@@ -25,18 +25,18 @@
 %% Page Intentionally Left Blank'', use the ``leftblank'' option, as
 %% above. 
 
-\documentclass[12pt,twoside]{mitthesis}
+\documentclass[12pt,twoside,leftblank,draft]{upcthesis}
 \usepackage{lgrind}
-\pagestyle{plain}
+\pagestyle{drafthead}
 
 %% This bit allows you to either specify only the files which you wish to
 %% process, or `all' to process all files which you \include.
 %% Krishna Sethuraman (1990).
 
-\typein [\files]{Enter file names to process, (chap1,chap2 ...), or `all' to
-process all files:}
+%%\typein [\files]{Enter file names to process, (chap1,chap2 ...), or `all' to process all files:}
+%%\files{all}
 \def\all{all}
-\ifx\files\all \typeout{Including all files.} \else \typeout{Including only \files.} \includeonly{\files} \fi
+%%\ifx\files\all \typeout{Including all files.} \else \typeout{Including only \files.} \includeonly{\files} \fi
 
 \begin{document}
 
@@ -45,7 +45,7 @@ process all files:}
 % signature.tex for more information and uncomment the following line if
 % applicable.
 % \include{signature}
-\pagestyle{plain}
+\pagestyle{drafthead}
 \include{contents}
 \include{chap1}
 \include{chap2}

@@ -1,0 +1,184 @@
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  5 DEC 2013 16:47
+entering extended mode
+ restricted \write18 enabled.
+ %&-line parsing enabled.
+**main.tex
+(./main.tex
+LaTeX2e <2011/06/27>
+Babel <3.9f> and hyphenation patterns for 78 languages loaded.
+(./upcthesis.cls
+
+LaTeX Warning: You have requested document class `upcthesis',
+               but the document class provides `mitthesis'.
+
+Document Class: mitthesis 1999/10/20
+\vithesis=\count79
+Intentionally Leaving Pages Blank
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/report.cls
+Document Class: report 2007/10/19 v1.4h Standard LaTeX document class
+(/usr/local/texlive/2013/texmf-dist/tex/latex/base/size12.clo
+File: size12.clo 2007/10/19 v1.4h Standard LaTeX file (size option)
+)
+\c@part=\count80
+\c@chapter=\count81
+\c@section=\count82
+\c@subsection=\count83
+\c@subsubsection=\count84
+\c@paragraph=\count85
+\c@subparagraph=\count86
+\c@figure=\count87
+\c@table=\count88
+\abovecaptionskip=\skip41
+\belowcaptionskip=\skip42
+\bibindent=\dimen102
+)
+(/usr/local/texlive/2013/texmf-dist/tex/latex/setspace/setspace.sty
+Package: setspace 2011/12/19 v6.7a set line spacing
+)
+Thesis document copyright MIT unless otherwise (manually) specified
+\@titlesupervisor=\box26
+\@abstractsupervisor=\box27
+\c@savepage=\count89
+) (./lgrind.sty
+Package: lgrind 1997/01/30 v3.4 LGrind environment and supporting stuff
+\lc@unt=\count90
+\ln@xt=\count91
+\LGnuminterval=\count92
+\LGindent=\skip43
+\LGsloppy=\skip44
+\procbox=\box28
+\ls@far=\box29
+\tb@x=\box30
+\TBw@d=\dimen103
+\@ts=\dimen104
+) (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux)
+(./chap2.aux) (./appa.aux) (./appb.aux) (./biblio.aux))
+\openout1 = `main.aux'.
+
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 41.
+LaTeX Font Info:    ... okay on input line 41.
+\openout2 = `cover.aux'.
+
+ (./cover.tex [1
+
+
+
+{/usr/local/texlive/2013/texmf-var/fonts/map/pdftex/updmap/pdftex.map}] [2
+
+]
+(./abstract.tex) [3
+
+] [4
+
+]) [5]
+\openout2 = `contents.aux'.
+
+ (./contents.tex [6
+
+
+
+] (./main.toc
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <12> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <8> on input line 2.
+LaTeX Font Info:    External font `cmex10' loaded for size
+(Font)              <6> on input line 2.
+)
+\tf@toc=\write3
+\openout3 = `main.toc'.
+
+ [7] [8
+
+]
+(./main.lof)
+\tf@lof=\write4
+\openout4 = `main.lof'.
+
+ [9] [10
+
+] (./main.lot)
+\tf@lot=\write5
+\openout5 = `main.lot'.
+
+) [11]
+\openout2 = `chap1.aux'.
+
+ (./chap1.tex [12
+
+
+
+]
+Chapter 1.
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ‰ in font cmr12!
+Missing character: There is no Â in font cmr12!
+Missing character: There is no © in font cmr12!
+
+Underfull \vbox (badness 8132) has occurred while \output is active []
+
+ [13]
+[14]) [15]
+\openout2 = `chap2.aux'.
+
+
+No file chap2.tex.
+\openout2 = `appa.aux'.
+
+(./appa.tex [16
+
+
+
+
+
+]
+Appendix A.
+[17])
+\openout2 = `appb.aux'.
+
+ (./appb.tex [18
+
+
+
+
+]
+Appendix B.
+[19] [20] [21])
+\openout2 = `biblio.aux'.
+
+ (./biblio.tex
+No file main.bbl.
+) (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
+(./appa.aux) (./appb.aux) (./biblio.aux)) ) 
+Here is how much of TeX's memory you used:
+ 516 strings out of 493315
+ 5478 string characters out of 6137904
+ 58310 words of memory out of 5000000
+ 3972 multiletter control sequences out of 15000+600000
+ 9453 words of font info for 33 fonts, out of 8000000 for 9000
+ 957 hyphenation exceptions out of 8191
+ 28i,7n,21p,833b,243s stack positions out of 5000i,500n,10000p,200000b,80000s
+</usr/local/texlive/2013/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/f
+onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fon
+ts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts
+/type1/public/amsfonts/cm/cmsl12.pfb>
+Output written on main.pdf (21 pages, 77406 bytes).
+PDF statistics:
+ 92 PDF objects out of 1000 (max. 8388607)
+ 63 compressed objects within 1 object stream
+ 0 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
+
