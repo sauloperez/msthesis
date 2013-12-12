@@ -15,19 +15,35 @@ Since its creation, CREAF has made very important contributions to the field of 
 
 \section{Motivations}
 
-The motivation for this master thesis arise from the idea that the wide development of the web technology such as HTML5, PaaS, IaaS, NoSQL and the steady increase in Open Source adoption in recent years make possible the implementation of powerful systems with significant cuts on budget. Moreover these technologies often come with (entail?) considerable improvements in maintainability, performance and complexity reduction.
+The motivation for this master thesis arise from the idea that the wide development of web technology such as HTML5, PaaS, IaaS, NoSQL and the steady increase in Open Source adoption in recent years make possible the implementation of powerful systems with significant cuts on budget. Moreover these technologies often come with (entail?) considerable improvements in maintainability, performance and reduced complexity.
 
-I am firmly convinced that this set of technologies and tools could improve research in centres such as CREAF, providing them with better and affordable infrastructures that allow to reduce the timespan of common processes and calculations. Moreover, they provide new means for the dissemination of the valuable data that results from these processes.
+I am firmly convinced that this set of technologies and tools could improve research in centres such as CREAF, providing them with better and affordable infrastructures that allow to reduce the timespan of common processes and calculations. Moreover, they provide new means for the dissemination of the valuable data that result from these processes.
 
-I tend to think that some computer engineering ought to be a tool to push forward the development of other sciences. In particular, as recently graduated engineers we can contribute with our acquired knowledge to the society attemting to solve problems that benefit us all. Therefore, I wished to develop a project whose outcome could benefit the work of some public research centre becoming a useful tool.
+I think that computer engineering should be conceived as a tool to push forward the development of other sciences. In particular, as recently graduated engineers we can contribute with our acquired knowledge to the society attempting to solve problems that benefit us all. Therefore, I wish to develop a project whose outcome could improve the work of some public research centre becoming a useful tool.
 
 Given my discovered interest in topics like distributed computing, sensor networks and resilience systems arouse in my recent stay in University of Antwerp I am eager for expanding my knowledge farther and dig deeper into these fields relating them in a real-world use case.
 
-\subsection{CREAF future tools}
+\section{CREAF future tools}
 
 Within in the context of volunteered geographic information (VGI) and renewable energies CREAF wants to solve the problem of knowing the distribution of renewable energy produced in Catalan homes. Nowadays the actual distribution of the energy produced by either wind or solar systems and their performance and evolution over time are unknown complicating the decision-making process regarding renewable energies in Catalonia.
 
 On the other hand, CREAF wishes to expand its methodological tools by adopting sensor web. The reduced cost of hardware devices like Raspberry Pi and Arduino  and their general-purpose features make them an affordable option as sensor devices and facilitates the development of sensor client software. For these reasons, CREAF aims to deploy its own sensor devices in wild nature in the near future. 
 
 Although some points were already clear, some others such as the architecture of the whole system to which the sensor clients will connect to as well as the software they would be shipped with were unknown for CREAF.
+
+\section{Project Goals}
+
+This project is aimed to develop a system that offers features to registered users’, those who freely share their data, and some other features available for all internet users. It will visualize the energy production of the clients’ system and its contribution to the whole Catalan renewable energy production in a real time map, while offering a private analytics dashboard to registered users where they can figure out the actual performance of their system.
+
+Given the extent of the desired product we will develop a proof of concept; a distributed computing based system containing base features being a simple yet functional prototype of the final product. Once built the system results and metrics will be evaluated and its architecture may eventually become the standard infrastructure basis for future CREAF projects that demand sensor data.
+
+TODO cite that the sensor devices are going to be either Raspberry Pi or Arduino
+
+Hence, these two general goals are translated with the following specific goals (describe further the fact that we have a reduced scope; we don't have time for all):
+
+\begin{itemize}
+	\item Provide a command line interface that allows the simulation of the sensors functionality
+	\item Develop a functional system that stores and processes the sensor observations
+	\item Implement a simple public web application to show the real time data
+\end{itemize}
 
