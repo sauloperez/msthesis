@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  12 DEC 2013 17:15
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  17 DEC 2013 18:03
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -94,18 +94,18 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <8> on input line 2.
 LaTeX Font Info:    External font `cmex10' loaded for size
 (Font)              <6> on input line 2.
- [7])
+)
 \tf@toc=\write3
 \openout3 = `main.toc'.
 
- [8]
+ [7] [8
+
+]
 (./main.lof)
 \tf@lof=\write4
 \openout4 = `main.lof'.
 
- [9
-
-] [10
+ [9] [10
 
 ] (./main.lot)
 \tf@lot=\write5
@@ -133,60 +133,166 @@ LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
 Underfull \vbox (badness 8132) has occurred while \output is active []
 
  [13]
-[14]) [15]
+[14]
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+Missing character: There is no â in font cmr12!
+Missing character: There is no € in font cmr12!
+Missing character: There is no ™ in font cmr12!
+
+Underfull \vbox (badness 1596) has occurred while \output is active []
+
+ [15])
+[16]
 \openout2 = `chap2.aux'.
 
- (./chap2.tex [16
+ (./chap2.tex
+Chapter 2.
+[17
+
+
+
+] [18]) [19]
+\openout2 = `chap3.aux'.
+
+ (./chap3.tex [20
 
 
 
 ]
-Chapter 2.
-[17] [18]) [19]
+Chapter 3.
+) [21]
+\openout2 = `chap4.aux'.
+
+ (./chap4.tex [22
+
+
+
+]
+Chapter 4.
+) [23]
+\openout2 = `chap5.aux'.
+
+ (./chap5.tex [24
+
+
+
+]
+Chapter 5.
+) [25]
+\openout2 = `chap6.aux'.
+
+ (./chap6.tex [26
+
+
+
+]
+Chapter 6.
+) [27]
+\openout2 = `chap7.aux'.
+
+ (./chap7.tex [28
+
+
+
+]
+Chapter 7.
+) [29]
+\openout2 = `chap8.aux'.
+
+ (./chap8.tex [30
+
+
+
+]
+Chapter 8.
+) [31]
+\openout2 = `chap9.aux'.
+
+ (./chap9.tex [32
+
+
+
+]
+Chapter 9.
+) [33]
+\openout2 = `chap10.aux'.
+
+ (./chap10.tex [34
+
+
+
+]
+Chapter 10.
+) [35]
+\openout2 = `chap11.aux'.
+
+ (./chap11.tex [36
+
+
+
+]
+Chapter 11.
+) [37]
+\openout2 = `chap12.aux'.
+
+ (./chap12.tex [38
+
+
+
+]
+Chapter 12.
+) [39]
 \openout2 = `appa.aux'.
 
- (./appa.tex [20
+ (./appa.tex [40
 
 
 
 ]
 Appendix A.
-[21])
+[41])
 \openout2 = `appb.aux'.
 
- (./appb.tex [22
+ (./appb.tex [42
 
 
 
 
 ]
 Appendix B.
-[23] [24] [25])
+[43] [44] [45])
 \openout2 = `biblio.aux'.
 
  (./biblio.tex
 No file main.bbl.
 ) (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
-(./appa.aux) (./appb.aux) (./biblio.aux)) ) 
+(./chap3.aux) (./chap4.aux) (./chap5.aux) (./chap6.aux) (./chap7.aux)
+(./chap8.aux) (./chap9.aux) (./chap10.aux) (./chap11.aux) (./chap12.aux)
+(./appa.aux) (./appb.aux) (./biblio.aux))
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 537 strings out of 493315
- 5832 string characters out of 6137904
+ 587 strings out of 493315
+ 6297 string characters out of 6137904
  58310 words of memory out of 5000000
  3988 multiletter control sequences out of 15000+600000
  9453 words of font info for 33 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  28i,7n,21p,930b,245s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2013/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (25 pages, 90979 bytes).
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
+sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></us
+r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on main.pdf (45 pages, 101322 bytes).
 PDF statistics:
- 109 PDF objects out of 1000 (max. 8388607)
- 75 compressed objects within 1 object stream
+ 175 PDF objects out of 1000 (max. 8388607)
+ 120 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
