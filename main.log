@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  5 JAN 2014 22:04
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  30 JAN 2014 23:11
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -146,125 +146,138 @@ Missing character: There is no ™ in font cmr12!
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
  [15]
-[16]) [17]
+[16]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+ [17])
+Overfull \hbox (250.27628pt too wide) in paragraph at lines 69--50
+\OT1/cmr/m/n/12 TO A LESS FOR-MAL SPEC-I-FI-CA-TION. TODO: REF-ER-ENCE http://a
+gilepainrelief.com/notesfromatooluser/2008/10/advantages-|
+ []
+
+
+Underfull \vbox (badness 2726) has occurred while \output is active []
+
+ [18]
+[19]
 \openout2 = `chap2.aux'.
 
- (./chap2.tex [18
+ (./chap2.tex [20
 
 
 
 ]
 Chapter 2.
-[19] [20]) [21] [22]
+[21] [22]) [23] [24]
 \openout2 = `chap3.aux'.
 
  (./chap3.tex
 Chapter 3.
-) [23
+) [25
 
 
 
 ]
 \openout2 = `chap4.aux'.
 
- (./chap4.tex [24
+ (./chap4.tex [26
 
 
 
 ]
 Chapter 4.
-) [25]
+) [27]
 \openout2 = `chap5.aux'.
 
- (./chap5.tex [26
+ (./chap5.tex [28
 
 
 
 ]
 Chapter 5.
-) [27]
+) [29]
 \openout2 = `chap6.aux'.
 
- (./chap6.tex [28
+ (./chap6.tex [30
 
 
 
 ]
 Chapter 6.
-) [29]
+) [31]
 \openout2 = `chap7.aux'.
 
- (./chap7.tex [30
+ (./chap7.tex [32
 
 
 
 ]
 Chapter 7.
-) [31]
+) [33]
 \openout2 = `chap8.aux'.
 
- (./chap8.tex [32
+ (./chap8.tex [34
 
 
 
 ]
 Chapter 8.
-) [33]
+) [35]
 \openout2 = `chap9.aux'.
 
- (./chap9.tex [34
+ (./chap9.tex [36
 
 
 
 ]
 Chapter 9.
-) [35]
+) [37]
 \openout2 = `chap10.aux'.
 
- (./chap10.tex [36
+ (./chap10.tex [38
 
 
 
 ]
 Chapter 10.
-) [37]
+) [39]
 \openout2 = `chap11.aux'.
 
- (./chap11.tex [38
+ (./chap11.tex [40
 
 
 
 ]
 Chapter 11.
-) [39]
+) [41]
 \openout2 = `chap12.aux'.
 
- (./chap12.tex [40
+ (./chap12.tex [42
 
 
 
 ]
 Chapter 12.
-) [41]
+) [43]
 \openout2 = `appa.aux'.
 
- (./appa.tex [42
+ (./appa.tex [44
 
 
 
 ]
 Appendix A.
-[43])
+[45])
 \openout2 = `appb.aux'.
 
- (./appb.tex [44
+ (./appb.tex [46
 
 
 
 
 ]
 Appendix B.
-[45] [46] [47])
+[47] [48] [49])
 \openout2 = `biblio.aux'.
 
  (./biblio.tex
@@ -288,10 +301,10 @@ onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fon
 ts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts
 /type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/
 type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (47 pages, 103205 bytes).
+Output written on main.pdf (49 pages, 106042 bytes).
 PDF statistics:
- 181 PDF objects out of 1000 (max. 8388607)
- 124 compressed objects within 2 object streams
+ 188 PDF objects out of 1000 (max. 8388607)
+ 129 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
