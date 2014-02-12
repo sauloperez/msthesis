@@ -8,43 +8,41 @@
 
 The Center for Ecological Research and Forestry Applications (CREAF) is a public research institution that was created in 1987.  The members of the Governing Council of CREAF are the Generalitat of Catalonia, the Autonomous University of Barcelona (UAB), University of Barcelona (UB), the Institute for Research and Technology (IRTA), the Institute of Catalan Studies (IEC) and the Spanish National Research Council (CSIC).
 
-Its objective is to generate knowledge and create new methodological tools in the field of terrestrial ecology, with special emphasis on forest ecology, in order to improve environmental planning and management in rural and urban areas. This is achieved, among other means, through the development of methodological and conceptual tools designed to facilitate decision-making and improve environmental management.
+Its objective is to generate knowledge and create new methodological tools in the field of terrestrial ecology in order to improve environmental planning and management in rural and urban areas with special emphasis on forest ecology. This is achieved, among other means, through the development of methodological and conceptual tools designed to facilitate decision-making and improve environmental management.
 
-Since its creation, CREAF has made very important contributions to the field of terrestrial ecology and towards a sustainable management of the environment. This has been achieved through research, development, training and technology transfer. Some of its outstanding breakthroughs are the design and implementation of the Ecological and Forest Inventory of Catalonia (EFIC), innovative at the international level due to the incorporation of new ecological parameters, the production of the Land Cover Map of Catalonia (MCSC), a high-resolution digital map for environmental assessment and territorial planning and management and the development of the MiraMon \copyright  Geographic Information System, widely adopted in Catalan administration and currently being used in over thirty countries around the world.
+Since its creation, CREAF has made very important contributions to the field of terrestrial ecology and towards a sustainable management of the environment. This has been achieved through research, development, training and technology transfer. Among its most relevant contributions there are the design and implementation of the Ecological and Forest Inventory of Catalonia (EFIC), innovative at the international level due to the incorporation of new ecological parameters, the production of the Land Cover Map of Catalonia (MCSC), a high-resolution digital map for environmental assessment and territorial planning and management and the development of the MiraMon \copyright  Geographic Information System, widely adopted in Catalan administration and currently used in over thirty countries around the world.
 
 
 \section{Motivations}
 
-The motivation for this master thesis arise from the idea that the wide development of web technology such as HTML5, PaaS, IaaS, NoSQL and the steady increase in Open Source adoption in recent years make possible the implementation of powerful systems with significant cuts on budget. Moreover these technologies often come with (entail?) considerable improvements in maintainability, performance and reduced complexity.
+The motivation for this master thesis arise from the idea that the wide development of web technologies, DevOps and infrastructure services, as well as the steady increase in Open Source adoption in the recent years make possible the implementation of powerful systems with significant cuts on budget and maintenance costs. Moreover these technologies often come with entail considerable improvements in maintainability, performance and reduced complexity.
 
-I am firmly convinced that this set of technologies and tools could improve research in centres such as CREAF, providing them with better and affordable infrastructures that allow to reduce the timespan of common processes and calculations. Moreover, they provide new means for the dissemination of the valuable data that result from these processes.
+I am firmly convinced that these technologies and tools can improve research in centres such as CREAF, providing them with better and affordable infrastructures reducing the timespan of common processes. Furthermore, they provide new means for the dissemination of the resulting data.
 
-I think that computer engineering should be conceived as a tool to push forward the development of other sciences. In particular, as recently graduated engineers we can contribute with our acquired knowledge to the society attempting to solve problems that benefit us all. Therefore, I wish to develop a project whose outcome could improve the work of some public research centre becoming a useful tool.
+Nonetheless, I think that computer engineering should be conceived as a tool to push forward the development of other sciences. In particular, as recently graduated engineers we can contribute back to the society with our knowledge to the society attempting to solve problems that benefit us all. Therefore, I wish to develop a project whose outcome could improve the work of some public research centre thus, becoming a useful tool.
 
-Given my discovered interest in topics like distributed computing, sensor networks and resilience systems arouse in my recent stay in University of Antwerp I am eager for expanding my knowledge farther and dig deeper into these fields relating them in a real-world use case.
+Given my discovered interest in topics like distributed computing, sensor networks and resilience systems arouse in my recent stay in University of Antwerp I am eager for expanding my knowledge farther and dig deeper into these fields in a real-world use case.
 
-Within in the context of volunteered geographic information (VGI) and renewable energies CREAF wants to solve the problem of knowing the distribution of renewable energy produced in Catalan homes. Nowadays the actual distribution of the energy produced by either wind or solar systems and their performance and evolution over time are unknown complicating the decision-making process regarding renewable energies in Catalonia.
+Within the context of volunteered geographic information (VGI) and renewable energies, CREAF wants to solve the problem of knowing the distribution of renewable energy produced in Catalan homes. Nowadays, its performance, time evolution and the distribution is unknown thus, complicating the decision-making regarding renewable energy sources in Catalonia.
 
-On the other hand, CREAF wishes to expand its methodological tools by adopting sensor web. The reduced cost of hardware devices like Raspberry Pi and Arduino  and their general-purpose features make them an affordable option as sensor devices and facilitates the development of sensor client software. For these reasons, CREAF aims to deploy its own sensor devices in wild nature in the near future. 
+On the other hand, CREAF wishes to expand its methodological tools by adopting sensor web. The reduced cost of hardware devices like Raspberry Pi and Arduino  and their general-purpose features make them an affordable and versatile solution as sensor devices. Its considerable computational power also facilitates the development of services clients in widely adopted languages. For these reasons, CREAF plans to deploy its own sensor devices in wild nature in the near future. 
 
-Although some points were already clear, some others such as the architecture of the whole system to which the sensor clients will connect to as well as the software they would be shipped with were unknown for CREAF.
+Although CREAF already took some design decisions, the architecture of the system and the software the devices would be shipped with were still to be determined.
+
+Given the mutual interest in the project outlined by CREAF we set out this master thesis to design and implement a prototype as a first working solution.
 
 \section{Project Goals}
 
-This project is aimed to develop a system that offers features to registered users’, those who freely share their data, and some other features available for all internet users. It will visualize the energy production of the clients’ system and its contribution to the whole Catalan renewable energy production in a real time map, while offering a private analytics dashboard to registered users where they can figure out the actual performance of their system.
+This project is aimed to develop a system that offers features to registered users, those who freely share their data, and some other features publicly available. It will visualize the energy production of the client’s system and its contribution to the whole Catalan renewable energy production in a real time map, while offering a private analytics dashboard to registered users where they can figure out the actual performance of their system.
 
-Given the extent of the desired product we will develop a proof of concept; a distributed computing based system containing base features being a simple yet functional prototype of the final product. Once built the system results and metrics will be evaluated and its architecture may eventually become the standard infrastructure basis for future CREAF projects that demand sensor data.
+Given the extent of the desired product we will develop a proof of concept. A distributed computing system that will provide essential features so being a simple but functional prototype of the final product. Once built, the system results and metrics will be evaluated and its architecture may eventually become the standard infrastructure basis for future CREAF projects that demand sensor data. AS a consequence, all features for registered users are out of the scope.
 
-Hence, the private features for registered users are out of the scope. TODO extend to clearly specify what is going to be out of the scope
-
-TODO cite that the sensor devices are going to be either Raspberry Pi or Arduino
-
-Hence, these two general goals are translated to the following specific goals (describe further the fact that we have a reduced scope; we don't have time for all):
+To sum up, these two general objectives are translated into the following specific goals:
 
 \begin{itemize}
 	\item Provide a command line interface that allows the simulation of the sensors functionality
 	\item Develop a functional system that stores and processes the sensor observations
-	\item Implement a simple public web application to show the real time data
+	\item Implement a simple public web application to display the observations in a real time map
 \end{itemize}
 
 \section{Methodolgy}
