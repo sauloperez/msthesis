@@ -7,7 +7,7 @@
 \chapter{Analysis}
 
 \section{Requirements}
-They have been obtained throughout some interviews with the CREAF researcher in charge of the project.
+They have been obtained throughout some meetings with CREAF researcher in charge of the project.
 
 Real use-case data (number of owners) has been obtained to "scope" the system qualities properly.
 
@@ -24,18 +24,17 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 \subsubsection{Usability}
 
 \begin{itemize}
-	\item The system must be user friendly and easy to use by means of a GUI
+	\item The web application must be user friendly and easy to use by means of a GUI
 	\item The sensor devices must be easy to set up by end users
-	\item The sensor device must collect and deliver the data automatically
-	\item All the command line interfaces must be scriptable and configurable
+	\item The sensor device must collect and deliver data automatically
+	\item All the command line interfaces must be configurable
 \end{itemize}
 
 \subsubsection{Reliability}
 
 \begin{itemize}
 	\item The system must be reliable in low bandwidth and high network latency
-	\item The system must be reliable in high-load scenarios
-	\item The system must be reliable in high user concurrency scenarios
+	\item The system must be reliable in high concurrency scenarios
 \end{itemize}
 
 \subsubsection{Performance}
@@ -43,14 +42,14 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 \begin{itemize}
 	\item The sensor devices must be able to send [Y] request per hour
 	\item The system must be able to process observations received from [X] sensor devices
-	\item The system must able to show new available data in the real time visualization before the next observation is sent from the sensor device
+	\item The system must able to display a sample from a certain sensor before its next sample is received
 \end{itemize}
 
 \subsubsection{Supportability}
 
 \begin{itemize}
 	\item The system must have an event logging system
-	\item The system must support SOS standard in order to be interoperable
+	\item The system must conform to the OGC Sensor Observation Service (SOS)
 	\item The system must be horizontally scalable
 	\item The codebase must be maintainable and extendible
 \end{itemize}
@@ -66,9 +65,9 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 \subsection{System Constraints}
 
 \begin{itemize}
-	\item The sensor devices must send [X] power observations within an hour
+	\item The sensor devices must send 6 power observations per hour
 	\item The system must be able to run in commodity servers 
-	\item The software must be portable in order to be deployed in any platform including PaaS and IaaS
+	\item The whole codebase must be portable in order to be deployed in any platform including PaaS and IaaS
 \end{itemize}
 
 SOS
@@ -76,7 +75,7 @@ SOS
 \subsection{System Compliance}
 
 \begin{itemize}
-	\item The system and all its components must adhere to [Open Source license] license
+	\item The system and all its components must adhere to Apache license
 \end{itemize}
 
 
