@@ -1,3 +1,4 @@
+
 %% This is an example first chapter.  You should put chapter/appendix that you
 %% write into a separate file, and add a line \include{yourfilename} to
 %% main.tex, where `yourfilename.tex' is the name of the chapter/appendix file.
@@ -10,22 +11,22 @@ The Center for Ecological Research and Forestry Applications (CREAF) is a public
 
 Its objective is to generate knowledge and create new methodological tools in the field of terrestrial ecology in order to improve environmental planning and management in rural and urban areas with special emphasis on forest ecology. This is achieved, among other means, through the development of methodological and conceptual tools designed to facilitate decision-making and improve environmental management.
 
-Since its creation, CREAF has made very important contributions to the field of terrestrial ecology and towards a sustainable management of the environment. This has been achieved through research, development, training and technology transfer. Among its most relevant contributions there are the design and implementation of the Ecological and Forest Inventory of Catalonia (EFIC), innovative at the international level due to the incorporation of new ecological parameters, the production of the Land Cover Map of Catalonia (MCSC), a high-resolution digital map for environmental assessment and territorial planning and management and the development of the MiraMon \copyright  Geographic Information System, widely adopted in Catalan administration and currently used in over thirty countries around the world.
+Since its creation, CREAF has made very important contributions to the field of terrestrial ecology and towards a sustainable management of the environment. This has been achieved through research, development, training and technology transfer. Some of its most relevant contributions include the design and implementation of the Ecological and Forest Inventory of Catalonia (EFIC), innovative at the international level due to the incorporation of new ecological parameters, the production of the Land Cover Map of Catalonia (MCSC), a high-resolution digital map for environmental assessment and territorial planning and management and the development of the MiraMon \copyright  Geographic Information System, widely adopted in Catalan administration and currently used in over thirty countries around the world.
 
 
 \section{Motivations}
 
-The motivation for this master thesis arise from the idea that the wide development of web technologies, DevOps and infrastructure services make possible the implementation of powerful systems with significant cuts on budget and maintenance costs. Moreover, these technologies often entail considerable improvements in maintainability, performance and reduced complexity.
+The motivation for this master thesis stems from the idea that the wide development of web technologies, DevOps and infrastructure services make possible the implementation of powerful systems with significant cuts on budget and maintenance costs. Moreover, these technologies often entail considerable improvements in maintainability, performance and reduced complexity.
 
 I am firmly convinced that these technologies and tools can improve research in centres such as CREAF, providing them with better and affordable infrastructures reducing the timespan of common processes. Furthermore, they provide new means for the dissemination of the resulting data.
 
-Nonetheless, I think that computer engineering should be conceived as a tool to push forward the development of other sciences. In particular, as recently graduated engineers we can contribute back to the society with our knowledge to the society attempting to solve problems that benefit us all. Hence, I wish to develop a project whose outcome could improve the work of some public research centre thus, becoming a useful tool.
+Nonetheless, I think that computer engineering should be conceived as a tool to push forward the development of other sciences. As recently graduated engineers we can contribute back to society with our knowledge attempting to solve problems that benefit us all. Hence, I wish to develop a project in which the outcome could improve the work of some public research centre thus, becoming a useful tool.
 
-Given my discovered interest in topics like distributed computing, sensor networks and resilience systems arouse in my recent stay in University of Antwerp I am eager for expanding my knowledge farther and dig deeper into these fields in a real-world use case.
+Given my discovered interest in topics like distributed computing, sensor networks and resilience systems arouse in my recent stay in University of Antwerp. I am eager in expanding my knowledge further and dig deeper into these fields in a real world use case.
 
-Within the context of volunteered geographic information (VGI) and renewable energies, CREAF wants to solve the problem of knowing the distribution of renewable energy produced in Catalan homes. Nowadays, its performance, time evolution and the distribution is unknown thus, complicating the decision-making regarding renewable energy sources in Catalonia.
+Within the context of volunteered geographic information (VGI) and renewable energies, CREAF wants to solve the problem of knowing the distribution of renewable energy produced in Catalan homes. Nowadays, its performance, time evolution and distribution is unknown thus, complicating the decision-making regarding renewable energy sources in Catalonia.
 
-On the other hand, CREAF wishes to expand its methodological tools by adopting sensor web. The reduced cost of hardware devices like Raspberry Pi and Arduino  and their general-purpose features make them an affordable and versatile solution as sensor devices. Its considerable computational power also facilitates the development of services clients in widely adopted languages. For these reasons, CREAF plans to deploy its own sensor devices in wild nature in the near future. 
+On the other hand, CREAF wishes to expand its methodological tools by adopting sensor web. The reduced cost of hardware devices like Raspberry Pi and Arduino  and their general-purpose features make them an affordable and versatile solution as sensor devices. Their considerable computational power also facilitates the development of services clients in widely adopted languages. For these reasons, CREAF plans to deploy its own sensor devices in wild nature in the near future. 
 
 Although CREAF already took some design decisions, the architecture of the system and the software the devices would be shipped with were still to be determined.
 
@@ -33,9 +34,9 @@ Given the mutual interest in the project outlined by CREAF we set out to design 
 
 \section{Project Goals}
 
-The Renewable Energy Production Distribution Map of Catalan Homes (REDCH) is aimed to develop a system that offers features to registered users, those who freely share their data, and some other features publicly available. It will visualize the energy production of the client’s system and its contribution to the whole Catalan renewable energy production in a real time map, while offering a private analytics dashboard to registered users where they can figure out the actual performance of their system.
+The Renewable Energy Production Distribution Map of Catalan Homes (REDCH) is aimed at developing a system that offers features to registered users, those who freely share their data, and some other features publicly available. It will visualize the energy production of the client’s system and its contribution to the whole Catalan renewable energy production in a real time map, while offering a private analytics dashboard to registered users where they can figure out the actual performance of their system.
 
-Given the extent of the desired product with this thesis we are going to develop a proof of concept. A distributed computing system that will provide essential features so being a simple but functional prototype of the final product. Once built, the system results and metrics will be evaluated and its architecture may eventually become the standard infrastructure basis for future CREAF projects that demand sensor data. As a consequence, all features for registered users are out of the scope.
+Given the extent of the desired product with this thesis we are going to develop a proof of concept. A distributed computing system that will provide essential features, being a simple but functional prototype of the final product. Once built, the system results and metrics will be evaluated and its architecture may eventually become the standard infrastructure basis for future CREAF projects that demand sensor data. As a consequence, all features for registered users are out of the scope.
 
 To sum up, these two general objectives are translated into the following specific goals:
 
@@ -53,17 +54,17 @@ Although advocating for agile software methodologies the concept-proof nature of
 
 In conjunction with incremental development Iterative development is a way of breaking down the development of a software system in smaller chunks and repeated cycles. In each cycle, known as iteration, the slice of functionality is designed, developed, tested, deployed and evaluated. This allows software developers to apply the knowledge acquired in previous iterations, so the first implementation whose goal is to build a bare minimal functional system is iteratively enhanced so as to meet the requirements.
 
-Nevertheless, iterative and incremental development are the basis for Agile development. Therefore, by adhering to them we attempt to avoid the agile practices and constraints that may be pointless in this case. Doing so, we aim to progressively enhance the codebase in subsequent iterations, gain insight into the architecture and improve any weak points we may identify until eventually meeting the requirements. Additionaly, by this way early results can be achieved and evaluated by CREAF resulting in a smoother collaboration.
+Nevertheless, iterative and incremental development are the basis for Agile development. Therefore, by adhering to them we attempt to avoid the agile practices and constraints that may be pointless in this case. Doing so, we aim to progressively enhance the codebase in subsequent iterations, gain insight into the architecture and improve any weak points we may identify until eventually meeting the requirements. Additionally, early results can be achieved and evaluated by CREAF resulting in a smoother collaboration.
 
 \subsection{Test-Driven Development}
 
-The chosen methodology also includes Test-Driven Development, which is a developer practice that involves writing tests before writing the code being tested. The initially failing test defines the behaviour of the code to be written, then the developer writes the minimum amount of code required to pass the test. Once it passes, it is time to refactor it to remove any duplication. This cycle must be repeated as many times as it requires to further extend the responsibilities of the code.
+The chosen methodology also includes Test-Driven Development, which is a developer practice that involves writing tests before writing the code being tested. The initially failing test defines the behaviour of the code to be written, then the developer writes the minimum amount of code required to pass the test. Once it passes, it is time to refactor it to remove any duplication. This cycle must be repeated as many times as it required to further extend the responsibilities of the code.
 
 Besides validating the correctness of the code, by driving the design of the program in small chunks through test cases the developer is mainly concerned with the interface of the program rather than its actual implementation.
 
 What we aim for while using TDD in this project is to obtain a more modularized, maintainable, and extensible code. The development of the software in small units leads to smaller, more focused and loosely coupled classes and cleaner interfaces. The main benefit we may get by this means, however, is a greater level of confidence in the code caused by the fact that all code written is covered by at least one test.
 
-Additionally, in this early stage of the project to have a test-covered code is basic for the successful evolution of the project. So it can be ensured that it keeps its intended behaviour and any defects are caught early in the development process, what has a considerably minor impact on costs than in later stages.
+Additionally, in this early stage of the project to have a test-covered code is basic practice for the successful evolution of the project. So it can be ensured that it keeps its intended behaviour and any defects are caught early in the development process, what has a considerably minor impact on costs than in later stages.
 
 TODO: NOTE ON THE LATTER CHAPTER THAT BY FOCUSING ON BEHAVIOUR TESTS FIRST WE GET A EXECUTABLE SPECIFICATION, SPECIALLY WITH RSPEC. BUT "TESTS ARE NOT A REPLACEMENT FOR SPECIFICATION". CONTRACTS FOR OPERATIONS. http://www.eiffel.com/general/column/2004/september.html. LEADS TO A LESS FORMAL SPECIFICATION.
 TODO: REFERENCE http://agilepainrelief.com/notesfromatooluser/2008/10/advantages-of-tdd.html
