@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  13 FEB 2014 09:32
+This is pdfTeX, Version 3.1415926-2.5-1.40.14 (TeX Live 2013) (format=pdflatex 2013.8.15)  21 FEB 2014 09:12
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -100,187 +100,160 @@ LaTeX Font Info:    External font `cmex10' loaded for size
 \tf@toc=\write3
 \openout3 = `main.toc'.
 
- [8]
-(./main.lof)
-\tf@lof=\write4
-\openout4 = `main.lof'.
-
- [9
-
-] [10
-
-] (./main.lot)
-\tf@lot=\write5
-\openout5 = `main.lot'.
-
-) [11]
+) [8]
 \openout2 = `chap1.aux'.
 
- (./chap1.tex [12
 
-
-
-]
+(./chap1.tex
 Chapter 1.
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ‰ in font cmr12!
-LaTeX Font Info:    Try loading font information for OMS+cmr on input line 13.
+LaTeX Font Info:    Try loading font information for OMS+cmr on input line 14.
 (/usr/local/texlive/2013/texmf-dist/tex/latex/base/omscmr.fd
 File: omscmr.fd 1999/05/25 v2.5h Standard LaTeX font definitions
 )
 LaTeX Font Info:    Font shape `OMS/cmr/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 13.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 14.
 
 Underfull \vbox (badness 8132) has occurred while \output is active []
 
- [13]
-[14]
+ [9
+
+
+
+]
+[10]
 Missing character: There is no â in font cmr12!
 Missing character: There is no € in font cmr12!
 Missing character: There is no ™ in font cmr12!
 
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [15]
-[16]
+ [11]
+[12]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
- [17])
-Overfull \hbox (150.99733pt too wide) in paragraph at lines 68--50
-\OT1/cmr/m/n/12 I-FI-CA-TION". CON-TRACTS FOR OP-ER-A-TIONS. http://www.eiffel.
-com/general/column/2004/september.html.|
- []
-
-
-Overfull \hbox (292.53151pt too wide) in paragraph at lines 68--50
-\OT1/cmr/m/n/12 LEADS TO A LESS FOR-MAL SPEC-I-FI-CA-TION. TODO: REF-ER-ENCE ht
-tp://agilepainrelief.com/notesfromatooluser/2008/10/advantages-|
- []
-
-
-Underfull \vbox (badness 2726) has occurred while \output is active []
-
- [18]
-[19]
+ [13])
+[14]
 \openout2 = `chap2.aux'.
 
- (./chap2.tex [20
-
-
-
-]
+ (./chap2.tex
 Chapter 2.
-[21] [22]) [23] [24]
+[15
+
+
+
+] [16]) [17]
 \openout2 = `chap3.aux'.
 
- (./chap3.tex
-Chapter 3.
-) [25
+ (./chap3.tex [18
 
 
 
 ]
+Chapter 3.
+) [19]
 \openout2 = `chap4.aux'.
 
- (./chap4.tex [26
+ (./chap4.tex [20
 
 
 
 ]
 Chapter 4.
-) [27]
+) [21]
 \openout2 = `chap5.aux'.
 
- (./chap5.tex [28
+ (./chap5.tex [22
 
 
 
 ]
 Chapter 5.
-) [29]
+) [23]
 \openout2 = `chap6.aux'.
 
- (./chap6.tex [30
+ (./chap6.tex [24
 
 
 
 ]
 Chapter 6.
-) [31]
+) [25]
 \openout2 = `chap7.aux'.
 
- (./chap7.tex [32
+ (./chap7.tex [26
 
 
 
 ]
 Chapter 7.
-) [33]
+) [27]
 \openout2 = `chap8.aux'.
 
- (./chap8.tex [34
+ (./chap8.tex [28
 
 
 
 ]
 Chapter 8.
-) [35]
+) [29]
 \openout2 = `chap9.aux'.
 
- (./chap9.tex [36
+ (./chap9.tex [30
 
 
 
 ]
 Chapter 9.
-) [37]
+) [31]
 \openout2 = `chap10.aux'.
 
- (./chap10.tex [38
+ (./chap10.tex [32
 
 
 
 ]
 Chapter 10.
-) [39]
+) [33]
 \openout2 = `chap11.aux'.
 
- (./chap11.tex [40
+ (./chap11.tex [34
 
 
 
 ]
 Chapter 11.
-) [41]
+) [35]
 \openout2 = `chap12.aux'.
 
- (./chap12.tex [42
+ (./chap12.tex [36
 
 
 
 ]
 Chapter 12.
-) [43]
+) [37]
 \openout2 = `appa.aux'.
 
- (./appa.tex [44
+ (./appa.tex [38
 
 
 
 ]
 Appendix A.
-[45])
+[39])
 \openout2 = `appb.aux'.
 
- (./appb.tex [46
+ (./appb.tex [40
 
 
 
 
 ]
 Appendix B.
-[47] [48] [49])
+[41] [42] [43])
 \openout2 = `biblio.aux'.
 
  (./biblio.tex
@@ -288,26 +261,29 @@ No file main.bbl.
 ) (./main.aux (./cover.aux) (./contents.aux) (./chap1.aux) (./chap2.aux)
 (./chap3.aux) (./chap4.aux) (./chap5.aux) (./chap6.aux) (./chap7.aux)
 (./chap8.aux) (./chap9.aux) (./chap10.aux) (./chap11.aux) (./chap12.aux)
-(./appa.aux) (./appb.aux) (./biblio.aux)) ) 
+(./appa.aux) (./appb.aux) (./biblio.aux))
+
+LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
+
+ ) 
 Here is how much of TeX's memory you used:
- 617 strings out of 493315
- 6586 string characters out of 6137904
+ 611 strings out of 493315
+ 6542 string characters out of 6137904
  60948 words of memory out of 5000000
  3998 multiletter control sequences out of 15000+600000
  9453 words of font info for 33 fonts, out of 8000000 for 9000
  957 hyphenation exceptions out of 8191
  28i,7n,21p,930b,245s stack positions out of 5000i,500n,10000p,200000b,80000s
-</usr/local/texlive/2013/texmf-dist/
-fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/local/texlive/2013/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/local/texlive/2013/texmf-dist/f
-onts/type1/public/amsfonts/cm/cmr12.pfb></usr/local/texlive/2013/texmf-dist/fon
-ts/type1/public/amsfonts/cm/cmr17.pfb></usr/local/texlive/2013/texmf-dist/fonts
-/type1/public/amsfonts/cm/cmsl12.pfb></usr/local/texlive/2013/texmf-dist/fonts/
-type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on main.pdf (49 pages, 105576 bytes).
+</usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb
+></usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb><
+/usr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb></u
+sr/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsl12.pfb></us
+r/local/texlive/2013/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb>
+Output written on main.pdf (43 pages, 101413 bytes).
 PDF statistics:
- 188 PDF objects out of 1000 (max. 8388607)
- 129 compressed objects within 2 object streams
+ 169 PDF objects out of 1000 (max. 8388607)
+ 116 compressed objects within 2 object streams
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
