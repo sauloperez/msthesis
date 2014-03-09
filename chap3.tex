@@ -4,7 +4,83 @@
 %% You can process specific files by typing their names in at the 
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
-\chapter{Specification}
+\chapter{Analysis}
+
+\section{Requirements}
+They have been obtained throughout some meetings with CREAF researcher in charge of the project.
+
+Real use-case data (number of owners) has been obtained to "scope" the system qualities properly.
+
+\subsection{System-Wide Functional Requirements}
+
+\begin{itemize}
+	\item The system must be fed with the data collected by the sensor devices
+	\item The system must require an authentication system for the sensor devices and the web application users
+	\item The system must provide software tracing
+\end{itemize}
+
+\subsubsection{System Qualities}
+
+\subsubsection{Usability}
+
+\begin{itemize}
+	\item The web application must be user friendly and easy to use by means of a GUI
+	\item The sensor devices must be easy to set up by end users
+	\item The sensor device must collect and deliver data automatically
+	\item All the command line interfaces must be configurable
+\end{itemize}
+
+\subsubsection{Reliability}
+
+\begin{itemize}
+	\item The system must be reliable in low bandwidth and high network latency
+	\item The system must be reliable in high concurrency scenarios
+\end{itemize}
+
+\subsubsection{Performance}
+
+\begin{itemize}
+	\item The sensor devices must be able to send [Y] request per hour
+	\item The system must be able to process observations received from [X] sensor devices
+	\item The system must able to display a sample from a certain sensor before its next sample is received
+\end{itemize}
+
+\subsubsection{Supportability}
+
+\begin{itemize}
+	\item The system must have an event logging system
+	\item The system must conform to the OGC Sensor Observation Service (SOS)
+	\item The system must be horizontally scalable
+	\item The codebase must be maintainable and extendible
+\end{itemize}
+
+\subsection{System Interfaces}
+
+\subsubsection{Interfaces to External Systems}
+
+\begin{itemize}
+	\item The system must integrate 52 North SOS implementation to provide a standard interoperability layer
+\end{itemize}
+
+\subsection{System Constraints}
+
+\begin{itemize}
+	\item The sensor devices must send 6 power observations per hour
+	\item The system must be able to run in commodity servers 
+	\item The whole codebase must be portable in order to be deployed in any platform including PaaS and IaaS
+\end{itemize}
+
+SOS
+
+\subsection{System Compliance}
+
+\begin{itemize}
+	\item The system and all its components must adhere to Apache license
+\end{itemize}
+
+
+\section{Technology Research}
+
 
 
 
