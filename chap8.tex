@@ -4,4 +4,17 @@
 %% You can process specific files by typing their names in at the 
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
-\chapter{Deployment}
+\chapter{Infrastructure}
+
+Once we have develop the software we need to configure the underlying infrastructure to run it. This process, that involves creating directories and installing packages, may be error-prone when done manually. Besides, we would eventually need to repeat these steps next time we have to set up another server to provide high availability. Even though, writing the build-out process may help, whoever reads that documentation can't figure out the current state of the configuration.
+
+Puppet, among other solutions such as Chef, is a software that enables server configuration automation. It automates server provisioning by formalizing its configuration into manifests. Puppet's manifests are text files that contain statements written in a declarative domain-specific language (DSL) that allows to define the desired state of the infrastructure. Once these configurations are deployed, Puppet automatically installs the necessary packages and ensures that the machine’s files and services match the desired state.
+
+Server automation frameworks formalize systems administration treating infrastructure as code. As a result, infrastructure's configuration can be tested and repeated, automating away repetitive tasks while systems administrators focus on architecting and tunning services.
+
+Puppet is our choice due to its popularity and reputation. With lots of tutorials and other learning materials are available online it is a suitable tool for the job.
+
+\section{Provisioning}
+
+
+
