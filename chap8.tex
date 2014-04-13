@@ -16,7 +16,7 @@ The whole infrastructure is compound by EC2 instances, virtual servers in Amazon
 
 One of the major benefits Redch can take advantage of is Auto Scaling. It allows to scale the number of EC2 instances up and down according to a set of predefined conditions. The load balancer, for instance, can automatically spawn app servers based on load. Redch can get the most out of it exploiting the fact that solar panels don't produce energy at night, so no requests from those sensors will be received during night. This allows to reduce the computing power to bare minimum. (wind mills?)
 
-As for the database server, although it is desirable to keep the infrastructure provider-independent, it makes use of the Amazon RDS. A service... Among its upsides... fine-grained configuration and monitoring.
+As for the database server, although it is desirable to keep the infrastructure provider-independent, we choose Amazon RDS. It makes easier to set up, operate, and scale a relational database. Furthermore, it provides automated backups, Multi-AZ replication and monitoring metrics. It has support for MySQL, Oracle, SQL Server and PostregSQL, the DBMS 52North SOS uses. However, due to its recent release in November of 2013 it is still in beta version.
 
 \section{Provisioning}
 
