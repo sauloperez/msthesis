@@ -6,9 +6,9 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Technology research}
 
-This chapter aims to synthesize the research carried on the main knowledge areas involved in the development of this project. It analyses technologies, paradigms and different insights the design of the project is based upon. This includes the main areas of concern: Public Interface and Interoperability, Database, Real time, Web Technologies, Event logging.   
+This chapter aims to synthesize the research carried on the main knowledge areas involved in the development of this project. It pretends to give an overview of the technologies and paradigms considered to support the design decisions the project is based upon. This includes the main areas of concern: Public Interface, Database, Real time, Web Technologies, Event logging.
 
-\section{Public Interface and Interoperability}
+\section{Public Interface}
 
 \subsection{Client devices}
 
@@ -18,15 +18,41 @@ On the other hand, the decrease in the price of processors for mobile devices, w
 
 Both devices have different aims and capabilities. Arduino is a easy-to-use lower-level physical computing platform, whereas Raspberry Pi beats general purpose PCs in terms of cost and size. Nonetheless, it is not unusual to combine their features attaching them together as a single device, which \cite{Arduberry} attempts. While Arduino brings I/O capabilities Raspberry Pi lacks, the latter provides computing power.
 
-These features have contributed to their popularity among people involved in technology as well as computing aficionados. They have attracted great interest in the Internet of Things (IoT) community and have had direct impact on its recent growth. Some projects are heavily inspired by Arduino extensibility such as \cite{Thinking-Things}, whilst others build their products based on customized Arduino boards. 
+These features have contributed to their popularity among people involved in technology as well as computing aficionados. They have attracted great interest in the Internet of Things (IoT) community and have had direct impact on its recent growth. Some project are heavily inspired by Arduino extensibility such as \cite{Thinking-Things}, whilst others build their products based on customized Arduino boards. 
 
 This is the case of Smart Citizen a whole platform aimed at generating participatory processes of people in cities thus, creating more effective and optimized relationships between services, technology and communities in the urban environment. The core of the platform is the called Smart Citizen Kit, a hardware device shipped with air, temperature, light, sound and humidity sensors plus a Wi-Fi module to serve as ambient sensor. They started up with Arduino shields to develop a prototype, until eventually coming up with their own specific-purpose arduino-compatible data-processing board.
 
+\subsection{Interoperability}
+
+
+
 \section{Database}
 
-Ever growing data set, very small data units and mainly write ops.
+The way the data is handled and stored is a key point of the project. Therefore, it is crucial to choose the Database management system (DBMS) that best fits the features of the underlying data set. It must implement some sort of geographic support as every observation implicitly belongs to a particular geolocation.
+
+Databases allow to persist a representation of the real-world objects and their relations in a structured fashion. Furthermore, they also allow to integration the data of different applications thus, avoiding data duplication. 
 
 \subsection{Relational Databases and NoSQL}
+
+Databases may be classified in three general models: hierarchical, network and relational, being the latter the most popular. The relational model is based on set theory and predicate logic. Relational databases implement an approximation of that mathematical model using a table-based format. The data is structured in tables that represent relations, where the information of a particular entity is represented by a row and the set of fixed attributes of such entity correspond to the columns.
+
+\paragraph{Relational DBMSs}
+
+Databases, however, need DBMSs in order to be functional. A DBMS is a software specially designed to allow the creation, querying, update, and management of databases. It is a layer above the OS that abstracts the applications from the database. Hence, applications deal with databases through the DBMS, as they do with files through the OS.
+
+DBMSs essentially provide efficient, reliable, convenient, and safe multi-user storage of and access to massive amounts of persistent data. However, not every data management or analysis problem is best solved exclusively using a traditional DBMS. There are some problems that are more suitable for other type of systems.
+
+\paragraph{NoSQL Systems}
+
+NoSQL, named after the term \textit{Not Only SQL}, Systems are different from traditional relational systems in that they tend to provide a flexible schema rather than a rigid structure, they are quicker or cheaper to set up, they are geared towards massive scalability and they use relaxed consistency in order to provide higher performance and higher availability.
+
+Nonetheless, as downside there is no declarative query language thus, more programming is involved in manipulating the data. Furthermore, because of the relaxed consistency models, their better performance comes at the expense of fewer guarantees about the consistency of the data. Eventually consistent systems are often classified as providing BASE (Basically Available, Soft state, Eventual consistency) properties in contrast to traditional ACID (Atomicity, Consistency, Isolation, Durability) guarantees of relational systems. 
+
+Althought, this is a field that is changing very fast, the number of different kinds of NoSQL systems can be generalized in four main categories: MapReduce framework, Key-value stores, Graph database systems and Document stores. MapReduce framework are typically used for applications that process large amounts of data to do complex analysis, whereas Key-value stores tend to perform a lot of small operations on very small parts of the data. On the other hand, Graph database systems are designed for storing and operating over very large graphs.
+
+Document stores are very similar to Key-value stores except that the values are a document. Hence, the data model is based on \mathnormal{<key, document>} pairs. The document is a known type of structure that can contain semistructured formats such as JSON or XML. The basic operations, like key-value stores, allow to fetch, update, delete and insert a document based on a given key. Additionally, they also implement a fetch operation based on document contents which is a very implementation-specific feature since there is no standard query language. Few examples of document stores are CouchDB, MongoDB and Amazon's SimpleDB, among many others.  
+
+MongoDB geo support.
 
 NoSQL
 MongoDB most mature
@@ -35,12 +61,15 @@ pros:
 - performance
 - administration ease
 - several new options, not very production ready, stability
+- since 2000s
 
 cons: 
 - migration from relational design 
 - non-ACID
 - eventual consistency (although, non achievable in a distributed system)
-- mature. years of performance fine-tunning. 
+- mature. years of performance fine-tunning. Relational databases since 1970.
+
+
 
 \section{Real Time}
 for frontend redirect to web technologies
@@ -56,7 +85,7 @@ redis
 
 \section{Web Technologies}
 
-Since the Sir Tim Berners-Lee's first draft of the World Wide Web back in 1989 and his first proposal for the HyperText Markup Language (HTML) \cite{HTMLtags} in 1991 the WWW has experienced a tremendous evolution. Since then, HTML has gone through many revisions. With the contribution of Apple, Mozilla Foundation and Opera software the First Public Working Draft of  the HTML5 specification was published in 2008, but it hadn't been until 2012 that The World Wide Web Consortium (W3C) designated HTML5 as a Candidate Recommendation. It is planned to be released as stable Recommendation by the end of 2014.
+Since the Sir Tim Berners-Lee's first draft of the World Wide Web back in 1989 and his first proposal for the HyperText Markup Language (HTML) \cite{HTMLtags} in 1991 the WWW has experienced a tremendous evolution. Since then, HTML has gone through many revisions. The World Wide Web Consortium (W3C) published many iterations of the standard until the specification HTML 4.01 in 1999. It was not until 2004, when the Web Hypertext Application Technology Working Group (WHATWG) was founded by individuals of Apple, the Mozilla Foundation, and Opera Software, that HTML was proposed to be extended so as to allow the creation of web applications. WHATWG published the First Public Working Draft of the HTML5 specification in 2008. Although parts of HTML5 have been implemented in browsers it hadn't been until 2012 that W3C designated HTML5 as a Candidate Recommendation and it is planned to be released as a stable Recommendation by the end of 2014.
 
 
 Ajax
