@@ -34,42 +34,41 @@ Databases allow to persist a representation of the real-world objects and their 
 
 \subsection{Relational Databases and NoSQL}
 
-Databases may be classified in three general models: hierarchical, network and relational, being the latter the most popular. The relational model is based on set theory and predicate logic. Relational databases implement an approximation of that mathematical model using a table-based format. The data is structured in tables that represent relations, where the information of a particular entity is represented by a row and the set of fixed attributes of such entity correspond to the columns.
+Databases may be classified in three general models: hierarchical, network, relational and NoSQL. Relational databases have gain a lot of popularity since their appearance in the late 1970s, becoming the de facto choice regarding data management in IT systems. On the ohter hand, NoSQL systems is a field that is still evolving very fast since its birth in the 2000s.
 
 \paragraph{Relational DBMSs}
 
+The relational model is based on set theory and predicate logic. Relational databases implement an approximation of that mathematical model using a table-based format. The data is structured in tables that represent relations, where the information of a particular entity is represented by a row and the set of fixed attributes of such entity correspond to the columns.
+
 Databases, however, need DBMSs in order to be functional. A DBMS is a software specially designed to allow the creation, querying, update, and management of databases. It is a layer above the OS that abstracts the applications from the database. Hence, applications deal with databases through the DBMS, as they do with files through the OS.
 
-DBMSs essentially provide efficient, reliable, convenient, and safe multi-user storage of and access to massive amounts of persistent data. However, not every data management or analysis problem is best solved exclusively using a traditional DBMS. There are some problems that are more suitable for other type of systems.
+Relational DBMSs essentially provide efficient, reliable, convenient, and safe multi-user storage of and access to massive amounts of persistent data. They guarantee consistency by means of robust concurreny models and ACID (Atomicity, Consistency, Isolation, Durability) transactions. Due to decades of development and research relational database systems are relied upon by mission-critical applications that demand strict consistency. 
+
+The most popular open-source relational DBMSs are MySQL and PostgreSQL, being the latter the most advanced. One of its most remarkable fetaures is PostGIS, a PostgreSQL extension that adds support for location awareness allowing to query by geographic location. As a consequence of PostGIS' rich feature list PostgreSQL is the standard choice for Geographic Information Systems (GIS).
+
+However, not every data management or analysis problem is best solved exclusively using a traditional DBMS. There are some problems that are more suitable for other type of systems \cite{NoSQL-use-cases}.
 
 \paragraph{NoSQL Systems}
 
-NoSQL, named after the term \textit{Not Only SQL}, Systems are different from traditional relational systems in that they tend to provide a flexible schema rather than a rigid structure, they are quicker or cheaper to set up, they are geared towards massive scalability and they use relaxed consistency in order to provide higher performance and higher availability.
+NoSQL Systems, named after the term \textit{Not Only SQL}, differ from traditional relational systems in that they tend to provide a flexible schema rather than a rigid structure, they are quicker or cheaper to set up, they are geared towards massive scalability and they use relaxed consistency in order to provide higher performance and higher availability.
 
-One of the main goals of NoSQL systems is to enhance horizontal scalability. As the CAP theorem states \cite{•}, this can only be achieved by relaxing either its consistency or its availability so partition tolerance may be guaranteed. There is no consensus over which pair to choose among NoSQL vendors. Some opt for consistency against availability, whereas others focus on availability over consistency. Nonetheless, there are few that pick both properties and consequently provide scalability through replication rather than partitioning.
+Their downsides are that there is no declarative query language thus, more programming is involved in manipulating the data. Furthermore, because of the relaxed consistency models, their better performance comes at the expense of fewer guarantees about the consistency of the data. Eventually consistent systems are often classified as providing BASE (Basically Available, Soft state, Eventual consistency) properties in contrast to traditional ACID-compliant relational systems.
 
-Nonetheless, as downside there is no declarative query language thus, more programming is involved in manipulating the data. Furthermore, because of the relaxed consistency models, their better performance comes at the expense of fewer guarantees about the consistency of the data. Eventually consistent systems are often classified as providing BASE (Basically Available, Soft state, Eventual consistency) properties in contrast to traditional ACID (Atomicity, Consistency, Isolation, Durability) guarantees of relational systems. 
+One of the main goals of NoSQL systems is to enhance horizontal scalability. As the CAP theorem states \cite{CAP-theorem}\cite{CAP:online}, this can only be achieved by relaxing either its consistency or its availability so partition tolerance may be guaranteed. There is no consensus among NoSQL vendors over which pair to choose. Some opt for consistency against availability, while others focus on availability over consistency \cite{CAP-NoSQL}. Nonetheless, there are few that pick both properties and consequently provide scalability through replication rather than partitioning.
 
-The number of different kinds of NoSQL systems can be generalized in four main categories: MapReduce framework, Key-value stores, Graph database systems and Document stores. MapReduce framework are typically used for applications that process large amounts of data to do complex analysis, whereas Key-value stores tend to perform a lot of small operations on very small parts of the data. On the other hand, Graph database systems are designed for storing and operating over very large graphs.
+The number of different kinds of NoSQL systems may be generalized in four main categories: MapReduce framework, Key-value stores, Graph database systems and Document stores. MapReduce framework are typically used for applications that process large amounts of data to do complex analysis, whereas Key-value stores tend to perform a lot of small operations on very small parts of the data. On the other hand, Graph database systems are designed for storing and operating over very large graphs.
 
-Document stores are very similar to Key-value stores except that the values are a document. Hence, the data model is based on \mathnormal{<key, document>} pairs. The document is a known type of structure that can contain semistructured formats such as JSON or XML. The basic operations, like key-value stores, allow to fetch, update, delete and insert a document based on a given key. Additionally, they also implement a fetch operation based on document contents which is a very implementation-specific feature since there is no standard query language. Few examples of document stores are CouchDB, MongoDB and Amazon's SimpleDB, among many others.  
+\paragraph{Document stores}
+
+Document stores are very similar to Key-value stores except that the values are a document. Hence, the data model is based on ${<key, document>}$ pairs where the document is a known type of structure that can contain semistructured formats such as JSON or XML. The basic operations, like key-value stores, allow to fetch, update, delete and insert a document based on a given key. Additionally, they also implement a fetch operation based on document contents which is a very implementation-specific feature since there is no standard query language. Few examples of document stores are CouchDB, MongoDB and Amazon's SimpleDB, among many others.  
 
 MongoDB geo support.
 
 NoSQL
 MongoDB most mature
-pros:
-- scalabiltiy (auto sharding capabilities)
-- performance
-- administration ease
-- several new options, not very production ready, stability
-- since 2000s
 
 cons: 
-- migration from relational design 
-- non-ACID
-- eventual consistency (although, non achievable in a distributed system)
-- mature. years of performance fine-tunning. Relational databases since 1970.
+- migration from relational design
 
 
 
