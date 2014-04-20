@@ -120,7 +120,7 @@
 %%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{upcthesis}[1999/10/20]
+\ProvidesClass{upcthesis}[2014/04/20]
 
 \def\mystretch{1.5}		% Double spacing hack
 \DeclareOption{doublespace}{}	% This is default
