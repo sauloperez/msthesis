@@ -10,7 +10,7 @@ This chapter aims to describe the tools and processes involved in the infrastruc
 
 \section{Amazon AWS setup}
 
-Amazon Web Services (AWS) is a cloud computing platform. It is a collection of remote computing services ranging from computing services, with the well-known Amazon EC2, and storage services, with Amazon S3, to networking services such as DNS among others. AWS is a world-wide leader of Infrastructure-as-a-Service (IaaS) providers. Lots of major web applications like Spotify, Airbnb, Foursquare Github and Mapbox rely on Amazon Web Services.
+Amazon Web Services (AWS) is a cloud computing platform. It is a collection of remote computing services ranging from computing services, with the well-known Amazon EC2, and storage services, with Amazon S3, to networking services such as DNS among others. AWS is a world-wide leader of Infrastructure-as-a-Service (IaaS) providers. A number of high-profile websites like Spotify, Airbnb, Foursquare Github and Mapbox rely on Amazon Web Services.
 
 The whole infrastructure is compound by EC2 instances, virtual servers in Amazon's cloud. They all run a custom Amazon Machine Image (AMI) built from a raw Ubuntu 12.04 LTS AMI installing all needed dependencies: Puppet and Ruby 2.0.0. As a result any new instance booted up with this custom AMI is ready the be provisioned. Starting and stopping machines, as well as configuring their firewall rules is managed through the AWS Management Console, a web UI.
 
