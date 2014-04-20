@@ -6,18 +6,18 @@
 % `vi' and `upcase' options by Krishna Sethuraman - krishna@athena.mit.edu
 % Margins and heading types by Peter Nuth  - nuth@ai.mit.edu
 % Title and abstract page by Stephen Gildea - gildea@erl.mit.edu
-% Look in this directory for example file mitthesis.doc
+% Look in this directory for example file upcthesis.doc
 % Also for propcover.tex - Boilerplate for PHD proposal.
 
 % To use this style - say something like:
 %  for dull, boring thesis format:
-%	\documentclass[12pt]{mitthesis}
+%	\documentclass[12pt]{upcthesis}
 %       \pagestyle{plain}
 % OR for fast drafts: 
-%	\documentclass[11pt,singlespace,draft]{mitthesis}
+%	\documentclass[11pt,singlespace,draft]{upcthesis}
 %	\pagestyle{drafthead}
 % OR for Tech Reports:
-%	\documentclass[12pt,twoside]{mitthesis}	
+%	\documentclass[12pt,twoside]{upcthesis}	
 %	\pagestyle{headings}
 % OR
 %  some other combination...
@@ -120,7 +120,7 @@
 %%%%%%%%
 
 \NeedsTeXFormat{LaTeX2e}
-\ProvidesClass{mitthesis}[1999/10/20]
+\ProvidesClass{upcthesis}[1999/10/20]
 
 \def\mystretch{1.5}		% Double spacing hack
 \DeclareOption{doublespace}{}	% This is default
@@ -152,6 +152,9 @@
 % If the user wants single spacing, set baselinestretch=1.
 
 \usepackage{setspace}
+
+% It provides a \textdegree command for proper degree symbol
+\usepackage{textcomp}
 
 % Note - doublespace.sty has some float-related troubles in
 % combination with graphics or color, and is not officially compliant

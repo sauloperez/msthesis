@@ -18,13 +18,23 @@ On the other hand, the decrease in the price of processors for mobile devices, w
 
 Both devices have different aims and capabilities. Arduino is a easy-to-use lower-level physical computing platform, whereas Raspberry Pi beats general purpose PCs in terms of cost and size. Nonetheless, it is not unusual to combine their features attaching them together as a single device, which \cite{Arduberry} attempts. While Arduino brings I/O capabilities Raspberry Pi lacks, the latter provides computing power.
 
-These features have contributed to their popularity among people involved in technology as well as computing aficionados. They have attracted great interest in the Internet of Things (IoT) community and have had direct impact on its recent growth. Some project are heavily inspired by Arduino extensibility such as \cite{Thinking-Things}, whilst others build their products based on customized Arduino boards. 
+These features have contributed to their popularity among people involved in technology as well as computing aficionados. They have attracted great interest in the Internet of Things (IoT) community and have had direct impact on its recent growth. Some project are heavily inspired by Arduino extensibility such as \cite{Thinking-Things}, whilst others build their products based on customized Arduino boards.
 
 This is the case of Smart Citizen a whole platform aimed at generating participatory processes of people in cities thus, creating more effective and optimized relationships between services, technology and communities in the urban environment. The core of the platform is the called Smart Citizen Kit, a hardware device shipped with air, temperature, light, sound and humidity sensors plus a Wi-Fi module to serve as ambient sensor. They started up with Arduino shields to develop a prototype, until eventually coming up with their own specific-purpose arduino-compatible data-processing board.
 
 \subsection{Interoperability}
 
+Interoperability is the software quality of enabling a system to interact with other systems without the need to write or maintain custom logic. This is often achieved using the same protocols, exchange or file formats, or by means of standardization.
 
+Interoperability has a great impact on several fields such as financial or medical industries where inadequate implementations may lead to important economic costs. It also crucial in science since the outcomes of a research must be operable for others in order to progress towards a common goal. This also applies in the context of this project since the data obtained by the sensors and its underlying infrastructure may be used in other research projects of CREAF. Not less important is the role this project plays within CREAF's efforts towards the Sensor Web \cite{SWE} as standardization group of the Open Geospatial Consortium (OGC). Therefore, interoperability is a main concern for REDCH.
+
+The OGC's Observations \& Measurements (O\&M) \cite{OM} is the standard data model for storing and publishing sensor data. Based on the Geography Markup Language (GML) OGC standard, it models the relationship between observation events, the spatial objects under observation, the measured properties and measurement procedure and the captured data resulting from the observations. O\&M is one of the open standards developed in the Sensor Web Enablement (SWE) initiative of the OGC.
+
+While O\&M provides a system-independent way of sensor data exchange, the Sensor Observation Service (SOS), another SWE standard, defines a Web service interface for sensor data. This standard allows querying observations and sensor metadata, registering and removing sensors, as well as inserting new sensor observations. Furthermore, it defines KVP and SOAP bindings so as to be binding-independent. However OGC does not provide an implementation but a service interface.
+
+There are currently some open-source implementations of the SOS. The Earth Science Institute of the University of Applied Sciences of the South Switzerland set up istSOS \cite{istSOS} in 2009. A SOS implementation entirely written in Python that includes a RESTful API and a graphical user interface for easing the administration of the service.
+
+52$\textdegree$North is a network of partners from research, such as the University of Münster and the Technische Universität Dresden, industry, such ESRI Inc. and public administrations such as the IT department of the German Federal Ministry of Transport, Building and Urban Development. It is aimed at bringing innovation in the field of Geoinformatics. 52ºNorth SOS \cite{52north-SOS} is the leading implementation of the Sensor Observation Service. The latest version 4.0, recently released as of this writing, comes with full support of the SOS 2.0 specification. In addition, 52ºNorth has developed the SOS RESTful Extension. A SOS 4.0 Add-on that provides a REST binding beyond the standard KVP and SOAP defined by the OGC.
 
 \section{Database}
 
@@ -42,15 +52,15 @@ The relational model is based on set theory and predicate logic. Relational data
 
 Databases, however, need DBMSs in order to be functional. A DBMS is a software specially designed to allow the creation, querying, update, and management of databases. It is a layer above the OS that abstracts the applications from the database. Hence, applications deal with databases through the DBMS, as they do with files through the OS.
 
-Relational DBMSs essentially provide efficient, reliable, convenient, and safe multi-user storage of and access to massive amounts of persistent data. They guarantee consistency by means of robust concurreny models and ACID (Atomicity, Consistency, Isolation, Durability) transactions. Due to decades of development and research relational database systems are relied upon by mission-critical applications that demand strict consistency. 
+Relational DBMSs essentially provide efficient, reliable, convenient, and safe multi-user storage of and access to massive amounts of persistent data. They guarantee consistency by means of robust concurrency models and ACID (Atomicity, Consistency, Isolation, Durability) transactions. Due to decades of development and research relational database systems are relied upon by mission-critical applications that demand strict consistency.
 
-The most popular open-source relational DBMSs are MySQL and PostgreSQL, being the latter the most advanced. One of its most remarkable fetaures is PostGIS, a PostgreSQL extension that adds support for location awareness allowing to query by geographic location. As a consequence of PostGIS' rich feature list PostgreSQL is the standard choice for Geographic Information Systems (GIS).
+The most popular open-source relational DBMSs are MySQL and PostgreSQL, both with spatial extensions. PostGIS, however, is the most mature solution. It is a PostgreSQL extension that adds support for location awareness allowing to query by geographic location. In addition, PostGIS supports geographic coordinates. As a consequence of PostGIS' rich feature list PostgreSQL is the standard choice for Geographic Information Systems (GIS).
 
 However, not every data management or analysis problem is best solved exclusively using a traditional DBMS. There are some problems that are more suitable for other type of systems \cite{NoSQL-use-cases}.
 
 \paragraph{NoSQL Systems}
 
-NoSQL Systems, named after the term \textit{Not Only SQL}, differ from traditional relational systems in that they tend to provide a flexible schema rather than a rigid structure, they are quicker or cheaper to set up, they are geared towards massive scalability and they use relaxed consistency in order to provide higher performance and higher availability.
+NoSQL Systems, which name stands for \textit{Not Only SQL}, differ from traditional relational systems in that they tend to provide a flexible schema rather than a rigid structure, they are quicker or cheaper to set up, they are geared towards massive scalability and they use relaxed consistency in order to provide higher performance and higher availability.
 
 Their downsides are that there is no declarative query language thus, more programming is involved in manipulating the data. Furthermore, because of the relaxed consistency models, their better performance comes at the expense of fewer guarantees about the consistency of the data. Eventually consistent systems are often classified as providing BASE (Basically Available, Soft state, Eventual consistency) properties in contrast to traditional ACID-compliant relational systems.
 
@@ -62,15 +72,7 @@ The number of different kinds of NoSQL systems may be generalized in four main c
 
 Document stores are very similar to Key-value stores except that the values are a document. Hence, the data model is based on ${<key, document>}$ pairs where the document is a known type of structure that can contain semistructured formats such as JSON or XML. The basic operations, like key-value stores, allow to fetch, update, delete and insert a document based on a given key. Additionally, they also implement a fetch operation based on document contents which is a very implementation-specific feature since there is no standard query language. Few examples of document stores are CouchDB, MongoDB and Amazon's SimpleDB, among many others.  
 
-MongoDB geo support.
-
-NoSQL
-MongoDB most mature
-
-cons: 
-- migration from relational design
-
-
+In addition, MongoDB, CouchDB and SimpleGEO support geospatial indexing allowing to query for location-based data. Although not as accurate as PostGIS, these NoSQL systems may fit in some use cases where performance and scalability are a major issue.
 
 \section{Real Time}
 for frontend redirect to web technologies
