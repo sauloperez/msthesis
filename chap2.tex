@@ -74,7 +74,17 @@ Document stores are very similar to Key-value stores except that the values are 
 
 In addition, MongoDB, CouchDB and SimpleGEO support geospatial indexing allowing to query for location-based data. Although not as accurate as PostGIS, these NoSQL systems may fit in some use cases where performance and scalability are a major issue.
 
-\section{Real Time}
+
+\section{Real Time in Distributed Systems}
+
+As defined in \cite{distributed-systems-book} a distributed system is \textit{a collection of independent computers that appears to its users as a single coherent system}. This involves some sort of collaboration between the autonomous components (i.e., computers). Although discussing the advantages and disadvantages is not the topic of this writing, the main benefits of distributed architectures over centralized systems are the greater scalability, improved resilience and higher availability. To do so, distributed systems decouple a single application in a number of components that handle the diverse functionalities of the whole system. This allows to horizontally scale the components in an independent way and make them fail-tolerant. However, this impose other problems. The components need to share state and communicate. Moreover, handling failure is often a complex task.
+
+The challenge a real time in a distributed environment entails is essentially the management of the system's state. 
+
+why state a problem in DS
+
+pull vs push
+
 for frontend redirect to web technologies
 
 \subsection{Asynchronous Messaging Queue}
