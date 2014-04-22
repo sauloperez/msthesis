@@ -74,34 +74,28 @@ Document stores are very similar to Key-value stores except that the values are 
 
 In addition, MongoDB, CouchDB and SimpleGEO support geospatial indexing allowing to query for location-based data. Although not as accurate as PostGIS, these NoSQL systems may fit in some use cases where performance and scalability are a major issue.
 
-
 \section{Real Time in Distributed Systems}
 
 As defined in \cite{distributed-systems-book} a distributed system is \textit{a collection of independent computers that appears to its users as a single coherent system}. This involves some sort of collaboration between the autonomous components (i.e., computers). Although discussing the advantages and disadvantages is not the topic of this writing, the main benefits of distributed architectures over centralized systems are the greater scalability, improved resilience and higher availability. To do so, distributed systems decouple a single application in a number of components that handle the diverse functionalities of the whole system. This allows to horizontally scale the components in an independent way and make them fail-tolerant. However, this impose other problems. The components need to share state and communicate. Moreover, handling failure is often a complex task.
 
 The challenge a real time in a distributed environment entails is essentially the management of the system's state. 
 
-why state a problem in DS
-
-pull vs push
-
-for frontend redirect to web technologies
+- why state a problem in DS
+- pull vs push
 
 \subsection{Asynchronous Messaging Queue}
 RabbitMQ
 ZeroMQ
 
-impact on client. Async app server. Reactor pattern.
+- impact on client
+- Async app server. Reactor pattern.
 
 \subsection{Tuple Space}
 redis
 
 \section{Web Technologies}
 
-Since the Sir Tim Berners-Lee's first draft of the World Wide Web back in 1989 and his first proposal for the HyperText Markup Language (HTML) \cite{HTMLtags} in 1991 the WWW has experienced a tremendous evolution. Since then, HTML has gone through many revisions. The World Wide Web Consortium (W3C) published many iterations of the standard until the specification HTML 4.01 in 1999. It was not until 2004, when the Web Hypertext Application Technology Working Group (WHATWG) was founded by individuals of Apple, the Mozilla Foundation, and Opera Software, that HTML was proposed to be extended so as to allow the creation of web applications. WHATWG published the First Public Working Draft of the HTML5 specification in 2008. Although parts of HTML5 have been implemented in browsers it hadn't been until 2012 that W3C designated HTML5 as a Candidate Recommendation and it is planned to be released as a stable Recommendation by the end of 2014.
-
-
-Ajax
+Since the Sir Tim Berners-Lee's first draft of the World Wide Web back in 1989 and his first proposal for the HyperText Markup Language (HTML) \cite{HTMLtags} in 1991 the WWW has experienced a tremendous evolution. Since then, HTML has gone through many revisions. The World Wide Web Consortium (W3C) published many iterations of the standard until the specification HTML 4.01 in 1999. It was not until 2004 that HTML was proposed to be extended so as to allow the creation of web applications. This led to the publication of the First Public Working Draft of the HTML5 specification in 2008. Although parts of HTML5 have been implemented in browsers it hadn't been until 2012 that W3C designated HTML5 as a Candidate Recommendation and it is planned to be released as a stable Recommendation by the end of 2014.
 
 HTML5	
 	- what is it
@@ -110,22 +104,21 @@ HTML5
 	- APIs: Canvas, SVG, ... particularly the ones involved in Redch
 
 Browser vendors
-	- dramatical improvement of JS engines
-	- battle as new explorer engine
+	- dramatic improvement of JS engines
 	- prefixed CSS properties and non-standarized prefixed APIs
 
-	- Firefox OS, Node.js (JS in the backend), Win8 JS apps, 
-	- rich applications GDocs, Chrome book
 	- Towards application platform
-Canvas, SVG
+		- Firefox OS, Node.js (JS in the backend), Win8 JS apps, 
+		- rich applications GDocs, Chrome book
 
 JS Libraries
 	- to solve cross-browser issues/compatibility, old browsers. jQuery
 	- D3, widely used. Standard for data visualization. As being the 5th most starred repository in github, more than rails or angular.js, shows.
 	- Chart.js
 
-	JS apps -> Redch web application 
-	problem of JS apps -> old browsers. Autoupdate
+JS apps -> Redch web application 
+	- Ajax
+	- problem of JS apps -> old browsers. Autoupdate
 	- Backbone, underscore -> Angular.js, Ember
 	- full ecosystem of MVC components, templates systems, etc.
 
