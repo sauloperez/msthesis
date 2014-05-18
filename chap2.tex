@@ -75,19 +75,26 @@ Document stores are very similar to Key-value stores except that the values are 
 In addition, MongoDB, CouchDB and SimpleGEO support geospatial indexing allowing to query for location-based data. Although not as accurate as PostGIS, these NoSQL systems may fit in some use cases where performance and scalability are a major issue.
 
 
-\section{Real Time in Distributed Systems}
+\section{Real-Time in Distributed Systems}
 
-As defined in \cite{distributed-systems-book} a distributed system is \textit{a collection of independent computers that appears to its users as a single coherent system}. This involves some sort of collaboration between the autonomous components (i.e., computers). Although discussing the advantages and disadvantages is not the topic of this writing, the main benefits of distributed architectures over centralized systems are the greater scalability, improved resilience and higher availability. To do so, distributed systems decouple a single application in a number of components that handle the diverse functionalities of the whole system. This allows to horizontally scale the components in an independent way and make them fail-tolerant. However, this impose other problems. The components need to share state and communicate. Moreover, handling failure is often a complex task.
+As defined in \cite{distributed-systems-book} a distributed system is \textit{a collection of independent computers that appears to its users as a single coherent system}. This involves some sort of collaboration between the autonomous components (i.e., computers). Although discussing the advantages and disadvantages is not the topic of this writing, the main benefits of distributed architectures over centralized systems are the greater scalability, improved resilience and higher availability. To do so, distributed systems decouple a single application in a number of components that handle the diverse functionalities of the whole system. This allows to horizontally scale the components in an independent way and make them fail-tolerant. However, this impose other problems as the components need to share state and communicate. Moreover, handling failure is often a complex task. \cite{} presents a summary if the main distributed computing concerns.
 
-The challenge a real time in a distributed environment entails is essentially the management of the system's state. 
+The challenge real-time in a distributed environment entails is essentially the management of the system's state, as happens with non-real-time distributed systems. Particularly, real time systems are systems in which the timeliness of the operations is a part of the functional requirements and correctness of the system. However, nearly all systems may be qualified as \textit{soft} real-time, in that there are usually unspoken expectations for the timeliness of operations. On the other hand, \textit{hard} real-time refers to systems which don't fulfil the requirements when time constraints are not met. This kind of systems are commonly known as Distributed Real-Time systems.
 
-why state a problem in DS
+\subsection{Message Passing}
 
-pull vs push
+Instead of sharing the state of each system component by sharing the memory, in distributed systems is generally a better approach to share state by communicating. Message passing is a communication model that involves calling a subroutine by sending a message to a intermediary process and relies on its infrastructure to invoke the actual code, rather than calling subroutine by name as in a traditional procedure call. In such systems the communication is explicit and the functions are separated from the specific implementations. (Immediate drawbacks)
 
-for frontend redirect to web technologies
+An immediate upside of such communication model is loosely coupling between components. With a remote procedure call the sender process must know the receiver and the complete signature of its procedures, whereas with message passing sender and receiver are nearly independent. This allows to upgrade the system's components one at a time thus, gives the system the ability to evolve. Furthermore, it also improves interoperability. If the message is text-based (i.e., JSON, XML) there is no requirement for the components to be built in the same platform, operating system or language.
 
-\subsection{Asynchronous Messaging Queue}
+As all information regarding the state is contained in the messages there is no need for the receiver to store state information thus, providing statelessness to the system. Although it comes at the cost of slightly longer transmission time, it drastically improves the system's scalability.
+
+Message passing systems are categorized in two main groups whether they implement synchronous or asynchronous messaging. While in the former the sender and the receiver must be running at the same time for the message to be passed, in the latter the receiver is not required to be running at the time the sender sends the message. As a consequence, asynchronous messaging requires additional data storing and retransmitting capabilities for components that may not run concurrently.
+
+In regular function calls the caller waits for the called function to complete. Likewise, in synchronous message passing the sending process remains blocked until the receiving process completes. The resulting impact on performance is generally unaffordable for large distributed systems, particularly for those with hard real-time constraints.
+
+In contrast, asynchronous messaging is non-blocking. The sending process delivers the function call and any needed arguments wrapped in a message to the message layer and continues its execution thread. The message layer acts as an intermediary between sender and receiver. It stores the message until the receiver requests messages sent to it. The receiver sends a message back with the result and the message layer stores it until the sender fetches its messages.
+
 RabbitMQ
 ZeroMQ
 
@@ -95,6 +102,11 @@ impact on client. Async app server. Reactor pattern.
 
 \subsection{Tuple Space}
 redis
+
+
+At a high level, there are two main approaches to achieve real-time pull vs push
+
+for frontend redirect to web technologies
 
 \section{Web Technologies}
 
