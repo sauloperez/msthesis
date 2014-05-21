@@ -109,56 +109,33 @@ It is worth mentioning, however, the MQ Telemetry Transport (MQTT) a pub/sub, si
 
 Scalability and reliability don't make a difference between all products above, except for MQTT, as all of them are highly scalable, robust and reliable. With regards to performance, it's really difficult to evaluate objectively even with standardized benchmarks. However, as already stated, ZeroMQ is by far the most performant message queue when message persistence is not required. Althought there's no much difference between other solutions, RabbitMQ tends to beat others when used with AMQP protocol.
 
-impact on client. Async app server. Reactor pattern.
-
-\subsection{Tuple Space}
-what is it
-redis
-
 \section{Web Technologies}
 
 Since the Sir Tim Berners-Lee's first draft of the World Wide Web back in 1989 and his first proposal for the HyperText Markup Language (HTML) \cite{HTMLtags} in 1991 the WWW has experienced a tremendous evolution. Since then, HTML has gone through many revisions. The World Wide Web Consortium (W3C) published many iterations of the standard until the specification HTML 4.01 in 1999. It was not until 2004, when the Web Hypertext Application Technology Working Group (WHATWG) was founded to extend HTML so as to allow the creation of web applications. WHATWG published the First Public Working Draft of the HTML5 specification in 2008. Although parts of HTML5 have been implemented in browsers it hadn't been until 2012 that W3C designated HTML5 as a Candidate Recommendation and it is planned to be released as a stable Recommendation by the end of 2014.
 
 HTML5 is designed to deliver rich content without the need for third-party plugins while being backward compatible. As happened in HTML 4.01 with CSS 1.0, in HTML5 JavaScript is an integral part of the specification along with CSS3. The standard defines multiple JavaScript APIs such as drag and drop, files, webRTC, audio and video, webGL, etc. while others like vibration or accelerometer APIs are still in development.
 
-HTML5 together with XMLHttpRequest API, the technology behind AJAX, already present in major browsers some years ago, has turned web browsers into web application containers. This fact has pushed forward the development of JavaScript libraries. Some try to solve cross-browser issues such as jQuery. Since its creation in 2006 it has become the standard for manipulating the DOM and deal with AJAX requests due to its simplicity and extensibility.
+HTML5 together with XMLHttpRequest API, the technology behind AJAX, already present in major browsers some years ago, has turned web browsers into web application containers. This fact has pushed forward the development of JavaScript libraries. Some try to solve cross-browser issues like jQuery. Since its creation in 2006 it has become the standard for manipulating the DOM and deal with AJAX requests due to its simplicity and extensibility.
 
 As for JavaScript frameworks, there is a myriad of choices due to the rebirth of the JavaScript community over the last few years. These modern JavaScript frameworks like Backbone.js, Ember.js, AngularJS, CanJS and others provide structure, organization and maintainability to the so called single-page applications (SPA). All of them implement variations of the Model-View-Controller (MVC) pattern.
 
 Much like jQuery improved the DOM manipulation, D3.js happens to be essential as well when it comes to data visualizations. Its concepts provide an abstraction layer that allow the manipulation of documents based on data. It converts data to visualizations using HTML, SVG and CSS with lots of features through a large collection of components and plugins. It is worth mentioning, its geographic projections along with layouts and geometry plugins, which may come in handy in our project and its further development.
 
-Furthermore, this ubiquity of the web and the expanding availability of HTML5-capable devices 
-
-HTML5	
-	- what is it (done)
-	- who (done)
-	- future
-	- APIs: Canvas, SVG, ... particularly the ones involved in Redch
-
-Browser vendors
-	- dramatical improvement of JS engines
-	- Towards application platform (done)
-Canvas, SVG
-
-JS Libraries
-	- to solve cross-browser issues/compatibility, old browsers. jQuery (done)
-	- D3, widely used. Standard for data visualization. As being the 5th most starred repository in github, more than rails or angular.js, shows. (done)
-	- Chart.js
-
-	JS apps -> Redch web application (done)
-	- Backbone, underscore -> Angular.js, Ember (done)
-	- full ecosystem of MVC components, templates systems, etc. (done)
-
-
 \subsection{Real-Time}
-At a high level, there are two main approaches to achieve real-time pull vs push
 
-Server Sent Events:
-specification over standard HTTP. RFC
+The web follows the pull paradigm by design. In HTTP the communication is initiated by the client, who sends a request to a server. The server then, sends a response back to the client. That is, the client pulls data from the server. While this approach works fine for fetching documents from a server, for what the web was initially designed, it does not when is the server who needs to initiate the communication.
 
-websockets:
-buzzword, trend, full duplex
-Too often misunderstood, lower level protocol than HTTP, whole new protocol
+The first and common solution to this issue is what is known as polling. To poll the server at regular intervals regardless of whether it has new data available. A further improvement of this approach is to make this requests wait until there's new data available, which is called long polling or comet. Both techniques, however, entail a waste of resources and are clearly non-real-time.
+
+Nonetheless, HTML5 has provided two new techniques to solve this common issue and bring push capabilities to the web. Server Sent Events (SSE) is a W3C specification that defines an API for opening an HTTP connection for receiving push notifications from a server through a half-duplex channel. It is designed to be extend to work with other notification schemes such as SMS. \cite{http://www.w3.org/TR/2012/CR-eventsource-20121211/} Furthermore, it has features like automatic reconnection, event identifiers and the ability to send custom events.
+
+With server-sent events, it's possible for a web server to send data to a web page at any time, by pushing messages to it. The client initiates the communication by issuing a request to the server when a new EventSource object is instantiated in JavaScript. Then the server pushes the messages as DOM events that can be listened to like any other JavaScript event source.
+
+On the other hand, WebSockets provide a richer protocol with support for bi-direction, full-duplex communication. They have drawn much more attention than server-sent events due to its richer feature set. WebSockets is a TCP-based protocol \cite{http://tools.ietf.org/html/rfc6455} completely separate from HTTP that provides low-latency two-way communication for browser-based applications.
+
+Its bidirectional capabilities makes it particularly suitable for games, messaging apps and for use cases where near real-time updates in both directions is needed. Additionally, it provides cross origin communication, which enables communication between parties on any domain. As a downside, since it's not HTTP it requires specific infrastructure such as a WebSockets-aware web server.
+
+impact on client of AMQP, SSE. Async app server. Reactor pattern.
 
 \section{Event Logging}
 Need to get insight of the system functioning. Misbehaviour. Analysis tool.
