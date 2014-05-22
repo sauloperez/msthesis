@@ -156,6 +156,14 @@
 % It provides a \textdegree command for proper degree symbol
 \usepackage{textcomp}
 
+% *** GRAPHICS RELATED PACKAGES ***
+%
+\usepackage[final]{graphicx}
+% declare the path(s) where your graphic files are
+\graphicspath{ {images/} }
+% and their extensions so you won't have to specify these with
+% every instance of \includegraphics
+
 % Note - doublespace.sty has some float-related troubles in
 % combination with graphics or color, and is not officially compliant
 % with 2e.  setspace is a replacement which is 2e-compliant.
