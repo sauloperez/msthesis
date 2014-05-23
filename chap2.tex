@@ -8,6 +8,13 @@
 
 This chapter aims to synthesize the research carried on the main knowledge areas involved in the development of this project. It pretends to give an overview of the technologies and paradigms considered to support the design decisions the project is based upon. This includes the main areas of concern: Public Interface, Database, Real-time and Web Technologies.
 
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{architecture_analysis}
+	\caption{High-level required components}
+	\label{fig:arch_analysis}
+\end{figure}
+
 \section{Public Interface}
 
 \subsection{Client devices}
@@ -73,7 +80,6 @@ The number of different kinds of NoSQL systems may be generalized in four main c
 Document stores are very similar to Key-value stores except that the values are a document. Hence, the data model is based on ${<key, document>}$ pairs where the document is a known type of structure that can contain semistructured formats such as JSON or XML. The basic operations, like key-value stores, allow to fetch, update, delete and insert a document based on a given key. Additionally, they also implement a fetch operation based on document contents which is a very implementation-specific feature since there is no standard query language. Few examples of document stores are CouchDB, MongoDB and Amazon's SimpleDB, among many others.  
 
 In addition, MongoDB, CouchDB and SimpleGEO support geospatial indexing allowing to query for location-based data. Although not as accurate as PostGIS, these NoSQL systems may fit in some use cases where performance and scalability are a major issue.
-
 
 \section{Real-Time in Distributed Systems}
 
