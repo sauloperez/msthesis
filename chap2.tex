@@ -41,19 +41,17 @@ While O\&M provides a system-independent way of sensor data exchange, the Sensor
 
 There are currently some open-source implementations of the SOS. The Earth Science Institute of the University of Applied Sciences of the South Switzerland set up istSOS \cite{istSOS} in 2009. A SOS implementation entirely written in Python that includes a RESTful API and a graphical user interface for easing the administration of the service.
 
-52$\textdegree$North is a network of partners from research, such as the University of Münster and the Technische Universität Dresden, industry, such ESRI Inc. and public administrations such as the IT department of the German Federal Ministry of Transport, Building and Urban Development. It is aimed at bringing innovation in the field of Geoinformatics. 52ºNorth SOS \cite{52north-SOS} is the leading implementation of the Sensor Observation Service. The latest version 4.0, recently released as of this writing, comes with full support of the SOS 2.0 specification. In addition, 52ºNorth has developed the SOS RESTful Extension. A SOS 4.0 Add-on that provides a REST binding beyond the standard KVP and SOAP defined by the OGC.
+52$\textdegree$North is a network of partners from research, such as the University of Münster and the Technische Universität Dresden, industry, such ESRI Inc. and public administrations such as the IT department of the German Federal Ministry of Transport, Building and Urban Development. It is aimed at bringing innovation in the field of Geoinformatics. 52$\textdegree$North SOS \cite{52north-SOS} is the leading implementation of the Sensor Observation Service. The latest version 4.0, recently released as of this writing, comes with full support of the SOS 2.0 specification. In addition, 52ºNorth has developed the SOS RESTful Extension. A SOS 4.0 Add-on that provides a REST binding beyond the standard KVP and SOAP defined by the OGC.
 
 \section{Database}
 
-The way the data is handled and stored is a key point of the project. Therefore, it is crucial to choose the Database management system (DBMS) that best fits the features of the underlying data set. It must implement some sort of geographic support as every observation implicitly belongs to a particular geolocation.
+The way the data is handled and stored is a key point of the project. Therefore, it is crucial to choose the Database management system (DBMS) that best fits the features of the underlying data set. It must implement some sort of geographic support as every observation implicitly belongs to a particular geographic location.
 
-Databases allow to persist a representation of the real-world objects and their relations in a structured fashion. Furthermore, they also allow to integration the data of different applications thus, avoiding data duplication. 
-
-\subsection{Relational Databases and NoSQL}
+Databases allow to persist a representation of the real-world objects and their relations in a structured fashion. Furthermore, they also allow to integration the data of different applications thus, avoiding data duplication.
 
 Databases may be classified in three general models: hierarchical, network, relational and NoSQL. Relational databases have gain a lot of popularity since their appearance in the late 1970s, becoming the de facto choice regarding data management in IT systems. On the ohter hand, NoSQL systems is a field that is still evolving very fast since its birth in the 2000s.
 
-\paragraph{Relational DBMSs}
+\subsection{Relational DBMSs}
 
 The relational model is based on set theory and predicate logic. Relational databases implement an approximation of that mathematical model using a table-based format. The data is structured in tables that represent relations, where the information of a particular entity is represented by a row and the set of fixed attributes of such entity correspond to the columns.
 
@@ -65,7 +63,7 @@ The most popular open-source relational DBMSs are MySQL and PostgreSQL, both wit
 
 However, not every data management or analysis problem is best solved exclusively using a traditional DBMS. There are some problems that are more suitable for other type of systems \cite{NoSQL-use-cases}.
 
-\paragraph{NoSQL Systems}
+\subsection{NoSQL Systems}
 
 NoSQL Systems, which name stands for \textit{Not Only SQL}, differ from traditional relational systems in that they tend to provide a flexible schema rather than a rigid structure, they are quicker or cheaper to set up, they are geared towards massive scalability and they use relaxed consistency in order to provide higher performance and higher availability.
 
@@ -118,6 +116,8 @@ Scalability and reliability don't make a difference between all products above, 
 \section{Web Technologies}
 
 Since the Sir Tim Berners-Lee's first draft of the World Wide Web back in 1989 and his first proposal for the HyperText Markup Language (HTML) \cite{HTMLtags} in 1991 the WWW has experienced a tremendous evolution. Since then, HTML has gone through many revisions. The World Wide Web Consortium (W3C) published many iterations of the standard until the specification HTML 4.01 in 1999. It was not until 2004, when the Web Hypertext Application Technology Working Group (WHATWG) was founded to extend HTML so as to allow the creation of web applications. WHATWG published the First Public Working Draft of the HTML5 specification in 2008. Although parts of HTML5 have been implemented in browsers it hadn't been until 2012 that W3C designated HTML5 as a Candidate Recommendation and it is planned to be released as a stable Recommendation by the end of 2014.
+
+\subsection{HTML5}
 
 HTML5 is designed to deliver rich content without the need for third-party plugins while being backward compatible. As happened in HTML 4.01 with CSS 1.0, in HTML5 JavaScript is an integral part of the specification along with CSS3. The standard defines multiple JavaScript APIs such as drag and drop, files, webRTC, audio and video, webGL, etc. while others like vibration or accelerometer APIs are still in development.
 
