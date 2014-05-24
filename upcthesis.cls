@@ -156,11 +156,14 @@
 % It provides a \textdegree command for proper degree symbol
 \usepackage{textcomp}
 
+% Template for Uses Cases
+\usepackage{usecases}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
 % declare the path(s) where your graphic files are
-\graphicspath{ {images/} }
+\graphicspath{ {figures/} }
 % and their extensions so you won't have to specify these with
 % every instance of \includegraphics
 
