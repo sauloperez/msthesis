@@ -86,3 +86,23 @@ The actors of the system are:
 \end{usecase}
 
 \section{Conceptual Model}
+
+As shown in figure \ref{fig:use_cases}, the system consists of two main components the Observations service and the Web application, which operate over the various entities involved in the system. The diagram \ref{fig:conceptual_model} describes them and their relations, heavily based on the OGC O\&M model \cite{OM}.
+
+An observation is an aggregation of the following six elements:
+
+\begin{description}
+\item[Feature of interest] A representation of a real-world object that carries the observed property, e.g. "Pant\`a de Sau". Hence, for an in-place instrument it would be the sensor location, whereas for a remote sensor it is the target location.
+\item[Procedure] Instance of a process which has performed the observation. Even though it is usually a physical sensor, it can also be a process that leads to an observation such as a computation or the result of a post-processing.
+\item[Observed property] Represent the phenomena under observation. Usually a concept of an ontology, e.g. air temperature.
+\item[Phenomenon time] Time when the observation's result applies.
+\item[Result time] Time when the observation's result has been created. Note these two times may be identical.
+\item[Result] Result of the observation, which can be either a scalar value or a complex multi-dimensional array.
+\end{description}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{conceptual_model}
+	\caption{Conceptual model}
+	\label{fig:conceptual_model}
+\end{figure}
