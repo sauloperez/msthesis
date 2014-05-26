@@ -38,7 +38,13 @@ The actors of the system are:
 	\addscenario{Main Success Scenario:}{
 		\item The sensor issues a POST request to the sensors endpoint
 		\item The system stores the sensor's information in the database
-		\item The system sends a HTTP response with 201 status code to the sensor
+		\item The system sends an HTTP response with 201 status code to the sensor
+	}
+	\addscenario{Extensions:}{
+		\item[1.a] The sensor is already registered
+			\begin{enumerate}
+			\item[1.] The system returns an HTTP response with status 400
+			\end{enumerate}
 	}
 \end{usecase}
 
@@ -58,6 +64,24 @@ The actors of the system are:
 		\item The system stores the observation's data in the database
 		\item The system sends the observation's data to the web application tier
 		\item The system sends a HTTP response with 201 status code to the sensor
+	}
+	\addscenario{Extensions:}{
+		\item[1.a] The sensor is not found
+			\begin{enumerate}
+			\item[1.] The system returns a 400 HTTP response status
+			\end{enumerate}
+	}
+\end{usecase}
+
+\begin{usecase}
+	\addtitle{Use Case 3}{Browse data}
+	\addfield{Actors:}{Web application user}
+	\addfield{Preconditions:}{The system is running}
+	\addfield{Postconditions:}{The web application is shown}
+	\addscenario{Main Success Scenario:}{
+		\item The user points the browser to the web application URL
+		\item Once loaded, the web application establishes a stream connection against the web server
+		\item The system pushes the observations to the web application as they are available
 	}
 \end{usecase}
 
