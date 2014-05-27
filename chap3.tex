@@ -4,7 +4,7 @@
 %% You can process specific files by typing their names in at the 
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
-\chapter{Technology research}
+\chapter{Technology research} \label{technology_research}
 
 This chapter aims to synthesize the research carried on the main knowledge areas involved in the development of this project. It pretends to give an overview of the technologies and paradigms considered to support the design decisions the project is based upon. Considering the high-level architecture diagram below, these are the main areas of concern initially identified: public interface, that is, the interaction between the sensors and the web server, database, real-time across the system and web technologies.
 
@@ -29,7 +29,7 @@ These features have contributed to their popularity among people involved in tec
 
 This is the case of Smart Citizen a whole platform aimed at generating participatory processes of people in cities thus, creating more effective and optimized relationships between services, technology and communities in the urban environment. The core of the platform is the called Smart Citizen Kit, a hardware device shipped with air, temperature, light, sound and humidity sensors plus a Wi-Fi module to serve as ambient sensor. They started up with Arduino shields to develop a prototype, until eventually coming up with their own specific-purpose arduino-compatible data-processing board.
 
-\subsection{Interoperability}
+\subsection{Interoperability} \label{interoperability}
 
 Interoperability is the software quality of enabling a system to interact with other systems without the need to write or maintain custom logic. This is often achieved using the same protocols, exchange or file formats, or by means of standardization.
 
@@ -85,7 +85,7 @@ As defined in \cite{distributed-systems-book} a distributed system is \textit{a 
 
 The challenge real-time in a distributed environment entails is essentially the management of the system's state, as happens with non-real-time distributed systems. Particularly, real time systems are systems in which the timeliness of the operations is a part of the functional requirements and correctness of the system. However, nearly all systems may be qualified as \textit{soft} real-time, in that there are usually unspoken expectations for the timeliness of operations. On the other hand, \textit{hard} real-time refers to systems which don't fulfil the requirements when time constraints are not met. This kind of systems are commonly known as Distributed Real-Time systems.
 
-\subsection{Message Passing}
+\subsection{Message Passing} \label{message_passing}
 
 Instead of sharing the state of each system component by sharing the memory, in distributed systems is generally a better approach to share state by communicating. Message passing is a communication model that involves calling a subroutine by sending a message to a intermediary process and relies on its infrastructure to invoke the actual code, rather than calling subroutine by name as in a traditional procedure call. In such systems the communication is explicit and the functions are separated from the specific implementations. (Immediate drawbacks)
 
