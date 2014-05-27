@@ -58,7 +58,9 @@ Given the CREAF's determination towards the SWE initiative and its involvement i
 
 The SOS specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
 
-With regard to the bindings only SOAP and KVP are defined in the specification. Additionally, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use.
+With regard to the bindings only SOAP and KVP are defined in the specification. Additionally, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use. By choosing this binding, we aim to build a lightweight and stateless service client that can run in a resource-constrained sensor device.
+
+Furthermore, as fully discussed in \ref{interoperability}, SOS provides the interoperability the project requires.
 
 \subsection{Database}
 
