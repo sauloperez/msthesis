@@ -65,11 +65,20 @@ This decision impacts on the design of the data producers and consumers, which m
 
 Given the CREAF's determination towards the SWE initiative and its involvement in Open-source GIS community it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring last web standards to the OGC implementations, which may be worth checking out in order to include them in Redch project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version has been released less than three months before this writing.
 
+As fully discussed in \ref{interoperability}, SOS provides the level of interoperability the project requires.
+
 The SOS specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
 
 With regard to the bindings only SOAP and KVP are defined in the specification. Additionally, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use. By choosing this binding, we aim to build a lightweight and stateless service client that can run in a resource-constrained sensor device.
 
-Furthermore, as fully discussed in \ref{interoperability}, SOS provides the interoperability the project requires.
+In order to integrate with RabbitMQ, a component that handles the data delivery to the messaging queue must be developed and included in the SOS. Once the observation has been stored in the database, this component publishes a message with the observation into the queue. Its logical architecture is as figure \ref{fig:amqp_extension} shows.
+
+\begin{figure}[p]
+	\centering
+	\includegraphics[width=\textwidth]{amqp_extension}
+	\caption{SOS AMQP extension}
+	\label{fig:amqp_extension}
+\end{figure}
 
 \subsubsection{Database}
 
