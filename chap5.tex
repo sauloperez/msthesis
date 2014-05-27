@@ -25,7 +25,7 @@ The core idea of this architecture is to decouple the data producers from the da
 
 Such architecture brings a number of benefits, as outlined in \ref{technology_research}. First and foremost, each tier can easily scale out independently. In both tiers, high availability and increased throughput can be provided through redundancy \cite{Antwerp}, that is, adding more app servers. As for the database and the messaging queue, clusterizing them can provide better performance, increased throughput and storage capacity.
 
-The loosely coupled architecture the messaging queue entails not only allows scaling horizontally, but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue may be replaced without affecting any of the tiers.
+The loosely coupled architecture the messaging queue entails along with the benefits stated in \ref{message_passing} not only allows scaling horizontally, but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue may be replaced without affecting any of the tiers.
 
 Finally, a high-performance asynchronous messaging queue provides real-time capabilities to the system.
 
@@ -52,6 +52,15 @@ As already stated in \ref{actors}, although we opt for a solution that may invol
 
 The CLI acts as a presentation layer that allows interaction with the underlying SOS API client hence, the particular features of the sensor can be simulated. Additionally, with this approach the SOS client can be reused as a logic component within the final sensor device.
 
+\subsubsection{Messaging Queue}
+
+The messaging queue is the central component which drives the data throughout the system. As a consequence, it determines the architecture of all other components. A detailed list of most known messaging queue systems has been given in \ref{message_passing}. All of them are high-performant, but usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
+
+Then, the choice of an specific message queue depends on the amount of client libraries available, particularly for the languages used it in the project, its clustering support and the complexity of installation and management. It is also important that the chosen queue has enough high-quality online resources to help with the integration. RabbitMQ, with a rich management web UI and exhaustive documentation including a clustering guide, is the one that best fits our requirements.
+
+This decision impacts on the design of the data producers and consumers, which must integrate with RabbitMQ using the AMQP protocol. This will be discussed further in following sections.
+
+
 \subsubsection{Sensor Observation Service}
 
 Given the CREAF's determination towards the SWE initiative and its involvement in Open-source GIS community it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring last web standards to the OGC implementations, which may be worth checking out in order to include them in Redch project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version has been released less than three months before this writing.
@@ -62,7 +71,7 @@ With regard to the bindings only SOAP and KVP are defined in the specification. 
 
 Furthermore, as fully discussed in \ref{interoperability}, SOS provides the interoperability the project requires.
 
-\subsection{Database}
+\subsubsection{Database}
 
 52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, MySQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, Redch may benefit from the integration of some sort of NoSQL solution.
 
@@ -70,8 +79,7 @@ The system is characterised by an ever growing data set, with small data units. 
 
 The time constraints, however, do not allow to explore this possibility since it would require to migrate the relational schema to a non-relational one. In addition, this prototype will deal with a limited number of sensors for testing purposes only.
 
-\subsection{Messaging Queue}
 
-Nonetheless, usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
+\subsubsection{Web Application}
 
 impact on client of AMQP, SSE. Async app server. Reactor pattern.
