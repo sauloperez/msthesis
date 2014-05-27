@@ -54,20 +54,21 @@ The CLI acts as a presentation layer that allows interaction with the underlying
 
 \subsubsection{Sensor Observation Service}
 
-Given the CREAF's determination towards the SWE initiative and involvement in Open-source GIS community it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source SOS implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring last web standards to the OGC implementations, which may be worth checking out in order to include them in Redch project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version has been released less than three months as of this writing.
+Given the CREAF's determination towards the SWE initiative and its involvement in Open-source GIS community it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring last web standards to the OGC implementations, which may be worth checking out in order to include them in Redch project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version has been released less than three months before this writing.
 
+The SOS specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
 
-
-
-Nonetheless, usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
-
-impact on client of AMQP, SSE. Async app server. Reactor pattern.
+With regard to the bindings only SOAP and KVP are defined in the specification. Additionally, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use.
 
 \subsection{Database}
 
 To that end, it must be taken into account the pattern of the data flow.
   
 Ever growing data set, very small data units and mainly write ops.
+
+Nonetheless, usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
+
+impact on client of AMQP, SSE. Async app server. Reactor pattern.
 
 
 NoSQL
