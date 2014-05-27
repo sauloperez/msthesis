@@ -64,17 +64,14 @@ Furthermore, as fully discussed in \ref{interoperability}, SOS provides the inte
 
 \subsection{Database}
 
-To that end, it must be taken into account the pattern of the data flow.
-  
-Ever growing data set, very small data units and mainly write ops.
+52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, MySQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, Redch may benefit from the integration of some sort of NoSQL solution.
+
+The system is characterised by an ever growing data set, with small data units. That is, the system is write-intensive and I/O-bound. Given this features, in a real-world scenario Redch may take advantage of NoSQL massive scalability and its higher performance and scalability. Furthermore, in this project the impact of relaxed consistency may not be as high as in other systems where high reliability is required.
+
+The time constraints, however, do not allow to explore this possibility since it would require to migrate the relational schema to a non-relational one. In addition, this prototype will deal with a limited number of sensors for testing purposes only.
+
+\subsection{Messaging Queue}
 
 Nonetheless, usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
 
 impact on client of AMQP, SSE. Async app server. Reactor pattern.
-
-
-NoSQL
-MongoDB most mature
-
-cons: 
-- migration from relational design
