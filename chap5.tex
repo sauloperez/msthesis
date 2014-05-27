@@ -16,18 +16,18 @@ Ruby has been chosen as the main language for the development of the project. Th
 
 The core idea of this architecture is to decouple the data producers from the data consumers by means of an asynchronous message queue enabling push capabilities in the consumption tier. It is compound of four different servers, as figure \ref{fig:physical_architecture} shows: An application server that receives the observations from the sensors and stores them in the database. That server is also responsible for publishing the observation into the messaging queue. Then, the messaging queue pushes them to the data consumption tier, where the app server sends them to the web clients.
 
-Doing so, implies a number of benefits as outlined in Chapter 3. First and foremost, each tier can easily scale out independently. For both tiers, the throughput can be increased adding more app servers. As for the database and the messaging queue, clusterizing them can provide better performance, increased throughput and storage capacity.
-
-The loosely coupled architecture the messaging queue entails not only allows scaling horizontally, but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue may be replaced without affecting any of the tiers.
-
-Finally, a high-performance asynchronous messaging queue provides real-time capabilities to the system.
-
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{physical_architecture}
 	\caption{Physical Architecture}
 	\label{fig:physical_architecture}
 \end{figure}
+
+Such architecture brings a number of benefits, as outlined in Chapter 3. First and foremost, each tier can easily scale out independently. In both tiers, high availability and increased throughput can be provided through redundancy \cite{Antwerp}, that is, adding more app servers. As for the database and the messaging queue, clusterizing them can provide better performance, increased throughput and storage capacity. 
+
+The loosely coupled architecture the messaging queue entails not only allows scaling horizontally, but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue product can be replaced without affecting any of the tiers.
+
+Finally, a high-performance asynchronous messaging queue provides real-time capabilities to the system.
 
 \subsection{Logical Architecture}
 
