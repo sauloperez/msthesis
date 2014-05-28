@@ -27,7 +27,7 @@ There are four distinguished groups of stakeholders which will be affected by th
 
 \subsection{Budget Constraint}
 
-\subsubsection{Development}
+\subsubsection{Development Constraint}
 
 \begin{description}
 \item[Description] The project shall be developed by one engineer.
@@ -35,7 +35,7 @@ There are four distinguished groups of stakeholders which will be affected by th
 \item[Fit criterion] All deliverables shall be done by the author of the MS Thesis.
 \end{description}
 
-\subsubsection{Infrastructure}
+\subsubsection{Infrastructure Constraint}
 
 \begin{description}
 \item[Description] The system's prototype must not involve any cost.
@@ -49,9 +49,21 @@ As already outlined in \ref{project_goals} this MS Thesis is part of a larger pr
 
 Firstly, a sensor simulator that will allow to use the system as if the sensor were already developed. To that end, the simulator will provide an interface to allow seamless interaction with the system. It will cover the essential use cases for the system to work, leaving others out of the scope.
 
-Secondly, a distributed system that will process and store the observations generated from the simulators. Eventually, the same system will deal with real observations from the sensor devices.
+Secondly, a distributed system that will process and store the observations generated from the simulators. Eventually, the same system will deal with real observations from the sensor devices. Additionally, it will provide a web interface to manage the sensors and observations as well as the system's settings.
 
 Finally, a simple web application publicly accessible that will display these observations in a real-time map. This application will allow to explore the possibilities of a complete SaaS by providing insight into the complexities and requirements of building such service.
+
+The scope of the project is formalized with the following features:
+
+\begin{itemize}
+\item Register simulators as sensors in the system
+\item Store observations generated from the simulator
+\item Change the data storage configuration
+\item Query the data store
+\item Clear the data store
+\item Show observations in real-time on a map
+\end{itemize}
+
 
 \section{Functional Requirements}
 
