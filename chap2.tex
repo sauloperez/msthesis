@@ -16,7 +16,7 @@ There are four distinguished groups of stakeholders which will be affected by th
 \paragraph{Decision makers} Politicians and any person responsible for decisions that may affect the future of renewable energies in Catalonia. They will use the system as a basis for decisions concerning renewable energy production in Catalonia.
 \paragraph{Green activists} They act as a pressure group disseminating the system in their regular campaigns.
 
-\section{Constraints}
+\section{Constraints} \label{constraints}
 \subsection{Schedule Constraint}
 
 \begin{description}
@@ -43,14 +43,21 @@ There are four distinguished groups of stakeholders which will be affected by th
 \item[Fit criterion] The the developed prototype shall not incur any cost for CREAF.
 \end{description}
 
-\section{Scope of the Work}
 \section{Scope of the Product}
+
+As already outlined in \ref{project_goals} this MS Thesis is part of a larger project. Given the constraints enumerated in \ref{constraints} the said MS Thesis aims to build the foundation for the further development of the project, focusing on its core features. By doing so, we will be able to draw conclusions and plan the further development of the project accordingly. Thus, aspects such as the hardware of the sensor device, its distribution among the users or the building of the complete web application with private features falls beyond the scope of this MS Thesis. Therefore, the system will be compound of the following three parts. 
+
+Firstly, a sensor simulator that will allow to use the system as if the sensor were already developed. To that end, the simulator will provide an interface to allow seamless interaction with the system. It will cover the essential use cases for the system to work, leaving others out of the scope.
+
+Secondly, a distributed system that will process and store the observations generated from the simulators. Eventually, the same system will deal with real observations from the sensor devices.
+
+Finally, a simple web application publicly accessible that will display these observations in a real-time map. This application will allow to explore the possibilities of a complete SaaS by providing insight into the complexities and requirements of building such service.
 
 \section{Functional Requirements}
 
-They have been obtained throughout some meetings with CREAF researcher in charge of the project.
+These requirements have been obtained by means of some meetings with the CREAF researcher in charge of the project.
 
-Real use-case data (number of owners) has been obtained to "scope" the system qualities properly.
+TODO Real use-case data (number of owners) has been obtained to "scope" the system qualities properly.
 
 \begin{itemize}
 	\item The system must be fed with the data collected by the sensor devices
