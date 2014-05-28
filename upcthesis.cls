@@ -159,6 +159,10 @@
 % Template for Uses Cases
 \usepackage{usecases}
 
+% Make the table of contents linkable
+\usepackage[final]{hyperref}
+\hypersetup{colorlinks=false, linktoc=all}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
