@@ -68,7 +68,9 @@ As fully discussed in \ref{interoperability}, SOS provides the level of interope
 
 The SOS specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
 
-With regard to the bindings only SOAP and KVP are defined in the specification. Additionally, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use. By choosing this binding, we aim to build a lightweight and stateless service client that can run in a resource-constrained sensor device.
+With regard to the bindings only SOAP and KVP are defined in the specification. In addition, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use. By choosing this binding, we aim to build a lightweight and stateless service client that can run in a resource-constrained sensor device.
+
+Additionally, 52ºNorth SOS also provides an administrator GUI that allows to change the settings, de/activate encodings and bindings and query and clear the data store.
 
 In order to integrate with RabbitMQ, a component that handles the data delivery to the messaging queue must be developed and included in the SOS. Once the observation has been stored in the database, this component publishes a message with the observation into the queue. Its logical architecture is as figure \ref{fig:amqp_extension} shows.
 
