@@ -6,19 +6,19 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Specification}
 
-The following section describes what the system does detailing its features.
+The following section describes what the system does detailing its entities.
 
 \section{Uses Case Model}
 
-This section describes the services of the systems as events triggered by external actors and their interrelation.
+This section describes the operations of the systems as events triggered by external actors and their interrelation.
 
-\subsection*{Actors}
+\subsection{Actors} \label{actors}
 
-The actors of the system are:
+The actors of the system are the following.
 
 \begin{description}
-	\item[Sensor device] The device responsible for registering itself in the system and sending the gathered observations to it. As the design and building of the sensor device is out of the scope of the project, it is simulated by a CLI tool that allows to issue request against the system.
-	\item[Web application user] A person who interacts with the public web application that shows the observations in a data visualization.
+	\item[Sensor device] The device responsible for registering itself in the system and sending the measured observations to it.
+	\item[User] A person who interacts with the public web application that shows the observations in a data visualization.
 \end{description}
 
 \subsection{Use Cases}
@@ -36,14 +36,14 @@ The actors of the system are:
 	\addfield{Preconditions:}{The system is running}
 	\addfield{Postconditions:}{The sensor is registered and persisted in the system}
 	\addscenario{Main Success Scenario:}{
-		\item The sensor issues a POST request to the sensors endpoint
+		\item The sensor sends a request to register itself
 		\item The system stores the sensor's information in the database
-		\item The system sends an HTTP response with 201 status code to the sensor
+		\item The system notifies the sensor that it has been successfully registered
 	}
 	\addscenario{Extensions:}{
 		\item[1.a] The sensor is already registered
 			\begin{enumerate}
-			\item[1.] The system returns an HTTP response with status 400
+			\item[1.] The system returns an error response
 			\end{enumerate}
 	}
 \end{usecase}
@@ -60,36 +60,36 @@ The actors of the system are:
 		\item The observation is sent to the web application tier
 	}
 	\addscenario{Main Success Scenario:}{
-		\item The sensor issues a POST request to the observations endpoint
+		\item The sensor sends a request to store the observation
 		\item The system stores the observation's data in the database
 		\item The system sends the observation's data to the web application tier
-		\item The system sends a HTTP response with 201 status code to the sensor
+		\item The system notifies the sensor the observation has been successfully stored
 	}
 	\addscenario{Extensions:}{
-		\item[1.a] The sensor is not found
+		\item[1.a] The observation's sensor is not found
 			\begin{enumerate}
-			\item[1.] The system returns a 400 HTTP response status
+			\item[1.] The system returns an error response
 			\end{enumerate}
 	}
 \end{usecase}
 
 \begin{usecase}
 	\addtitle{Use Case 3}{Browse data}
-	\addfield{Actors:}{Web application user}
+	\addfield{Actors:}{User}
 	\addfield{Preconditions:}{The system is running}
 	\addfield{Postconditions:}{The web application is shown}
 	\addscenario{Main Success Scenario:}{
-		\item The user points the browser to the web application URL
-		\item Once loaded, the web application establishes a stream connection
+		\item The user's browser loads the web application
+		\item Once loaded, the web application establishes a connection against the system
 		\item The system pushes the observations to the web application as they are available
 	}
 \end{usecase}
 
 \section{Conceptual Model}
 
-As shown in figure \ref{fig:use_cases}, the system consists of two main components the Observations service and the Web application, which operate over the various entities involved in the system. The diagram \ref{fig:conceptual_model} describes them and their relations, heavily based on the OGC O\&M model \cite{OM}.
+As shown in figure \ref{fig:use_cases}, the system revolves around the concepts of \textit{Observation} and \textit{Sensor}. The diagram \ref{fig:conceptual_model} describes these concepts and other entities involved in the system as well as their relations, heavily based on the OGC O\&M model \cite{OM}.
 
-An observation is an aggregation of the following six elements:
+To start with, an observation is an aggregation of the following six elements:
 
 \begin{description}
 \item[Feature of interest] A representation of a real-world object that carries the observed property, e.g. "Pant\`a de Sau". Hence, for an in-place instrument it would be the sensor location, whereas for a remote sensor it is the target location.
