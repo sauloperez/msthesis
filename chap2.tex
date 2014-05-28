@@ -6,12 +6,30 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Analysis}
 
-\section{Requirements}
+\section{Purpose of the project}
+\section{Stakeholders}
+
+There are four distinguished groups of stakeholders which will be affected by the outcome of this project. These are summarized as follows.
+
+\begin{enumerate}
+\item[Users] These are the product clients and producers of the data that feeds the system. They will provide the data gathered from their solar panels or wind mills to the system. To that end, they are responsible for keeping the sensor device working under the required conditions.
+\item[CREAF] This research center is the client of the project and the product owner. The staff in charge of the project is responsible for ensuring that the software and hardware of the sensor devices will be updated as needed and for the maintenance of the system. In addition, CREAF must also provide and approve any required funding and infrastructure, as well as monitor the progress of the project.
+\item[Decision makers] Politicians and any person responsible for decisions that may affect the future of renewable energies in Catalonia. They will use the system as a basis for decisions concerning renewable energy production in Catalonia.
+\item[Green activists] They act as a pressure group disseminating the system in their regular campaigns.
+\end{enumerate}
+
+\section{Constraints}
+\subsection{Schedule Constraints}
+\subsection{Budget Constraints}
+
+\section{Scope of the Work}
+\section{Scope of the Product}
+
+\section{Functional Requirements}
+
 They have been obtained throughout some meetings with CREAF researcher in charge of the project.
 
 Real use-case data (number of owners) has been obtained to "scope" the system qualities properly.
-
-\subsection{System-Wide Functional Requirements}
 
 \begin{itemize}
 	\item The system must be fed with the data collected by the sensor devices
@@ -19,9 +37,9 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 	\item The system must provide software tracing
 \end{itemize}
 
-\subsubsection{System Qualities}
+\section{Non-functional Requirements}
 
-\subsubsection{Usability}
+\subsection*{Usability}
 
 \begin{itemize}
 	\item The web application must be user friendly and easy to use by means of a GUI
@@ -30,14 +48,14 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 	\item All the command line interfaces must be configurable
 \end{itemize}
 
-\subsubsection{Reliability}
+\subsection*{Reliability}
 
 \begin{itemize}
 	\item The system must be reliable in low bandwidth and high network latency
 	\item The system must be reliable in high concurrency scenarios
 \end{itemize}
 
-\subsubsection{Performance}
+\subsection*{Performance}
 
 \begin{itemize}
 	\item The sensor devices must be able to send 6 requests per hour
@@ -45,7 +63,7 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 	\item The system must able to display a sample from a certain sensor before its next sample is received
 \end{itemize}
 
-\subsubsection{Supportability}
+\subsection*{Supportability}
 
 \begin{itemize}
 	\item The system must have an event logging system
@@ -54,15 +72,13 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 	\item The codebase must be maintainable and extendible
 \end{itemize}
 
-\subsection{System Interfaces}
-
-\subsubsection{Interfaces to External Systems}
+\subsection*{Interfaces to External Systems}
 
 \begin{itemize}
 	\item The system must integrate 52 North SOS implementation to provide a standard interoperability layer
 \end{itemize}
 
-\subsection{System Constraints}
+\subsection*{System Constraints}
 
 \begin{itemize}
 	\item The sensor devices must send 6 power observations per hour
@@ -72,7 +88,7 @@ Real use-case data (number of owners) has been obtained to "scope" the system qu
 
 SOS
 
-\subsection{System Compliance}
+\subsection*{System Compliance}
 
 \begin{itemize}
 	\item The system and all its components must adhere to Apache license
