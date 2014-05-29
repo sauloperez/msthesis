@@ -37,14 +37,13 @@ There are four distinguished groups of stakeholders which will be affected by th
 \begin{description}
 \item[Description] The system's prototype must not involve any cost.
 \item[Rationale] Due to the lack of budget the project must opt for free services and solutions.
-\item[Fit criterion] The the developed prototype shall not incur any cost for CREAF.
 \end{description}
 
 \section{Scope of the Product}
 
 As already outlined in \ref{project_goals} this MS Thesis is part of a larger project. Given the constraints enumerated in \ref{constraints} the said MS Thesis aims to build the foundation for the further development of the project, focusing on its core features. By doing so, we will be able to draw conclusions and plan the further development of the project accordingly. Thus, aspects such as the hardware of the sensor device, its distribution among the users or the building of the complete web application with private features falls beyond the scope of this MS Thesis. Therefore, the system will be compound of the following three parts. 
 
-Firstly, a sensor simulator that will allow to use the system as if the sensor were already developed. To that end, the simulator will provide an interface to allow seamless interaction with the system. It will cover the essential use cases for the system to work, leaving others out of the scope.
+Firstly, a sensor simulator that will allow to use the system as if the sensor were already developed. To that end, the simulator will provide a Command Line Interface (CLI) to allow seamless interaction with the system. It will cover the essential use cases for the system to work, leaving others out of the scope.
 
 Secondly, a distributed system that will process and store the observations generated from the simulators. Eventually, the same system will deal with real observations from the sensor devices. Additionally, it will provide a web interface to manage the sensors and observations as well as the system's settings.
 
@@ -111,58 +110,71 @@ TODO It must be taken into account that even though sensors bla simulators
 
 \subsubsection*{Usability}
 
-\begin{itemize}
-	\item The web application must be user friendly and easy to use by means of a GUI
-	\item The sensor devices must be easy to set up by end users
-	\item The sensor device must collect and deliver data automatically
-	\item All the command line interfaces must be configurable
-\end{itemize}
+\begin{usecase}
+\addtitle{Requirement}{User-friendly}
+\addfield{Description:}{The web application shall be easy to use by final users}
+\addfield{Rationale:}{The users must be able to use the web application by means of the User Interface (UI) without prior learning}
+\end{usecase}
 
-\subsubsection*{Reliability}
-
-\begin{itemize}
-	\item The system must be reliable in low bandwidth and high network latency
-	\item The system must be reliable in high concurrency scenarios
-\end{itemize}
+\begin{usecase}
+\addtitle{Requirement}{Configurable CLI}
+\addfield{Description:}{The simulator's CLI shall allow to configure all its parameters}
+\addfield{Rationale:}{The simulator's users must be able to choose the parameters of the operations in order to simulate the sensors behaviour in different conditions}
+\end{usecase}
 
 \subsubsection*{Performance}
 
-\begin{itemize}
-	\item The sensor devices must be able to send 6 requests per hour
-	\item The system must be able to process observations received from [X] sensor devices
-	\item The system must able to display a sample from a certain sensor before its next sample is received
-\end{itemize}
+\begin{usecase}
+\addtitle{Requirement}{Observations per hour}
+\addfield{Description:}{The sensor's simulators shall send at least 6 observations per hour}
+\addfield{Rationale:}{The simulators must be able to send at least 6 observation requests per hour to the system as this amount is likely to be changed}
+\end{usecase}
 
-\subsubsection*{Supportability}
+\begin{usecase}
+\addtitle{Requirement}{Real-time}
+\addfield{Description:}{The system shall display an sensor's observation before its next one is received}
+\addfield{Rationale:}{Users must be able to see the observations in real-time. Hence, the time to process and show an observation must be lower than the period between receipt of observations}
+\end{usecase}
 
-\begin{itemize}
-	\item The system must have an event logging system
-	\item The system must conform to the OGC Sensor Observation Service (SOS)
-	\item The system must be horizontally scalable
-	\item The codebase must be maintainable and extendible
-\end{itemize}
+\begin{usecase}
+\addtitle{Requirement}{Concurrency}
+\addfield{Description:}{The system shall be reliable processing observations from at least 10 sensors}
+\addfield{Rationale:}{Although budget constraints do not allow to use a full-featured infrastructure the system must be able to deal with reasonable concurrency}
+\end{usecase}
+
+\begin{usecase}
+\addtitle{Requirement}{Scalability}
+\addfield{Description:}{The system shall be scalable}
+\addfield{Rationale:}{It must be easy to scale the system in order to handle higher loads with more sensors, more users or both}
+\end{usecase}
 
 \subsubsection*{Interfaces to External Systems}
-
-\begin{itemize}
-	\item The system must integrate 52 North SOS implementation to provide a standard interoperability layer
-\end{itemize}
+\begin{usecase}
+\addtitle{Requirement}{Interoperability}
+\addfield{Description:}{The system shall conform to OGC Sensor Observation Service (SOS)}
+\addfield{Rationale:}{The system must offer its data using SOS standard in order to be interoperable from other independent systems}
+\end{usecase}
 
 \subsubsection*{System Constraints}
 
 \begin{itemize}
-	\item The sensor devices must send 6 power observations per hour
 	\item The system must be able to run in commodity servers 
 	\item The whole codebase must be portable in order to be deployed in any platform including PaaS and IaaS
 \end{itemize}
 
-SOS
+\begin{usecase}
+\addtitle{Requirement}{Licensing}
+\addfield{Description:}{The system and all its components shall adhere to Apache License}
+\addfield{Rationale:}{The system and all components of the final solution must adhere to Apache License to ensure all software is open-source}
+\end{usecase}
 
-\subsubsection*{System Compliance}
+\subsubsection*{Compliance}
 
-\begin{itemize}
-	\item The system and all its components must adhere to Apache license
-\end{itemize}
+\begin{usecase}
+\addtitle{Requirement}{Licensing}
+\addfield{Description:}{The system and all its components shall adhere to Apache License}
+\addfield{Rationale:}{The system and all components of the final solution must adhere to Apache License to ensure all software is open-source}
+\end{usecase}
 
 
 
