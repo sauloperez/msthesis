@@ -12,7 +12,7 @@ The design explained below aims to be a solid ground and a first prototype for t
 
 Ruby has been chosen as the main language for the development of the project. This dynamic language focused on simplicity and productivity, is often regarded as developer performant. Due to its flexibility and similarity with natural language, along with the massive amount of libraries and frameworks available, it allows developers to write applications very quickly. However, this features hamper its execution performance.
 
-\subsection{Physical Architecture}
+\section{Physical Architecture}
 
 The core idea of this architecture is to decouple the data producers from the data consumers by means of an asynchronous message queue enabling push capabilities in the consumption tier. It is compound of four different servers, as figure \ref{fig:physical_architecture} shows: An application server that receives the observations from the sensors and stores them in the database. That server is also responsible for publishing the observation into the messaging queue. Then, the messaging queue pushes them to the data consumption tier, where the app server sends them to the web clients.
 
@@ -28,6 +28,8 @@ Such architecture brings a number of benefits, as outlined in \ref{technology_re
 The loosely coupled architecture the messaging queue entails along with the benefits stated in \ref{message_passing} not only allows scaling horizontally, but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue may be replaced without affecting any of the tiers.
 
 Finally, a high-performance asynchronous messaging queue provides real-time capabilities to the system.
+
+\section{Logical Architecture}
 
 \subsection{Sensor}
 
