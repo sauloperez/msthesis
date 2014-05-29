@@ -159,6 +159,9 @@
 % Template for Uses Cases
 \usepackage{usecases}
 
+% Positioning
+\usepackage{float}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
