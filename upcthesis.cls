@@ -166,6 +166,9 @@
 \usepackage[final]{hyperref}
 \hypersetup{colorlinks=false, linktoc=all}
 
+% Highlighted source code blocks
+\usepackage{minted}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
