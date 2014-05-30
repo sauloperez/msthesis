@@ -50,6 +50,8 @@ As already stated in \ref{actors}, although we opt for a solution that may invol
 
 A CLI acts as a presentation layer that allows interaction with the underlying SOS API client hence, the particular features of the sensor can be simulated. Additionally, with this approach the SOS client can be reused as a logic component within the final sensor device.
 
+TODO Add simulator's class diagram an explain how it is structured
+
 \subsection{Messaging Queue}
 
 The messaging queue is the central component which drives the data throughout the system. As a consequence, it determines the architecture of all other components. A detailed list of most known messaging queue systems has been given in \ref{message_passing}. All of them are highly reliable and high-performant, but usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
