@@ -51,3 +51,33 @@ end
 \end{listing}
 
 \paragraph{Secure Shell} the Secure Shell (SSH) has provided to be essential for the development of the project. Once the aforementioned VMs are running the easiest and fastest way to manage them is using ssh through the terminal. Likewise, ssh is the only way to remotely manage the production servers.
+
+\section{CLI's command}
+
+Every implemented SOS operation has its CLI's command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+desc "simulate", "Simulate a sensor generating electrical power observations in W"
+option :period, :aliases => :p
+def simulate
+  setup
+  config = Redch::Config.load
+  simulate = Redch::Simulate.new(config.sos.device_id, config.sos.location)
+  simulate.period = options[:period].to_i if options[:period]
+
+  say("Sending an observation from #{put_coords(@setup.location)} every #{simulate.period} seconds...\n\n")
+  simulate.run do |value|
+    say("Observation with value #{value} sent")
+  end
+end
+\end{minted}
+\caption{Implementation of the command \texttt{simulate} using Thor}
+\label{fig:command}
+\end{listing}
