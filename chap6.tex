@@ -56,7 +56,13 @@ end
 
 \section{CLI's command}
 
-Every implemented SOS operation has its CLI's command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal.
+Every implemented SOS operation has its CLI's command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal. The command is executed from the terminal as:
+
+\begin{figure}[H]
+  \centering
+  \texttt{\$ redch simulate -p 10}
+  \caption{Example of sensor's simulation from the command line}
+\end{figure}
 
 \begin{listing}[h]
 \begin{minted}[
