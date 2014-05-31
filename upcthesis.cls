@@ -177,6 +177,9 @@
 % Read the doublespace style that we got from Rochester:
 %\input setdoublespace.sty 		
 
+% Full page horizontal figure. Enables '\begin{sidewaysfigure}'
+\usepackage{rotating}
+
 \def\baselinestretch{\mystretch}	% Double spacing hack
 
 %%%%%%%  Set up margins and formatting params %%%
