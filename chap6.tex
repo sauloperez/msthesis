@@ -189,9 +189,9 @@ end
 
 Data Joins is what D3.js uses to bind data to elements. Data joined to existing elements produces the \textit{enter} selection. That is, the intersection's set between data and elements. All unbound data produce the \textit{enter} selection. That is, all missing elements. Similarly, all remaining elements produce the \textit{exit} selection, which represents elements that are going to be removed. This selections represent the three possible states.
 
-To operate over these three states, one must select the elements and data to be joined. In the line of the source code all circles of the \texttt{this.\_g} SVG container are selected. This selection is then joined to the array of Backbone observation models \texttt{this.collection.models} passed in on instantiation.
+To operate over these three states, one must select the elements and data to be joined. In the third line of the source code all circles of the \texttt{this.\_g} SVG container are selected. This selection is then joined to the array of Backbone observation models \texttt{this.collection.models} passed in on instantiation.
 
-As a consequence, data joins lead to a more declarative code that allows to target operations to specific states without need for branches nor iterations. A good example is found in lines and . While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
+As a consequence, data joins lead to a more declarative code that allows to target operations to specific states without need for branches nor iterations. A good example is found in lines 8 and  24. While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
 
 \begin{listing}[H]
 \begin{minted}[
