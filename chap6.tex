@@ -102,10 +102,7 @@ baselinestretch=1.2,
 fontsize=\footnotesize,
 linenos
 ] {java}
-package com.redch;
-
-import java.io.IOException;
-
+// (...)
 public interface AMQPService {
   void publish(String message) throws IOException;
   void stop() throws IOException;
@@ -124,8 +121,7 @@ baselinestretch=1.2,
 fontsize=\footnotesize,
 linenos
 ] {java}
-(...)
-
+// (...)
 public class AMQPServiceImpl implements AMQPService {
   private static final Logger LOGGER = LoggerFactory.getLogger(AMQPServiceImpl.class);
 
@@ -148,7 +144,7 @@ public class AMQPServiceImpl implements AMQPService {
     producer.close();
   }
   
-  (...)
+  // (...)
 }
 \end{minted}
 \caption{AMQPService implementation}
@@ -169,11 +165,7 @@ linenos
 ] {ruby}
 class App < Sinatra::Base
   configure do
-    enable :logging
-
-    EM.next_tick do
-      AMQP.connection = AMQP.connect host: ENV['AMQP_HOST']
-    end
+    # (...)
   end
 
   get '/' do
