@@ -159,3 +159,41 @@ public class AMQPServiceImpl implements AMQPService {
 \caption{AMQPService implementation}
 \label{fig:amqp_service_implementation}
 \end{listing}
+
+\section{Sinatra's DSL}
+
+Sinatra exposes a simple DSL that allows to specify the actions associated to a given endpoint and the response template to render. Similar to the HTTP verbs methods it defines a method for each templating engine supported, which accepts the template name as a parameter.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+class App < Sinatra::Base
+  configure do
+    enable :logging
+
+    EM.next_tick do
+      AMQP.connection = AMQP.connect host: ENV['AMQP_HOST']
+    end
+  end
+
+  get '/' do
+    erb :index
+  end
+
+  get '/stream', provides: 'text/event-stream' do
+    stream :keep_open do |connection|
+      p "New connection: #{connection.object_id}"
+
+      Redch.subscribe_to 'samples', stream: connection
+    end
+  end
+end
+\end{minted}
+\caption{Implementation of the two backend endpoints with Sinatra}
+\label{fig:command}
+\end{listing}
