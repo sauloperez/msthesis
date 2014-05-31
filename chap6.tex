@@ -92,7 +92,7 @@ end
 
 \section{AMQP Service}
 
-The Service Interface pattern is a common and simple pattern for building Java extensible applications. The service is just a set of programming interfaces and classes that provide access to some specific feature. Considering the implemented AMQP Service, the figure \ref{fig:amqp_service_spi} constitutes the Service Provider Interface (SPI); The public interface that the service defines. Then, the particular implementation shown in \ref{fig:amqp_service_implementation} acts as a AMQP Service provider by conforming to the SPI.
+The Service Interface pattern is a common and simple pattern for building Java extensible applications. The Service is just a set of programming interfaces and classes that provide access to some specific feature. Considering the implemented AMQP Service, the figure \ref{fig:amqp_service_spi} constitutes the Service Provider Interface (SPI); The public interface that the service defines. Then, the particular implementation shown in \ref{fig:amqp_service_implementation} acts as a AMQP Service provider by conforming to the SPI.
 
 \begin{listing}[h]
 \begin{minted}[
@@ -124,17 +124,9 @@ baselinestretch=1.2,
 fontsize=\footnotesize,
 linenos
 ] {java}
-package com.redch;
-
-import java.io.IOException;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import com.redch.exception.AMQPServiceException;
+(...)
 
 public class AMQPServiceImpl implements AMQPService {
-
   private static final Logger LOGGER = LoggerFactory.getLogger(AMQPServiceImpl.class);
 
   private Producer producer;
@@ -148,20 +140,15 @@ public class AMQPServiceImpl implements AMQPService {
     }
   }
 
-  @Override
   public void publish(String message) throws IOException {
     producer.sendMessage(message);
   }
 
-  @Override
   public void stop() throws IOException {
     producer.close();
   }
-
-  @Override
-  public void setProducer(Producer producer) {
-    this.producer = producer;
-  }
+  
+  (...)
 }
 \end{minted}
 \caption{AMQPService implementation}
@@ -172,7 +159,7 @@ public class AMQPServiceImpl implements AMQPService {
 
 Sinatra exposes a simple DSL that allows to specify the actions associated to a given endpoint and the response template to render. Similar to the HTTP verbs methods it defines a method for each templating engine supported, which accepts the template name as a parameter.
 
-\begin{listing}[h]
+\begin{listing}[H]
 \begin{minted}[
 frame=lines,
 framesep=2mm,
