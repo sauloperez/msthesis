@@ -52,6 +52,8 @@ end
 
 \paragraph{Secure Shell} the Secure Shell (SSH) has provided to be essential for the development of the project. Once the aforementioned VMs are running the easiest and fastest way to manage them is using ssh through the terminal. Likewise, ssh is the only way to remotely manage the production servers.
 
+\paragraph{Custom tools} Third-party tools not always solve the issues encountered across the stages of a project. Rather than final solutions, sometimes is worth considering them as the building blocks of a custom solution. This is the approach followed on the building of the Random Observations Generator, a very simple wrapper around the RabbitMQ's Management Command Line Tool plugin. The wrapper is built with Thor and the Open4 gem, which allows to open child processes and handle their pids and I/O streams.
+
 \section{CLI's command}
 
 Every implemented SOS operation has its CLI's command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal.
