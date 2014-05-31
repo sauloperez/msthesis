@@ -8,27 +8,44 @@
 
 \section{Development environment set-up}
 
-iTerm2
-Sublime Text 2
-git
-pgAdmin3
+The development of this project comprehends a set of diverse tools that aim to ease this process allowing to focus on the particularities of this project rather than on repetitive and common tasks. What follows is a description and reasons behind their choice.
 
-- webapp:
-	- Thin. Sinatra's built-in web server
-	- Foreman
-- queue:
-	- Mac OS X Rabbitmq
-- SOS:
-	- Mac OS X JVM
-	- Tomcat 7
-	- Eclipse
-- CLI:
-	- local machine
-	- Vagrant and custom boxes
+\paragraph{Terminal emulator} iTerm2 has been used as the terminal emulator throughout the project to execute many tools used in this project. From the compilation of the customized SOS to the execution of the simulator's CLI. Its rich features such as search, split panes, tabs, 256 colors or OS native notifications support make it a good replacement for the Mac OS X terminal.
+
+\paragraph{Editors} Given the diversity of languages used in the project different editors have been used in its development. An static language like Java requires the use of a full-featured Integrated Development Environment (IDE) like Eclipse, which provides integration with major frameworks and tools. As for the dynamic languages of the project, Ruby and JavaScript, Sublime Text 2 has been chosen as the main editor, sometimes replaced with Vim. Both are lightweight editors with a rich environment of plugins and focused on the efficiency of the developer.
+
+\paragraph{Version Control System} Is essential for the sake of the project to store it in a Version Control System (CVS). Its whole codebase as well as this document are kept in multiple Git repositories. In addition, Github has been chosen as the as the code hosting service due to its focus on collaboration and its considerable popularity in the open-source community.
 	
+\paragraph{Virtual Machines} Virtual Machines (VM) have been mainly used for the use of multiple sensor simulators at once. A tool such as Vagrant has dramatically improved the use of such systems by providing means to easily configure lightweight and portable development environments. It has become as simple as describing the VM in a file and boot it typing \texttt{vagrant up} in the terminal. The same configuration file can boot the same VM in any other host OS with vagrant installed.
 
-\begin{minted} {ruby}
-def foo
-   puts 'bar'
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+VAGRANTFILE_API_VERSION = '2'
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = 'sensor-precise32'
+  config.vm.provision :shell, path: 'provisioning.sh'
+
+  config.vm.define :sensor0 do |s0|
+    s0.vm.host_name = 'sensor0'
+    s0.vm.network :private_network, ip: '192.168.0.2'
+  end
+
+  config.vm.define :sensor1 do |s1|
+    s1.vm.host_name = 'sensor1'
+    s1.vm.network :private_network, ip: '192.168.0.3'
+  end
+
+  config.vm.define :sensor2 do |s2|
+    s2.vm.host_name = 'sensor2'
+    s2.vm.network :private_network, ip: '192.168.0.4'
+  end
 end
 \end{minted}
+\caption{Example of a Vagrantfile specifying three sensor simulator's VM}
+\end{listing}
