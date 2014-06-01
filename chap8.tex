@@ -69,3 +69,86 @@ Puppet allows to provision machines by either applying the configuration directl
 \section{Deployment}
 
 Once the configuration is applied the target server is up and ready. Next, the code release must be transferred to the production environment to make the application available for use.
+
+Capistrano is a remote multi-server automation tool that enables the execution of arbitrary tasks on remote servers over SSH. It aims to allow reliable deployment of web applications to any number of machines simultaneously. All its features enforce sane development workflows.
+
+The general configuration of the application is set in the \texttt{deploy.rb} file. Then, each particular stage overrides it in its own file. By following this convention Capistrano infers the environment names and enables tasks to be run on each of them as in \ref{fig:capistrano}.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+set :application, 'redch'
+set :repo_url, 'git://github.com/sauloperez/redch-webapp.git'
+set :ssh_options, {
+  forward_agent: true
+}
+
+ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+
+set :deploy_to, '/var/redch'
+set :use_sudo, false
+set :deploy_via, :copy
+set :copy_strategy, :export
+
+SSHKit.config.command_map[:rake]  = "bundle exec rake"
+
+after 'deploy:publishing', 'nginx:restart'
+after 'deploy:publishing', 'passenger:restart'
+\end{minted}
+\caption{Capistrano's deployment definition}
+\label{fig:deploy.rb}
+\end{listing}
+
+\begin{figure}[h]
+  \texttt{\$ cap staging deploy}\\
+  \texttt{...}\\
+  \texttt{\$ cap production deploy:rollback}\\
+  \caption{Execution of commands in different environments}
+  \label{fig:capistrano}
+\end{figure}
+
+The configuration can be tailored to fit the needs of the project by writing extra tasks. Capistrano provides the \textit{deploy} and \textit{rollback} flows that invoke several hooks for the developer to hook up custom tasks into the flow either before or after the particular hook. In line 16 of listing \ref{fig:deploy.rb} Nginx is restarted right after the release has been published and before the deploy's leftovers are cleaned up.
+
+Therefore, some custom capistrano's tasks have been developed to ease the execution of common operations such as starting and stopping tomcat. The listing \ref{fig:cap_nginx} illustrates Nginx-related tasks used in the web application's deployment.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+namespace :nginx do
+  desc 'Start nginx'
+  task :start do
+    on roles(:app), in: :sequence, wait: 5 do
+      sudo 'start nginx'
+    end
+  end
+
+  desc 'Stop nginx'
+  task :stop do
+    on roles(:app), in: :sequence, wait: 5 do
+      sudo 'stop nginx'
+    end
+  end
+
+  desc 'Restart nginx'
+  task :restart do
+    on roles(:app), in: :sequence, wait: 5 do
+      sudo 'restart nginx'
+    end
+  end
+end
+\end{minted}
+\caption{Content of \texttt{lib/capistrano/tasks/nginx.cap}}
+\label{fig:cap_nginx}
+\end{listing}
+
+As Capistrano essentially executes commands in a remote server, custom tasks can written to target any specific purposes like listing servers' uptimes, checking their load, etc.
