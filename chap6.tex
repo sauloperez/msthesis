@@ -5,3 +5,325 @@
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Implementation}
+
+\section{Development environment set-up}
+
+The development of this project comprehends a set of diverse tools that aim to ease this process allowing to focus on the particularities of this project rather than on repetitive and common tasks. What follows is the description and reasons that led to their choice.
+
+\paragraph{Terminal emulator} iTerm2 has been used as the terminal emulator throughout the project to execute many tools used in this project. From the compilation of the customized SOS to the execution of the simulator's CLI. Its rich features such as search, split panes, tabs, 256 colors or OS native notifications support make it a good replacement for the Mac OS X terminal.
+
+\paragraph{Editors} Given the diversity of languages used in the project different editors have been used in its development. An static language like Java requires the use of a full-featured Integrated Development Environment (IDE) like Eclipse, which provides integration with major frameworks and tools. As for the dynamic languages of the project, Ruby and JavaScript, Sublime Text 2 has been chosen as the main editor, sometimes replaced with Vim. Both are lightweight editors with a rich environment of plugins and focused on the efficiency of the developer.
+
+\paragraph{Version Control System} Is essential for the sake of the project to store it in a Version Control System (CVS). Its whole codebase as well as this document are kept in multiple Git repositories. In addition, Github has been chosen as the as the code hosting service due to its focus on collaboration and its considerable popularity in the open-source community.
+	
+\paragraph{Virtual Machines} Virtual Machines (VM) have been mainly used for the use of multiple sensor simulators at once. A tool such as Vagrant has dramatically improved the use of such systems by providing means to easily configure lightweight and portable development environments. It has become as simple as describing the VM in a file and boot it typing \texttt{vagrant up} in the terminal. The same configuration file can boot the same VM in any other host OS with vagrant installed.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+VAGRANTFILE_API_VERSION = '2'
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  config.vm.box = 'sensor-precise32'
+  config.vm.provision :shell, path: 'provisioning.sh'
+
+  config.vm.define :sensor0 do |s0|
+    s0.vm.host_name = 'sensor0'
+    s0.vm.network :private_network, ip: '192.168.0.2'
+  end
+
+  config.vm.define :sensor1 do |s1|
+    s1.vm.host_name = 'sensor1'
+    s1.vm.network :private_network, ip: '192.168.0.3'
+  end
+
+  config.vm.define :sensor2 do |s2|
+    s2.vm.host_name = 'sensor2'
+    s2.vm.network :private_network, ip: '192.168.0.4'
+  end
+end
+\end{minted}
+\caption{Example of a Vagrantfile specifying three sensor simulator's VM}
+\end{listing}
+
+\paragraph{Secure Shell} the Secure Shell (SSH) has provided to be essential for the development of the project. Once the aforementioned VMs are running the easiest and fastest way to manage them is using ssh through the terminal. Likewise, ssh is the only way to remotely manage the production servers.
+
+\paragraph{Custom tools} Third-party tools not always solve the issues encountered across the stages of a project. Rather than final solutions, sometimes is worth considering them as the building blocks of a custom solution. This is the approach followed on the building of the Random Observations Generator\footnote{Git repository: \url{https://github.com/sauloperez/redch-obsgen}}, a very simple wrapper around the RabbitMQ's Management Command Line Tool plugin. The wrapper is built with Thor and the Open4 gem, which allows to open child processes and handle their pids and I/O streams.
+
+\section{CLI's command}
+
+Every implemented SOS operation has its CLI's command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal. The command is executed from the terminal as:
+
+\begin{figure}[H]
+  \centering
+  \texttt{\$ redch simulate -p 10}
+  \caption{Example of sensor's simulation from the command line}
+\end{figure}
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+desc "simulate", "Simulate a sensor generating electrical power observations in W"
+option :period, :aliases => :p
+def simulate
+  setup
+  config = Redch::Config.load
+  simulate = Redch::Simulate.new(config.sos.device_id, config.sos.location)
+  simulate.period = options[:period].to_i if options[:period]
+
+  say("Sending an observation from #{put_coords(@setup.location)} every #{simulate.period} seconds...\n\n")
+  simulate.run do |value|
+    say("Observation with value #{value} sent")
+  end
+end
+\end{minted}
+\caption{Implementation of the command \texttt{simulate} using Thor}
+\label{fig:command}
+\end{listing}
+
+\section{AMQP Service}
+
+The Service Interface pattern is a common and simple pattern for building Java extensible applications. The Service is just a set of programming interfaces and classes that provide access to some specific feature. Considering the implemented AMQP Service, the figure \ref{fig:amqp_service_spi} constitutes the Service Provider Interface (SPI); The public interface that the service defines. Then, the particular implementation shown in \ref{fig:amqp_service_implementation} acts as a AMQP Service provider by conforming to the SPI.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {java}
+// (...)
+public interface AMQPService {
+  void publish(String message) throws IOException;
+  void stop() throws IOException;
+  void setProducer(Producer producer);
+}
+\end{minted}
+\caption{AMQPService SPI}
+\label{fig:amqp_service_spi}
+\end{listing}
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {java}
+// (...)
+public class AMQPServiceImpl implements AMQPService {
+  private static final Logger LOGGER = LoggerFactory.getLogger(AMQPServiceImpl.class);
+
+  private Producer producer;
+
+  public AMQPServiceImpl(String host, String exchangeName) throws IOException, AMQPServiceException {
+    try {
+      this.producer = new Producer(host, exchangeName);
+    } catch (AMQPServiceException e) {
+      LOGGER.debug("AMQP connection failed");
+      throw e;
+    }
+  }
+
+  public void publish(String message) throws IOException {
+    producer.sendMessage(message);
+  }
+
+  public void stop() throws IOException {
+    producer.close();
+  }
+  
+  // (...)
+}
+\end{minted}
+\caption{AMQPService implementation}
+\label{fig:amqp_service_implementation}
+\end{listing}
+
+\section{Sinatra's DSL}
+
+Sinatra exposes a simple DSL that allows to specify the actions associated to a given endpoint and the response template to render. Similar to the HTTP verbs methods it defines a method for each templating engine supported, which accepts the template name as a parameter.
+
+\begin{listing}[H]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+class App < Sinatra::Base
+  configure do
+    # (...)
+  end
+
+  get '/' do
+    erb :index
+  end
+
+  get '/stream', provides: 'text/event-stream' do
+    stream :keep_open do |connection|
+      p "New connection: #{connection.object_id}"
+
+      Redch.subscribe_to 'samples', stream: connection
+    end
+  end
+end
+\end{minted}
+\caption{Implementation of the two backend endpoints with Sinatra}
+\label{fig:endpoints}
+\end{listing}
+
+\section{Data Joins in D3}
+
+Data Joins is what D3.js uses to bind data to elements. Data joined to existing elements produces the \textit{enter} selection. That is, the intersection's set between data and elements. All unbound data produce the \textit{enter} selection. That is, all missing elements. Similarly, all remaining elements produce the \textit{exit} selection, which represents elements that are going to be removed. This selections represent the three possible states.
+
+To operate over these three states, one must select the elements and data to be joined. In the third line of the source code all circles of the \texttt{this.\_g} SVG container are selected. This selection is then joined to the array of Backbone observation models \texttt{this.collection.models} passed in on instantiation.
+
+As a consequence, data joins lead to a more declarative code that allows to target operations to specific states without need for branches nor iterations. A good example is found in lines 8 and  24. While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
+
+\begin{listing}[H]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+draw: function() {
+  var self = this,
+      feature = this._g.selectAll("circle")
+        .data(this.collection.models),
+  //  (...)
+
+  // Update circles that are still present
+  feature.transition().duration(200).style("fill", function(model) {
+    return color(model.get('value'));
+  });
+
+  // Create new circles
+  feature.enter()
+    .append("circle")
+    .style("fill", function(model) {
+      return color(model.get('value'));
+    })
+    .style("fill-opacity", 0.75)
+  //  (...)
+    });
+
+  // Remove old circles
+  feature.exit()
+    .transition().duration(250).attr("r",0).remove();
+}
+\end{minted}
+\caption{D3 data joins used in the SPA}
+\label{fig:command}
+\end{listing}
+
+\section{Server-Sent Events}
+
+\subsection*{Server-side}
+
+From the server-side HTML5 Server-Sent Events API is a really simple convention over a regular HTTP streaming connection. Together with Sinatra's DSL its implementation is reduced to few lines.
+
+\begin{listing}[H]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+class App < Sinatra::Base
+  get '/stream', provides: 'text/event-stream' do
+    stream :keep_open do |stream|
+      stream << 'id: Time.now.to_i\n'
+      stream << 'data: a SSE event from Sinatra\n\n'
+    end
+  end
+end
+\end{minted}
+\caption{SSE server-side implementation with Sinatra}
+\label{fig:sse_backend}
+\end{listing}
+
+The Event Stream format is just a plaintext response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies the response must contain a line beginning with \texttt{data:} followed by the message. The message can be break up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
+
+An event can be associated with a unique id by including a line starting with \texttt{id:} as in line 4. Likewise, the reconnection-timeout can be changed by including a line beginning with \texttt{retry:} followed by the number of milliseconds to wait before the reconnection. In this way, whenever the connection is dropped the browser will attempt to reconnect after the specified time.
+
+What makes SSE even more interesting is the possibility to specify your own event names. If the server sends line beginning with \texttt{event:} followed by a unique name, this event will be associated with that name. Hence, the client can set up a regular event listener to listen to that particular event.
+
+\subsection*{Client-side}
+
+With regard to the client-side, the JavaScript API exposes the \texttt{EventSource} object. To subscribe to an event stream, this object must be instantiated passing the URL of the stream. This can be easily encapsulated into a standalone JavaScript object hence, the data consumers are not concerned with the details of the API. This is the idea behind the implementation of \texttt{communicator.js} partially shown in \ref{fig:sse_connection}.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+connect: function() {
+  if (this._connection) return;
+  this._connection = new EventSource(this.uri);
+  this.setCallbacks();
+}
+\end{minted}
+\caption{SSE connection in \texttt{communicator.js}}
+\label{fig:sse_connection}
+\end{listing}
+
+Next, a handler may be set up for each of the \texttt{EventSource}'s basic events: message, open and error. The \texttt{onmessage} handler fires and new data becomes available in the \texttt{data} property of the event object whenever updates are pushed from the server. Likewise, \texttt{onopen} is triggered when the connection has been opened and \texttt{onerror} when an error has been encountered.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+this._connection.onopen = function(e) {
+  console.log('New SSE connection opened');
+};
+this._connection.onmessage = function(e) {
+  console.log("Message '" + e.data + "' received");
+};
+this._connection.onerror = function(e) {
+  console.log('An error has occurred');
+};
+\end{minted}
+\caption{Example of SSE event handlers}
+\label{fig:sse_events}
+\end{listing}
+
+Furthermore, the application can listen to your specific events setting up a regular  \texttt{EventListener} as follows.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+this._connection.addEventListener('sensor-in-sleep-mode', function(e) {
+  console.log("This sensor won't send more observations");
+});
+\end{minted}
+\caption{Listen to custom events}
+\label{fig:sse_custom_event}
+\end{listing}
