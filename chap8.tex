@@ -18,13 +18,13 @@ One of the major benefits Redch can take advantage of is Amazon's Auto Scaling. 
 
 As for the database server, although it would desirable to keep the infrastructure provider-independent, Amazon RDS has been chosen. It makes easier to set up, operate, and scale a relational database. Furthermore, it provides automated backups, Multi-AZ replication and monitoring metrics. It has support for MySQL, Oracle, SQL Server and PostrgeSQL, all the DBMSs supported by 52ºNorth SOS, being the latter the one it uses by default. However, the PostrgeSQL support is still in beta version due to its recent release in November of 2013.
 
-The final production environment comprehends the four servers shown in \ref{fig:production_environment}. Three EC2 micro instances plus a RDS micro instance. All three EC2 instances are attached to an Elastic Block Storage (EBS), which are storage volumes with built-in redundancy. These volumes host the filesystem of their related EC2 instances, each one selected with 8GB of storage space.
+The final production environment comprehends the four servers shown in \ref{fig:infrastructure}. Three EC2 micro instances plus a RDS micro instance. All three EC2 instances are attached to an Elastic Block Storage (EBS), which are storage volumes with built-in redundancy. These volumes host the filesystem of their related EC2 instances, each one selected with 8GB of storage space.
 
 \begin{figure}
   \centering
-  \includegraphics[scale=1]{production_environment}
+  \includegraphics[width=\textwidth]{infrastructure}
   \caption{Production's infrastructure diagram}
-  \label{fig:production_environment}
+  \label{fig:infrastructure}
 \end{figure}
 
 Ubuntu 12-04 LTS has been chosen as the OS of all three servers due to its stability and security besides, the inherent benefits of a Linux OS. With regard to the database, Amazon's RDS abstract away from the particularities of the underlying hardware by providing the database access as a service.
