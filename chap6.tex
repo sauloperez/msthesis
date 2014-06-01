@@ -182,7 +182,7 @@ class App < Sinatra::Base
 end
 \end{minted}
 \caption{Implementation of the two backend endpoints with Sinatra}
-\label{fig:command}
+\label{fig:endpoints}
 \end{listing}
 
 \section{Data Joins in D3}
@@ -229,4 +229,101 @@ draw: function() {
 \end{minted}
 \caption{D3 data joins used in the SPA}
 \label{fig:command}
+\end{listing}
+
+\section{Server-Sent Events}
+
+\subsection*{Server-side}
+
+From the server-side HTML5 Server-Sent Events API is a really simple convention over a regular HTTP streaming connection. Together with Sinatra's DSL its implementation is reduced to few lines.
+
+\begin{listing}[H]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {ruby}
+class App < Sinatra::Base
+  get '/stream', provides: 'text/event-stream' do
+    stream :keep_open do |stream|
+      stream << 'id: Time.now.to_i\n'
+      stream << 'data: a SSE event from Sinatra\n\n'
+    end
+  end
+end
+\end{minted}
+\caption{SSE server-side implementation with Sinatra}
+\label{fig:sse_backend}
+\end{listing}
+
+The Event Stream format is just a plaintext response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies the response must contain a line beginning with \texttt{data:} followed by the message. The message can be break up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
+
+An event can be associated with a unique id by including a line starting with \texttt{id:} as in line 4. Likewise, the reconnection-timeout can be changed by including a line beginning with \texttt{retry:} followed by the number of milliseconds to wait before the reconnection. In this way, whenever the connection is dropped the browser will attempt to reconnect after the specified time.
+
+What makes SSE even more interesting is the possibility to specify your own event names. If the server sends line beginning with \texttt{event:} followed by a unique name, this event will be associated with that name. Hence, the client can set up a regular event listener to listen to that particular event.
+
+\subsection*{Client-side}
+
+With regard to the client-side, the JavaScript API exposes the \texttt{EventSource} object. To subscribe to an event stream, this object must be instantiated passing the URL of the stream. This can be easily encapsulated into a standalone JavaScript object hence, the data consumers are not concerned with the details of the API. This is the idea behind the implementation of \texttt{communicator.js} partially shown in \ref{fig:sse_connection}.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+connect: function() {
+  if (this._connection) return;
+  this._connection = new EventSource(this.uri);
+  this.setCallbacks();
+}
+\end{minted}
+\caption{SSE connection in \texttt{communicator.js}}
+\label{fig:sse_connection}
+\end{listing}
+
+Next, a handler may be set up for each of the \texttt{EventSource}'s basic events: message, open and error. The \texttt{onmessage} handler fires and new data becomes available in the \texttt{data} property of the event object whenever updates are pushed from the server. Likewise, \texttt{onopen} is triggered when the connection has been opened and \texttt{onerror} when an error has been encountered.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+this._connection.onopen = function(e) {
+  console.log('New SSE connection opened');
+};
+this._connection.onmessage = function(e) {
+  console.log("Message '" + e.data + "' received");
+};
+this._connection.onerror = function(e) {
+  console.log('An error has occurred');
+};
+\end{minted}
+\caption{Example of SSE event handlers}
+\label{fig:sse_events}
+\end{listing}
+
+Furthermore, the application can listen to your specific events setting up a regular  \texttt{EventListener} as follows.
+
+\begin{listing}[h]
+\begin{minted}[
+frame=lines,
+framesep=2mm,
+baselinestretch=1.2,
+fontsize=\footnotesize,
+linenos
+] {javascript}
+this._connection.addEventListener('sensor-in-sleep-mode', function(e) {
+  console.log("This sensor won't send more observations");
+});
+\end{minted}
+\caption{Listen to custom events}
+\label{fig:sse_custom_event}
 \end{listing}
