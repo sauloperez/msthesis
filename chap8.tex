@@ -29,7 +29,7 @@ The final production environment comprehends the four servers shown in \ref{fig:
 
 Ubuntu 12-04 LTS has been chosen as the OS of all three servers due to its stability and security besides, the inherent benefits of a Linux OS. With regard to the database, Amazon's RDS abstract away from the particularities of the underlying hardware by providing the database access as a service.
 
-\section{Configuration Management}
+\section{Provisioning}
 
 Once the software is developed the underlying infrastructure must be configured to host each of the system components. This process, that involves creating directories and installing packages, may be error-prone when done manually. Besides, it may need to be repeated several times when new servers need to be set up. Even though writing down the build-out process may help, whoever reads that documentation can't figure out the current state of the configuration.
 
@@ -60,11 +60,17 @@ service { 'apache2':
 
 Puppet is mature and widely used. Besides having an open source version, there are lots of learning materials available online.
 
-\section{Provisioning}
-
 Prior provisioning any server must have puppet installed, which comes packaged as a ruby gem. Therefore, Puppet does also require a MRI Ruby interpreter. Puppet can be installed with any system package manager, doing so will likely install previous releases missing features and bug fixes.
 
 Puppet allows to provision machines by either applying the configuration directly or compiled into a catalog and distributed to the target system via client-server paradigm.
+
+\subsection{Production Software}
+
+Most of the software used in the development environment is also used on the production one. This is the case of SOS, for instance, where both Tomcat 7 and PostgreSQL have been chosen to run also in production. However, the production web application's stack differs from the one in development. Nginx plus Passenger has been chosen over Thin, the server included in Sinatra for development purposes.
+
+Passenger is a mature and feature rich application server widely used in many production scenarios. Therefore, is easy to find learning materials and support on the internet. Nginx on the other hand, is a high-performance web server and load balancer that can handle high concurrency.
+
+Placed in front of the application server, Nginx acts as a reverse-proxy. It deals with all incoming requests serving static files efficiently and passing them the application layer. Then, Passenger processes the requests and returns a response.
 
 \section{Deployment}
 
