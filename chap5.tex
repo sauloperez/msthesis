@@ -50,7 +50,33 @@ As already stated in \ref{actors}, although we opt for a solution that may invol
 \end{minipage}
 \end{figure}
 
-A CLI acts as a presentation layer that allows interaction with the underlying SOS API client hence, the particular features of the sensor can be simulated. Additionally, with this approach the SOS client can be reused as a logic component within the final sensor device.
+A CLI acts as a presentation layer that allows interaction with the underlying SOS API client hence, the particular features of the sensor can be simulated. This approach offers the advantage of reusing the SOS client as a component of the final sensor device.
+
+\subsubsection*{Command Line Interface}
+
+On one hand, the \texttt{Redch} global namespace comprehends the CLI's commands. Similar to the command pattern, each class is named after the command it enables and contains all the logic for that particular command. As \ref{fig:cli_class_diagram} shows, the \texttt{Redch::CLI} class itself is a Thor application that exposes its interface in the command line, receives the input, executes the commands and prints their output.
+
+Thor is a toolkit for building powerful command-line interfaces, which is used by well-known frameworks and tools such as Bundler, Ruby on Rails or Vagrant. The Thor class exposes a command-suite command-line application like Git that leads to very polished and easy to maintain command-line applications. In any Thor's subclass public methods become commands. Furthermore, Thor provides an interface to easily specify options and flags as a command's metadata, along with methods to specify the description of the commands. These are then included in a \texttt{help} command automatically generated.
+
+\subsubsection*{Sensor Observation Service Client}
+
+On the other hand, each command calls the underlying SOS Client, which in turn makes an HTTP request to the service. Being SOS a RESTful Web Service, the client implements two REST resources: Sensor and Observation, using the Ruby's rest-client gem\footnote{Libraries in Ruby programming language}.
+
+This widely-used gem abstracts the actual http protocol by exposing methods for each HTTP verb that accept header and query parameters to be passed in. Additionally, it provides a lower-level API that allows to specify SSL parameters, deal with cookies, etc. for cases the general API doesn't cover.
+
+Finally, the client uses the Slim template language to render Geography Markup Language (GML), an OGC standard adopted by the International Organization for Standardization (ISO). Each operation has its own template that gets rendered with the data provided by each call. The obtained XML markup makes up the HTTP request body.
+
+\begin{sidewaysfigure}
+	\includegraphics[width=\textwidth]{cli_class_diagram}
+	\caption{CLI's class diagram}
+	\label{fig:cli_class_diagram}
+\end{sidewaysfigure}
+
+\begin{sidewaysfigure}
+	\includegraphics[width=\textwidth]{sos_client_class_diagram}
+	\caption{SOS Client's class diagram}
+	\label{fig:sos_client_class_diagram}
+\end{sidewaysfigure}
 
 \subsection{Messaging Queue}
 
@@ -102,7 +128,7 @@ The web application has two differentiated parts. The application's backend and 
 
 \subsubsection{Backend}
 
-The backend uses the amqp gem\footnote{Libraries in Ruby programming language}. A feature-rich asynchronous RabbitMQ client built on top of EventMachine, the most popular event-driven I/O and concurrency library in Ruby, which implements the Reactor pattern \cite{reactor}. The event handling pattern at the core of Python's Twisted or Node.js among others.
+The backend uses the amqp gem. A feature-rich asynchronous RabbitMQ client built on top of EventMachine, the most popular event-driven I/O and concurrency library in Ruby, which implements the Reactor pattern \cite{reactor}. The event handling pattern at the core of Python's Twisted or Node.js among others.
 
 Once a message is received, the backend forwards it to each open streaming connection using the HTML5 Server Sent Events API \ref{web_real_time}. Therefore, concurrency is essential for the performance of the backend, and again, it is provided with EventMachine.
 
@@ -113,6 +139,8 @@ Sinatra is a Web application framework and Domain Specific Language (DSL) that a
 The Sinatra Application exposes just two endpoints: \texttt{GET /} and \texttt{GET /stream}. The former is used to download the whole SPA, whereas the latter allows to open a SSE streaming connection.
 
 The class diagram of the whole backend is as follows.
+
+TODO state node.js. Tool made for this, performance worth checking out. Leaned towards Ruby to come up with a webapp quickly.
 
 \begin{figure}[H]
 	\centering
