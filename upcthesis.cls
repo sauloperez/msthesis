@@ -187,6 +187,9 @@
 % Full page horizontal figure. Enables '\begin{sidewaysfigure}'
 \usepackage{rotating}
 
+% Allows to include pdf files
+\usepackage[final]{pdfpages}
+
 \def\baselinestretch{\mystretch}	% Double spacing hack
 
 %%%%%%%  Set up margins and formatting params %%%
