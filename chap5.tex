@@ -12,7 +12,7 @@ The design explained below aims to be a solid ground and a first prototype for t
 
 Ruby has been chosen as the main language for the development of the project. This dynamic language focused on simplicity and productivity, is often regarded as developer performant. Due to its flexibility and similarity with natural language, along with the massive amount of libraries and frameworks available, it allows developers to write applications very quickly. However, this features hamper its execution performance.
 
-\subsection{Physical Architecture}
+\section{Physical Architecture}
 
 The core idea of this architecture is to decouple the data producers from the data consumers by means of an asynchronous message queue enabling push capabilities in the consumption tier. It is compound of four different servers, as figure \ref{fig:physical_architecture} shows: An application server that receives the observations from the sensors and stores them in the database. That server is also responsible for publishing the observation into the messaging queue. Then, the messaging queue pushes them to the data consumption tier, where the app server sends them to the web clients.
 
@@ -29,11 +29,13 @@ The loosely coupled architecture the messaging queue entails along with the bene
 
 Finally, a high-performance asynchronous messaging queue provides real-time capabilities to the system.
 
+\section{Logical Architecture}
+
 \subsection{Sensor}
 
 As already stated in \ref{actors}, although we opt for a solution that may involve RaspberryPi, the development of the sensor device falls out of the scope of the project. Nonetheless, the system requires some sort of client in order to simulate its functioning in normal conditions.
 
-\begin{figure}[H]
+\begin{figure}[h]
 \begin{minipage}{.5\textwidth}
 	\centering
 	\includegraphics[width=.7\textwidth]{sensor_logic_view}
@@ -140,7 +142,7 @@ The class diagram of the whole backend is as follows.
 
 TODO state node.js. Tool made for this, performance worth checking out. Leaned towards Ruby to come up with a webapp quickly.
 
-\begin{figure}[H]
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale=.7]{backend_class_diagram}
 	\caption{Backend's class diagram}
@@ -153,7 +155,7 @@ The SPA downloads all necessary source code ---HTML, JS and CSS--- on the first 
 
 The SPA consists of four different components: the HTML template, the data visualization, the data handling and the SSE client.
 
-\begin{figure}[p]
+\begin{figure}[h]
 	\centering
 	\includegraphics[scale=.62]{spa_class_diagram}
 	\caption{SPA's class diagram}
@@ -167,3 +169,27 @@ TODO speak about the map tiles servive. Mapbox
 The data visualization sets up a map and renders circles placed on the exact location where the observation took place, each one corresponding to a different observation. This circles convey the observation's electrical power with the filling color ranging from yellow to red following a linear function.
 
 All SPA's pieces work in a fully evented fashion. Whenever a SSE message is received the \texttt{Communicator} publishes the event into the \texttt{eventBus} and the observations collection, which is subscribed to said event, process it. Then, when the collection triggers an add, remove or change event the visualization gets updated with new, updated or deleted circles depending on the information contained in the collection at that point.
+
+\section{Sequence Diagrams}
+
+This section aims to depict the lifetime of an observation as it goes through all the aforementioned components. From the sensor up until it is visualized in the SPA. This gives a global view of the system's functioning.
+
+\begin{sidewaysfigure}
+	\includegraphics[width=\textwidth]{insert_observation_design_seq}
+	\caption{Sequence Diagram - Insert Observation}
+	\label{fig:insert_observation_design_seq}
+\end{sidewaysfigure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{amqp_service_design_seq}
+	\caption{Sequence Diagram - Publish Observation}
+	\label{fig:amqp_service_design_seq}
+\end{figure}
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[scale=.75]{browse_data_design_seq}
+	\caption{Sequence Diagram - Browse Data}
+	\label{fig:browse_data_design_seq}
+\end{figure}
