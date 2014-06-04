@@ -166,6 +166,9 @@
 \usepackage[final]{hyperref}
 \hypersetup{colorlinks=false, linktoc=all}
 
+% Highlighted source code blocks
+\usepackage{minted}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
@@ -180,6 +183,9 @@
 
 % Read the doublespace style that we got from Rochester:
 %\input setdoublespace.sty 		
+
+% Full page horizontal figure. Enables '\begin{sidewaysfigure}'
+\usepackage{rotating}
 
 \def\baselinestretch{\mystretch}	% Double spacing hack
 
