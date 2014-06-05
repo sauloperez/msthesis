@@ -169,6 +169,9 @@
 % Highlighted source code blocks
 \usepackage{minted}
 
+% Euro currency symbol
+\usepackage[gen]{eurosym}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
