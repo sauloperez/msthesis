@@ -9,3 +9,180 @@
 \section{Unit Testing}
 
 \section{Performance Testing}
+
+Performance testing comprehends any process of determining the quality attributes of a system such as responsiveness, stability and reliability under certain workloads. It is usually used to verify that the system meets its specifications.
+
+Load testing is the simplest form of performance testing. Load tests are conducted to assess the behaviour of the system under a particular load. The load is defined by a particular number of transactions and a certain level of concurrency within a specified duration. In the context of a web system the transactions are round trip of HTTP requests to a particular endpoint and the concurrency level is the number of requests performed at a time. As a result, the test outputs the response times of these requests and may uncover bottlenecks of the system.
+
+There are numerous variables involved in the execution of the system such as network reliability, performance of the underlying hardware, availability of third-party services, etc. Therefore, the following load test does not aim to give the exact performance of the system, but its approximate behaviour under conditions similar to a real scenarios making some reasonable assumptions.
+
+The tests have been conducted using two simple yet powerful and mature open-source tools: Apache Bench and Gnuplot. Apache Bench is a server benchmarking tool that focuses on showing how many requests per second a system is able to serve. It provides basic statistic functions such as mean, median, minimum and maximum of the measured magnitudes. Gnuplot, on the other hand, makes it easy to draw charts from diverse input text formats by means of a scripting language or interactive console.
+
+As the system has two entry points, the one used by the sensors and the web application, two different load test have been performed. By doing so, we can assess the performance of the Sensor Observation Service and the Web application.
+
+TODO what about the queue??
+
+\subsection{Web Application}
+
+First and foremost, the variables involved in determining the response times of the requests must be defined. These are concurrency and number of requests per test.
+
+\paragraph{Concurrency} We distinguish two different levels of concurrency. First, when a browser loads a web page it starts multiple connection to the server to load the resources. The number of simultaneous connections is a built-in browser parameter that for most of the web browsers defaults to 6. Besides, concurrency in a load testing often refers to the number of users issuing requests to the system at a time. The increases in this variable define the number of executions of the test.
+
+\paragraph{Number of requests} This is the total number of requests issued to the system for each execution of the test. However, each time a user loads a web page the browser makes as many requests as assets the page contains. That is, the browser loads each of the CSS files, images and JS scripts the HTML states, one per request.
+
+The single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application sources plus the map tiles and other resources fetched by the map client. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system, but the Mapbox's servers. Hence, they are not taken into account, although they impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
+
+\subsubsection*{Baseline}
+
+To serve as comparison the baseline is defined as a test with a single request to load the HTML page followed by 46 request with 6 concurrent connections to load the assets of 15,6 KB each. This tries to mimic the behaviour while simplifying the intricacies of the browser concurrency and assuming the content is instantly rendered.
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /test_asset
+Document Length:        15600 bytes
+
+Concurrency Level:      6
+Time taken for tests:   1.845 seconds
+Complete requests:      46
+Failed requests:        0
+Keep-Alive requests:    46
+Total transferred:      729330 bytes
+HTML transferred:       717600 bytes
+Requests per second:    24.94 [#/sec] (mean)
+Time per request:       240.603 [ms] (mean)
+Time per request:       40.100 [ms] (mean, across all concurrent requests)
+Transfer rate:          386.12 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    8  19.9      0      64
+Processing:    87  223 241.9    142    1448
+Waiting:       54  110  26.9     99     189
+Total:         87  231 249.4    142    1448
+
+Percentage of the requests served within a certain time (ms)
+  50%    142
+  66%    159
+  75%    259
+  80%    265
+  90%    378
+  95%    748
+  98%   1448
+  99%   1448
+ 100%   1448 (longest request)
+\end{minted}
+\label{fig:baseline}
+\caption{Output of the command \texttt{ab} for the baseline}
+\end{listing}
+
+As shown in \ref{fig:baseline}, the application assets are loaded in 231ms at 396KB/s. Together with the response time of a single request, this means a user waits $231ms + 431ms = 662ms$ seconds by average until the whole application is fully loaded.
+
+\subsubsection*{10 Users Scenario}
+
+In the following test executions the concurrency is increased progressively in order to simulate more demanding scenarios. First, simulating 10 users and then 50. For each of these, half of the required requests point to the HTML and the other half to the assets, thereby, simulating requests that impact the server differently.
+
+Therefore, the first test issues 10 concurrent requests to load the HTML, while 460 more requests with 60 concurrent connections load the assets.
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /
+Document Length:        2406 bytes
+
+Concurrency Level:      10
+Time taken for tests:   2.967 seconds
+Complete requests:      10
+Failed requests:        0
+Keep-Alive requests:    10
+Total transferred:      27460 bytes
+HTML transferred:       24060 bytes
+Requests per second:    3.37 [#/sec] (mean)
+Time per request:       2966.874 [ms] (mean)
+Time per request:       296.687 [ms] (mean, across all concurrent requests)
+Transfer rate:          9.04 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      100  106   2.9    107     110
+Processing:   241  529 821.4    276    2867
+Waiting:      236  380 370.9    270    1435
+Total:        345  636 819.3    383    2967
+
+Percentage of the requests served within a certain time (ms)
+  50%    383
+  66%    390
+  75%    397
+  80%    404
+  90%   2967
+  95%   2967
+  98%   2967
+  99%   2967
+ 100%   2967 (longest request)
+ \end{minted}
+\label{fig:kn10c10}
+\caption{Output of the command \texttt{ab} with 10 concurrent connections}
+\end{listing}
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /test_asset
+Document Length:        15600 bytes
+
+Concurrency Level:      60
+Time taken for tests:   33.881 seconds
+Complete requests:      460
+Failed requests:        0
+Keep-Alive requests:    460
+Total transferred:      7293300 bytes
+HTML transferred:       7176000 bytes
+Requests per second:    13.58 [#/sec] (mean)
+Time per request:       4419.294 [ms] (mean)
+Time per request:       73.655 [ms] (mean, across all concurrent requests)
+Transfer rate:          210.22 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   17  48.0      0     212
+Processing:   401 2677 2836.6   1979   31183
+Waiting:       71  431 699.3    217    7835
+Total:        401 2695 2849.7   1993   31183
+
+Percentage of the requests served within a certain time (ms)
+  50%   1993
+  66%   2608
+  75%   3115
+  80%   3535
+  90%   4596
+  95%   7347
+  98%  11424
+  99%  18008
+ 100%  31183 (longest request)
+ \end{minted}
+\label{fig:kn460c60}
+\caption{Output of 460 requests with 60 concurrent connections}
+\end{listing}
+
+All users' browser loaded the application in $2695ms + 636ms = 3331ms$ in average. However, the standard deviation turns out to be remarkably high. The resulting values shown in \ref{fig:kn460c60} are summarized in the chart \ref{fig:kn460c60_chart}.
+
+\begin{sidewaysfigure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{kn460c60}
+	\caption{Response time plot of 460 requests with 60 concurrent connections}
+	\label{fig:kn460c60_chart}
+\end{sidewaysfigure}
+
+\subsubsection*{50 Users Scenario}
