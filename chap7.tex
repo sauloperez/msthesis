@@ -185,4 +185,192 @@ All users' browser loaded the application in $2695ms + 636ms = 3331ms$ in averag
 	\label{fig:kn460c60_chart}
 \end{sidewaysfigure}
 
-\subsubsection*{50 Users Scenario}
+\subsubsection*{30 Users Scenario}
+
+To test the load equivalent to 30 users this execution sends 30 concurrent requests plus 1380 requests with 180 concurrent connections.
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /
+Document Length:        2406 bytes
+
+Concurrency Level:      30
+Time taken for tests:   1.607 seconds
+Complete requests:      30
+Failed requests:        0
+Keep-Alive requests:    30
+Total transferred:      82380 bytes
+HTML transferred:       72180 bytes
+Requests per second:    18.67 [#/sec] (mean)
+Time per request:       1606.587 [ms] (mean)
+Time per request:       53.553 [ms] (mean, across all concurrent requests)
+Transfer rate:          50.07 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      240  260  10.9    266     279
+Processing:   350  752 443.5    457    1356
+Waiting:      347  747 444.8    453    1354
+Total:        600 1013 437.1    726    1606
+
+Percentage of the requests served within a certain time (ms)
+  50%    726
+  66%   1555
+  75%   1561
+  80%   1572
+  90%   1602
+  95%   1604
+  98%   1606
+  99%   1606
+ 100%   1606 (longest request)
+ \end{minted}
+\label{fig:kn30c30}
+\caption{Output of 30 concurrent connections}
+\end{listing}
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /test_asset
+Document Length:        15600 bytes
+
+Concurrency Level:      180
+Time taken for tests:   102.233 seconds
+Complete requests:      1380
+Failed requests:        54
+   (Connect: 0, Receive: 0, Length: 54, Exceptions: 0)
+Keep-Alive requests:    1326
+Total transferred:      21187354 bytes
+HTML transferred:       20841574 bytes
+Requests per second:    13.50 [#/sec] (mean)
+Time per request:       13334.721 [ms] (mean)
+Time per request:       74.082 [ms] (mean, across all concurrent requests)
+Transfer rate:          202.39 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  128 652.6      0    4900
+Processing:     0 6618 17501.4    831   95570
+Waiting:       54 1260 6032.2    193   49972
+Total:          0 6745 17697.4    843   97127
+
+Percentage of the requests served within a certain time (ms)
+  50%    843
+  66%   1348
+  75%   1843
+  80%   2547
+  90%  21964
+  95%  45340
+  98%  86613
+  99%  91950
+ 100%  97127 (longest request)
+ \end{minted}
+\label{fig:kn1380c180}
+\caption{Output of 1380 requests with 180 concurrent connections}
+\end{listing}
+
+\begin{sidewaysfigure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{kn1380c180}
+	\caption{Response time plot of 1380 requests with 180 concurrent connections}
+	\label{fig:kn2300c300_chart}
+\end{sidewaysfigure}
+
+- Some failed requests
+- Throughput kept around 13.5 req/sec. It didn't partially because of the failures.
+- Something is wrong when stdev is more than 2 times the mean.
+- Poor reliability
+
+\section{Sensor Observation Service}
+
+This test aims to test the performance of system while receiving requests from the sensors. This test impacts on the SOS and the database, hence the bottleneck is likely to be one of this components. In contrast with previous load test, since SOS is essentially a set of HTTP endpoints regular requests with an increasing level of concurrency are enough to assess the performance of the system.
+
+Nevertheless, the requirements state that sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test must take into account this time spans.
+
+\subsection{Baseline}
+
+For this test the baseline is defined as a single POST request to each of the two endpoints: /sensors and /observations. Both have fairly similar behaviour, processing the request and storing results in the database, and receive payloads of similar size. Hence, there is no need for combining these request as it does not provide any valuable insight. The results of both executions are shown in \ref{fig:sensors_n1c1} \ref{fig:observations_n1c1}.
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /webapp/sos/rest/sensors
+Document Length:        890 bytes
+
+Concurrency Level:      1
+Time taken for tests:   0.511 seconds
+Complete requests:      1
+Failed requests:        0
+Total transferred:      1210 bytes
+Total body sent:        3003
+HTML transferred:       890 bytes
+Requests per second:    1.96 [#/sec] (mean)
+Time per request:       510.607 [ms] (mean)
+Time per request:       510.607 [ms] (mean, across all concurrent requests)
+Transfer rate:          2.31 [Kbytes/sec] received
+                        5.74 kb/s sent
+                        8.06 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       48   48   0.0     48      48
+Processing:   463  463   0.0    463     463
+Waiting:      462  462   0.0    462     462
+Total:        511  511   0.0    511     511
+ \end{minted}
+\label{fig:sensors_n1c1}
+\caption{Output of a POST request to /sensors}
+\end{listing}
+
+\begin{listing}[h]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /webapp/sos/rest/observations
+Document Length:        854 bytes
+
+Concurrency Level:      1
+Time taken for tests:   0.655 seconds
+Complete requests:      1
+Failed requests:        0
+Total transferred:      1210 bytes
+Total body sent:        2204
+HTML transferred:       854 bytes
+Requests per second:    1.53 [#/sec] (mean)
+Time per request:       654.535 [ms] (mean)
+Time per request:       654.535 [ms] (mean, across all concurrent requests)
+Transfer rate:          1.81 [Kbytes/sec] received
+                        3.29 kb/s sent
+                        5.09 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       59   59   0.0     59      59
+Processing:   595  595   0.0    595     595
+Waiting:      592  592   0.0    592     592
+Total:        654  654   0.0    654     654
+ \end{minted}
+\label{fig:observations_n1c1}
+\caption{Output of a POST request to /observations}
+\end{listing}
+
+\subsubsection*{First scenario}
+
+In this scenario the load is compound of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations increases up until 60 observations per hour.
+
