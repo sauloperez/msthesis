@@ -36,7 +36,53 @@ The single HTML page of the application contains 46 assets, loading 717 KB of da
 
 To serve as comparison the baseline is defined as a test with a single request to load the HTML page followed by 46 request with 6 concurrent connections to load the assets of 15,6 KB each. This tries to mimic the behaviour while simplifying the intricacies of the browser concurrency and assuming the content is instantly rendered.
 
-\begin{listing}[h]
+As shown in \ref{fig:baseline}, the application assets are loaded in 231ms at 396KB/s. Together with the response time of a single request, this means a user waits $231ms + 431ms = 662ms$ seconds by average until the whole application is fully loaded.
+
+\subsubsection*{10 Users Scenario}
+
+In the following test executions the concurrency is increased progressively in order to simulate more demanding scenarios. First, simulating 10 users and then 50. For each of these, half of the required requests point to the HTML and the other half to the assets, thereby, simulating requests that impact the server differently.
+
+Therefore, the first test issues 10 concurrent requests to load the HTML, while 460 more requests with 60 concurrent connections load the assets.
+
+All users' browser loaded the application in $2695ms + 636ms = 3331ms$ in average. However, the standard deviation turns out to be remarkably high. The resulting values shown in \ref{fig:kn460c60} are summarized in the chart \ref{fig:kn460c60_chart}.
+
+
+- Some failed requests
+- Throughput kept around 13.5 req/sec. It didn't partially because of the failures.
+- Something is wrong when stdev is more than 2 times the mean.
+- Poor reliability
+
+\subsubsection*{30 Users Scenario}
+
+To test the load equivalent to 30 users this execution sends 30 concurrent requests plus 1380 requests with 180 concurrent connections.
+
+\subsection{Sensor Observation Service}
+
+This test aims to test the performance of system while receiving requests from the sensors. This test impacts on the SOS and the database, hence the bottleneck is likely to be one of this components. In contrast with previous load test, since SOS is essentially a set of HTTP endpoints regular requests with an increasing level of concurrency are enough to assess the performance of the system.
+
+Nevertheless, the requirements state that sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test must take into account this time spans (REVIEW).
+
+\subsubsection*{Baseline}
+
+For this test the baseline is defined as a single POST request to the /observations endpoint. Both have fairly similar behaviour, they process the request, store results in the database and receive payloads of similar size. Hence, there is no need for testing both endpoints as it does not provide any valuable insight. 
+The results of the test are shown in \ref{fig:observations_n1c1}.
+
+
+\subsubsection*{First scenario}
+
+In this scenario the load is compound of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations is increased up until 60 observations per hour. This covers the worse scenario where all available sensors have been turned on at the same time, thereby sending their observations concurrently. For the sake of brevity, only the execution with the worse mean response time is shown in \ref{fig:observations_n60c10}, while the response times of all executions is summarized in the chart \ref{fig:observations_n60c10_chart}.
+
+It is worth noting that all requests use the same POST data file, as it is the only way to simulate a POST request with Apache Bench. Splitting the test in different executions wouldn't allow Apache Bench to compute the aggregate statistics.
+
+\subsubsection*{Second scenario}
+
+Finally, in this scenario the SOS performance is tested under a more demanding load. To do so, the test sends 500 requests with 30 concurrent connections in a single execution. Thus, assuming every sensor sends an observation per minute, given that the system receives multiple batches of concurrent connections in a minute, this scenario simulates much more than 30 sensors. 
+The results are listed in \ref{fig:observations_n500c30} and represented in \ref{fig:observations_n500c30_chart}.
+
+
+\section{Results}
+
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -80,15 +126,7 @@ Percentage of the requests served within a certain time (ms)
 \caption{Output of the command \texttt{ab} for the baseline}
 \end{listing}
 
-As shown in \ref{fig:baseline}, the application assets are loaded in 231ms at 396KB/s. Together with the response time of a single request, this means a user waits $231ms + 431ms = 662ms$ seconds by average until the whole application is fully loaded.
-
-\subsubsection*{10 Users Scenario}
-
-In the following test executions the concurrency is increased progressively in order to simulate more demanding scenarios. First, simulating 10 users and then 50. For each of these, half of the required requests point to the HTML and the other half to the assets, thereby, simulating requests that impact the server differently.
-
-Therefore, the first test issues 10 concurrent requests to load the HTML, while 460 more requests with 60 concurrent connections load the assets.
-
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -132,7 +170,7 @@ Percentage of the requests served within a certain time (ms)
 \caption{Output of the command \texttt{ab} with 10 concurrent connections}
 \end{listing}
 
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -176,20 +214,15 @@ Percentage of the requests served within a certain time (ms)
 \caption{Output of 460 requests with 60 concurrent connections}
 \end{listing}
 
-All users' browser loaded the application in $2695ms + 636ms = 3331ms$ in average. However, the standard deviation turns out to be remarkably high. The resulting values shown in \ref{fig:kn460c60} are summarized in the chart \ref{fig:kn460c60_chart}.
 
-\begin{sidewaysfigure}[h]
+\begin{sidewaysfigure}[!p]
 	\centering
 	\includegraphics[width=\textwidth]{kn460c60}
 	\caption{Response time plot of 460 requests with 60 concurrent connections}
 	\label{fig:kn460c60_chart}
 \end{sidewaysfigure}
 
-\subsubsection*{30 Users Scenario}
-
-To test the load equivalent to 30 users this execution sends 30 concurrent requests plus 1380 requests with 180 concurrent connections.
-
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -233,7 +266,7 @@ Percentage of the requests served within a certain time (ms)
 \caption{Output of 30 concurrent connections}
 \end{listing}
 
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -278,29 +311,14 @@ Percentage of the requests served within a certain time (ms)
 \caption{Output of 1380 requests with 180 concurrent connections}
 \end{listing}
 
-\begin{sidewaysfigure}[h]
+\begin{sidewaysfigure}[!p]
 	\centering
 	\includegraphics[width=\textwidth]{kn1380c180}
 	\caption{Response time plot of 1380 requests with 180 concurrent connections}
 	\label{fig:kn2300c300_chart}
 \end{sidewaysfigure}
 
-- Some failed requests
-- Throughput kept around 13.5 req/sec. It didn't partially because of the failures.
-- Something is wrong when stdev is more than 2 times the mean.
-- Poor reliability
-
-\section{Sensor Observation Service}
-
-This test aims to test the performance of system while receiving requests from the sensors. This test impacts on the SOS and the database, hence the bottleneck is likely to be one of this components. In contrast with previous load test, since SOS is essentially a set of HTTP endpoints regular requests with an increasing level of concurrency are enough to assess the performance of the system.
-
-Nevertheless, the requirements state that sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test must take into account this time spans.
-
-\subsection{Baseline}
-
-For this test the baseline is defined as a single POST request to each of the two endpoints: /sensors and /observations. Both have fairly similar behaviour, processing the request and storing results in the database, and receive payloads of similar size. Hence, there is no need for combining these request as it does not provide any valuable insight. The results of both executions are shown in \ref{fig:sensors_n1c1} \ref{fig:observations_n1c1}.
-
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -335,7 +353,7 @@ Total:        511  511   0.0    511     511
 \caption{Output of a POST request to /sensors}
 \end{listing}
 
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
 baselinestretch=1.2,
 fontsize=\footnotesize
@@ -370,7 +388,93 @@ Total:        654  654   0.0    654     654
 \caption{Output of a POST request to /observations}
 \end{listing}
 
-\subsubsection*{First scenario}
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
 
-In this scenario the load is compound of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations increases up until 60 observations per hour.
+Document Path:          /webapp/sos/rest/observations
+Document Length:        854 bytes
+
+Concurrency Level:      1
+Time taken for tests:   0.655 seconds
+Complete requests:      1
+Failed requests:        0
+Total transferred:      1210 bytes
+Total body sent:        2204
+HTML transferred:       854 bytes
+Requests per second:    1.53 [#/sec] (mean)
+Time per request:       654.535 [ms] (mean)
+Time per request:       654.535 [ms] (mean, across all concurrent requests)
+Transfer rate:          1.81 [Kbytes/sec] received
+                        3.29 kb/s sent
+                        5.09 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       59   59   0.0     59      59
+Processing:   595  595   0.0    595     595
+Waiting:      592  592   0.0    592     592
+Total:        654  654   0.0    654     654
+ \end{minted}
+\label{fig:observations_n60c10}
+\caption{Output of 60 POST request to /observations with 10 concurrent connections}
+\end{listing}
+
+\begin{sidewaysfigure}[!p]
+	\centering
+	\includegraphics[width=\textwidth]{observations_n60c10_total}
+	\caption{Response time plot of 6 executions of 10 concurrent connections}
+	\label{fig:observations_n60c10_chart}
+\end{sidewaysfigure}
+
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /webapp/sos/rest/observations
+Document Length:        854 bytes
+
+Concurrency Level:      1
+Time taken for tests:   0.655 seconds
+Complete requests:      1
+Failed requests:        0
+Total transferred:      1210 bytes
+Total body sent:        2204
+HTML transferred:       854 bytes
+Requests per second:    1.53 [#/sec] (mean)
+Time per request:       654.535 [ms] (mean)
+Time per request:       654.535 [ms] (mean, across all concurrent requests)
+Transfer rate:          1.81 [Kbytes/sec] received
+                        3.29 kb/s sent
+                        5.09 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       59   59   0.0     59      59
+Processing:   595  595   0.0    595     595
+Waiting:      592  592   0.0    592     592
+Total:        654  654   0.0    654     654
+ \end{minted}
+\label{fig:observations_n500c30}
+\caption{Output of 500 POST request to /observations with 30 concurrent connections}
+\end{listing}
+
+\begin{sidewaysfigure}[!p]
+	\centering
+	\includegraphics[width=\textwidth]{observations_n500c30}
+	\caption{Response time plot of 500 requests with 30 concurrent connections}
+	\label{fig:observations_n500c30_chart}
+\end{sidewaysfigure}
+
+By the first scenario it is provided the system meets the requirements in terms of observation's processing.
+
+
+
+
 
