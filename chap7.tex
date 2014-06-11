@@ -4,11 +4,7 @@
 %% You can process specific files by typing their names in at the 
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
-\chapter{Testing}
-
-\section{Unit Testing}
-
-\section{Performance Testing}
+\chapter{Performance Testing}
 
 Performance testing comprehends any process of determining the quality attributes of a system such as responsiveness, stability and reliability under certain workloads. It is usually used to verify that the system meets its specifications.
 
@@ -22,7 +18,7 @@ As the system has two entry points, the one used by the sensors and the web appl
 
 TODO what about the queue??
 
-\subsection{Web Application}
+\section{Web Application}
 
 First and foremost, the variables involved in determining the response times of the requests must be defined. These are concurrency and number of requests per test.
 
@@ -32,13 +28,13 @@ First and foremost, the variables involved in determining the response times of 
 
 The single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application sources plus the map tiles and other resources fetched by the map client. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system, but the Mapbox's servers. Hence, they are not taken into account, although they impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
 
-\subsubsection*{Baseline}
+\subsection*{Baseline}
 
 To serve as comparison the baseline is defined as a test with a single request to load the HTML page followed by 46 request with 6 concurrent connections to load the assets of 15,6 KB each. This tries to mimic the behaviour while simplifying the intricacies of the browser concurrency and assuming the content is instantly rendered.
 
 As shown in \ref{fig:baseline}, the application assets are loaded in 231ms at 396KB/s. Together with the response time of a single request, this means a user waits $231ms + 431ms = 662ms$ seconds by average until the whole application is fully loaded.
 
-\subsubsection*{10 Users Scenario}
+\subsection*{10 Users Scenario}
 
 In the following test executions the concurrency is increased progressively in order to simulate more demanding scenarios. First, simulating 10 users and then 50. For each of these, half of the required requests point to the HTML and the other half to the assets, thereby, simulating requests that impact the server differently.
 
@@ -52,29 +48,29 @@ All users' browser loaded the application in $2695ms + 636ms = 3331ms$ in averag
 - Something is wrong when stdev is more than 2 times the mean.
 - Poor reliability
 
-\subsubsection*{30 Users Scenario}
+\subsection*{30 Users Scenario}
 
 To test the load equivalent to 30 users this execution sends 30 concurrent requests plus 1380 requests with 180 concurrent connections.
 
-\subsection{Sensor Observation Service}
+\section{Sensor Observation Service}
 
 This test aims to test the performance of system while receiving requests from the sensors. This test impacts on the SOS and the database, hence the bottleneck is likely to be one of this components. In contrast with previous load test, since SOS is essentially a set of HTTP endpoints regular requests with an increasing level of concurrency are enough to assess the performance of the system.
 
 Nevertheless, the requirements state that sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test must take into account this time spans (REVIEW).
 
-\subsubsection*{Baseline}
+\subsection*{Baseline}
 
 For this test the baseline is defined as a single POST request to the /observations endpoint. Both have fairly similar behaviour, they process the request, store results in the database and receive payloads of similar size. Hence, there is no need for testing both endpoints as it does not provide any valuable insight. 
 The results of the test are shown in \ref{fig:observations_n1c1}.
 
 
-\subsubsection*{First scenario}
+\subsection*{First scenario}
 
 In this scenario the load is compound of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations is increased up until 60 observations per hour. This covers the worse scenario where all available sensors have been turned on at the same time, thereby sending their observations concurrently. For the sake of brevity, only the execution with the worse mean response time is shown in \ref{fig:observations_n60c10}, while the response times of all executions is summarized in the chart \ref{fig:observations_n60c10_chart}.
 
 It is worth noting that all requests use the same POST data file, as it is the only way to simulate a POST request with Apache Bench. Splitting the test in different executions wouldn't allow Apache Bench to compute the aggregate statistics.
 
-\subsubsection*{Second scenario}
+\subsection*{Second scenario}
 
 Finally, in this scenario the SOS performance is tested under a more demanding load. To do so, the test sends 500 requests with 30 concurrent connections in a single execution. Thus, assuming every sensor sends an observation per minute, given that the system receives multiple batches of concurrent connections in a minute, this scenario simulates much more than 30 sensors. 
 The results are listed in \ref{fig:observations_n500c30} and represented in \ref{fig:observations_n500c30_chart}.
