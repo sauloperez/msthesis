@@ -8,75 +8,69 @@
 
 Performance testing comprehends any process of determining the quality attributes of a system such as responsiveness, stability and reliability under certain workloads. It is usually used to verify that the system meets its specifications.
 
-Load testing is the simplest form of performance testing. Load tests are conducted to assess the behaviour of the system under a particular load. The load is defined by a particular number of transactions and a certain level of concurrency within a specified duration. In the context of a web system the transactions are round trip of HTTP requests to a particular endpoint and the concurrency level is the number of requests performed at a time. As a result, the test outputs the response times of these requests and may uncover bottlenecks of the system.
+Load testing is the simplest form of performance testing. Tests are conducted to assess the behaviour of the system under a particular load, which is defined by a particular number of transactions and a certain level of concurrency within a specified duration. In the context of a web system the transactions are round trip of HTTP requests to a particular endpoint, whereas the concurrency level is the number of requests performed at a time. As a result, the test outputs the response times of these requests, thus uncovering possible bottlenecks of the system.
 
-There are numerous variables involved in the execution of the system such as network reliability, performance of the underlying hardware, availability of third-party services, etc. Therefore, the following load test does not aim to give the exact performance of the system, but its approximate behaviour under conditions similar to a real scenarios making some reasonable assumptions.
+There are numerous variables involved in the execution of a web system such as network reliability, performance of the underlying hardware, availability of third-party services, etc. Therefore, the following load tests do not aim to give a thorough assessment of the performance of the system, but its behaviour under conditions similar to a real scenarios while making some reasonable assumptions.
 
-The tests have been conducted using two simple yet powerful and mature open-source tools: Apache Bench and Gnuplot. Apache Bench is a server benchmarking tool that focuses on showing how many requests per second a system is able to serve. It provides basic statistic functions such as mean, median, minimum and maximum of the measured magnitudes. Gnuplot, on the other hand, makes it easy to draw charts from diverse input text formats by means of a scripting language or interactive console.
+The tests have been conducted using two simple yet powerful and mature open-source tools: Apache Bench and Gnuplot. Apache Bench is a server benchmarking tool that focuses on showing how many requests per second a system is able to serve. It provides basic statistic such as mean, median, minimum and maximum of the measured magnitudes. Gnuplot, on the other hand, makes it easy to draw charts from diverse input text formats by means of a scripting language or interactive console. Additionally, Apache Bench can output data in Gnuplot-compatible format, which allows to easily integrate both tools.
 
 As the system has two entry points, the one used by the sensors and the web application, two different load test have been performed. By doing so, we can assess the performance of the Sensor Observation Service and the Web application.
 
-TODO what about the queue??
-
 \section{Web Application}
 
-First and foremost, the variables involved in determining the response times of the requests must be defined. These are concurrency and number of requests per test.
+First and foremost, the variables involved in determining the response times of the requests must be defined. These are the concurrency level and the number of requests per test.
 
-\paragraph{Concurrency} We distinguish two different levels of concurrency. First, when a browser loads a web page it starts multiple connection to the server to load the resources. The number of simultaneous connections is a built-in browser parameter that for most of the web browsers defaults to 6. Besides, concurrency in a load testing often refers to the number of users issuing requests to the system at a time. The increases in this variable define the number of executions of the test.
+\paragraph{Concurrency} We distinguish two different levels of concurrency. Firstly, when a browser loads a web page it starts multiple connection to the server to load the resources. The number of simultaneous connections is a built-in browser parameter that for most of the web browsers defaults to 6. Besides, concurrency in load testing often refers to the number of users issuing requests to the system at a time. Each progressive increase in this variable defines the workloads the system will be tested with.
 
 \paragraph{Number of requests} This is the total number of requests issued to the system for each execution of the test. However, each time a user loads a web page the browser makes as many requests as assets the page contains. That is, the browser loads each of the CSS files, images and JS scripts the HTML states, one per request.
 
-The single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application sources plus the map tiles and other resources fetched by the map client. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system, but the Mapbox's servers. Hence, they are not taken into account, although they impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
+In this particular case, the single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application source files plus the map tiles and other resources fetched by the map client. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system, but the Mapbox's servers. Hence, they are not taken into account, although they impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
 
 \subsection*{Baseline}
 
-To serve as comparison the baseline is defined as a test with a single request to load the HTML page followed by 46 request with 6 concurrent connections to load the assets of 15,6 KB each. This tries to mimic the behaviour while simplifying the intricacies of the browser concurrency and assuming the content is instantly rendered.
-
-As shown in \ref{fig:baseline}, the application assets are loaded in 231ms at 396KB/s. Together with the response time of a single request, this means a user waits $231ms + 431ms = 662ms$ seconds by average until the whole application is fully loaded.
+To serve as comparison the baseline is defined as a test with a single request to load the HTML page followed by 46 request with 6 concurrent connections to load the assets of 15,6 KB each. This tries to mimic the behaviour  of the browser while simplifying the intricacies of its concurrency and assuming the content gets rendered instantly.
 
 \subsection*{10 Users Scenario}
 
-In the following test executions the concurrency is increased progressively in order to simulate more demanding scenarios. First, simulating 10 users and then 50. For each of these, half of the required requests point to the HTML and the other half to the assets, thereby, simulating requests that impact the server differently.
+In the following scenario the concurrency is increased progressively in order to simulate more demanding situations. First, simulating 10 users and then 50. For each of these, half of the required requests point to the HTML and the other half to the assets, thereby, simulating requests that impact the server differently.
 
 Therefore, the first test issues 10 concurrent requests to load the HTML, while 460 more requests with 60 concurrent connections load the assets.
 
-All users' browser loaded the application in $2695ms + 636ms = 3331ms$ in average. However, the standard deviation turns out to be remarkably high. The resulting values shown in \ref{fig:kn460c60} are summarized in the chart \ref{fig:kn460c60_chart}.
-
-
-- Some failed requests
-- Throughput kept around 13.5 req/sec. It didn't partially because of the failures.
-- Something is wrong when stdev is more than 2 times the mean.
-- Poor reliability
-
 \subsection*{30 Users Scenario}
 
-To test the load equivalent to 30 users this execution sends 30 concurrent requests plus 1380 requests with 180 concurrent connections.
+To test the load equivalent to 30 users, this scenario involves 30 concurrent requests plus 1380 requests with 180 concurrent connections. Again, this tries to be slightly more realistic than just requesting the plain HTML document.
 
 \section{Sensor Observation Service}
 
-This test aims to test the performance of system while receiving requests from the sensors. This test impacts on the SOS and the database, hence the bottleneck is likely to be one of this components. In contrast with previous load test, since SOS is essentially a set of HTTP endpoints regular requests with an increasing level of concurrency are enough to assess the performance of the system.
+This test aims to assess the performance of system while receiving requests from the sensors. This test impacts on the SOS and the database, hence the bottleneck is likely to be one of this components. In contrast with the web application load test, since SOS is essentially a set of HTTP endpoints, regular requests with an increasing level of concurrency are enough to assess the performance of the system.
 
-Nevertheless, the requirements state that sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test must take into account this time spans (REVIEW).
+Nevertheless, the sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test must take into account this time spans.
 
 \subsection*{Baseline}
 
-For this test the baseline is defined as a single POST request to the /observations endpoint. Both have fairly similar behaviour, they process the request, store results in the database and receive payloads of similar size. Hence, there is no need for testing both endpoints as it does not provide any valuable insight. 
-The results of the test are shown in \ref{fig:observations_n1c1}.
-
+For this test, the baseline is defined as a single POST request to the \texttt{/observations} endpoint. The two available endpoints, \texttt{/sensors} and \texttt{/observations}, have fairly similar behaviour. They process requests with similar payload size and store results in the database. Hence, there is no need for testing both endpoints as it does not provide any valuable insight.
 
 \subsection*{First scenario}
 
-In this scenario the load is compound of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations is increased up until 60 observations per hour. This covers the worse scenario where all available sensors have been turned on at the same time, thereby sending their observations concurrently. For the sake of brevity, only the execution with the worse mean response time is shown in \ref{fig:observations_n60c10}, while the response times of all executions is summarized in the chart \ref{fig:observations_n60c10_chart}.
+In this scenario the load is compound of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations is increased up until 60 observations per hour. This covers the worse scenario where all available sensors have been turned on at the same time, thereby sending their observations simultaneously. For the sake of brevity, only the execution with the worse mean response time is shown in \ref{fig:observations_n60c10}, while the response times of all executions is summarized in the chart \ref{fig:observations_n60c10_chart}.
 
-It is worth noting that all requests use the same POST data file, as it is the only way to simulate a POST request with Apache Bench. Splitting the test in different executions wouldn't allow Apache Bench to compute the aggregate statistics.
+It is worth noting that all requests use the same POST data file, as it is the only way to simulate a POST request with Apache Bench. Splitting the test in different steps for each particular sensor wouldn't allow Apache Bench to compute aggregated statistics.
 
 \subsection*{Second scenario}
 
-Finally, in this scenario the SOS performance is tested under a more demanding load. To do so, the test sends 500 requests with 30 concurrent connections in a single execution. Thus, assuming every sensor sends an observation per minute, given that the system receives multiple batches of concurrent connections in a minute, this scenario simulates much more than 30 sensors. 
-The results are listed in \ref{fig:observations_n500c30} and represented in \ref{fig:observations_n500c30_chart}.
-
+Finally, in this scenario the SOS performance is tested under a more demanding load. To do so, the test sends 500 requests with 30 concurrent connections in a single execution. Thus, assuming every sensor sends an observation per minute, given that the system receives multiple batches of concurrent connections within a minute, this scenario simulates much more than 30 sensors.
 
 \section{Results}
+
+\subsection*{Web Application}
+
+As shown in \ref{fig:baseline}, the application assets are loaded in 240ms. This, together with the response time of a request for the HTML document, 431ms, means that a single user waits 671ms in average until the whole application is fully loaded. The requests per second the system is able to serve while dealing with the assets is 24.94 req/sec.
+
+When the concurrency level is increased up until 10, the application loading time reaches $2966ms + 4419ms = 7385ms$ in average. However, as shown in \ref{fig:kn460c60}, the throughput is reduced to 13.58 req/sec. The chart \ref{fig:kn460c60_chart} examines more closely the all response times, which happen to be slightly disparate in some cases.
+
+Nevertheless, the system reaches its tipping point when the concurrency is increased to 180 connections and 1380 requests for assets are issued. In this case, Apache Bench's output \ref{fig:kn1380c180} lists 54 failed requests and the mean response time is increased by more than 30\%. Its related chart \ref{fig:kn1380c180_chart} perfectly illustrates how the system is unable to reliably process all the requests. Besides the initial burst on the response, the standard deviation rises gradually as time goes by, until it reaches its maximum capacity serving requests in around 30 seconds. Then, the system suddenly brakes and it only serves HTTP error responses, which have a negligible response time.
+
+In spite of some unusually long response times, the system can reliably handle around 60 concurrent connections. In overall terms, the results make clear the performance is somewhat poor. Unfortunately, it takes more 7 seconds to load the application with 10 concurrent users, which is an scenario that is likely to happen.
 
 \begin{listing}[!p]
 \begin{minted}[
@@ -119,7 +113,7 @@ Percentage of the requests served within a certain time (ms)
  100%   1448 (longest request)
 \end{minted}
 \label{fig:baseline}
-\caption{Output of the command \texttt{ab} for the baseline}
+\caption{Web application baseline results}
 \end{listing}
 
 \begin{listing}[!p]
@@ -163,7 +157,7 @@ Percentage of the requests served within a certain time (ms)
  100%   2967 (longest request)
  \end{minted}
 \label{fig:kn10c10}
-\caption{Output of the command \texttt{ab} with 10 concurrent connections}
+\caption{Output of 10 concurrent connections to root of the Web application}
 \end{listing}
 
 \begin{listing}[!p]
@@ -207,7 +201,7 @@ Percentage of the requests served within a certain time (ms)
  100%  31183 (longest request)
  \end{minted}
 \label{fig:kn460c60}
-\caption{Output of 460 requests with 60 concurrent connections}
+\caption{Output of 460 requests with 60 concurrent connections to load the assets}
 \end{listing}
 
 
@@ -259,7 +253,7 @@ Percentage of the requests served within a certain time (ms)
  100%   1606 (longest request)
  \end{minted}
 \label{fig:kn30c30}
-\caption{Output of 30 concurrent connections}
+\caption{Output of 30 concurrent connections to the root of the web application}
 \end{listing}
 
 \begin{listing}[!p]
@@ -304,14 +298,14 @@ Percentage of the requests served within a certain time (ms)
  100%  97127 (longest request)
  \end{minted}
 \label{fig:kn1380c180}
-\caption{Output of 1380 requests with 180 concurrent connections}
+\caption{Output of 1380 requests with 180 concurrent connections to load the assets}
 \end{listing}
 
 \begin{sidewaysfigure}[!p]
 	\centering
 	\includegraphics[width=\textwidth]{kn1380c180}
 	\caption{Response time plot of 1380 requests with 180 concurrent connections}
-	\label{fig:kn2300c300_chart}
+	\label{fig:kn1380c180_chart}
 \end{sidewaysfigure}
 
 \begin{listing}[!p]
