@@ -1,15 +1,324 @@
-\chapter{Tables}
+\chapter{Instruction Manual}
 
-\begin{table}
-\caption{Armadillos}
-\label{arm:table}
-\begin{center}
-\begin{tabular}{||l|l||}\hline
-Armadillos & are \\\hline
-our	   & friends \\\hline
-\end{tabular}
-\end{center}
-\end{table}
+\section{Web Application}\label{doc-webapp}
+
+\subsection*{Installation}\label{installation}
+
+First, clone the repo:
+
+\begin{verbatim}
+git clone git@github.com:sauloperez/redch-webapp.git
+\end{verbatim}
+
+Next, install its dependencies:
+
+\begin{verbatim}
+bundle install
+\end{verbatim}
+
+Redch Webapp gets observations from a RabbitMQ, so make sure the
+RabbitMQ server is running and accessible from within your network. For
+Mac OS X users this is done be typing:
+
+\begin{verbatim}
+rabbitmq-server
+\end{verbatim}
+
+While for Ubuntu users this is done with:
+
+\begin{verbatim}
+sudo /etc/init.d/rabbitmq-server start
+\end{verbatim}
+
+Besides, you must load the appropriate Procfile containing the values
+for the required env variables. It must contain the following:
+
+\begin{verbatim}
+AMQP_HOST=<RabbitMQ_server_host>
+\end{verbatim}
+
+Name this file after the environment, e.g. \texttt{development} and save
+it wherever you like from your directory tree. You can edit the
+development file in
+\url{https://github.com/sauloperez/redch-webapp/blob/master/development}.
+
+You can find further documentation in
+\href{https://devcenter.heroku.com/articles/procfile\#developing-locally-with-foreman}{Process
+Types and the Procfile} from Heroku Dev Center and from its
+\href{https://github.com/ddollar/foreman}{Github repo}.
+
+\subsection*{Usage}\label{usage}
+
+\subsubsection*{Development}\label{development}
+
+Now we are ready to start the webapp. From the root folder type the
+following in your terminal, using the path of your environment file:
+
+\begin{verbatim}
+foreman start -e <path_to_env_file>
+\end{verbatim}
+
+Nevertheless, it is recommended to have a development environment file
+per machine ignored by git, so any customizations can be made for that
+machine.
+
+That's all. The webapp is up and running. Point your browser to
+\texttt{http://localhost:3000} and you will see the real time map.
+
+\subsubsection*{Production}\label{production}
+
+In production the deployment process is automatized using
+\href{http://capistranorb.com/}{Capistrano}. To deploy just type the
+following command from your machine:
+
+\begin{verbatim}
+cap production deploy
+\end{verbatim}
+
+This essentially runs commands on the remote server through SSH. Once
+the process is finished, point your browser to the production server.
+
+Additionaly, some tasks to manage production services are provided. Each
+service has its own start, stop and restart actions:
+
+\begin{verbatim}
+cap production nginx:restart
+cap production passenger:stop
+cap production rabbitmq:start
+
+# Or open an SSH connection
+cap production utils:ssh
+\end{verbatim}
+
+To list all available tasks type:
+
+\begin{verbatim}
+cap production -T
+\end{verbatim}
+
+\subsection*{Testing}\label{testing}
+
+Testing covers both frontend and backend of the app. Jasmine has been
+chosen for the former while RSpec for the latter.
+
+To test the frontend start up the server as stated above and point your
+browser to \texttt{http://localhost:3000/SpecRunner.html}. You will get
+immediate results of how many test are passing (hopefully all of them).
+
+As for the backend, type the following in your terminal:
+
+\begin{verbatim}
+rspec spec
+\end{verbatim}
+
+This will execute all tests contained in the \texttt{/spec} folder.
+
+
+\section{CLI Client}\label{doc-cli-client}
+
+\subsection*{Installation}\label{installation}
+
+You must clone the repo
+
+\begin{verbatim}
+$ git clone git@github.com:sauloperez/redch.git
+\end{verbatim}
+
+Although not mandatory, it is highly recommended to add the executable
+in your PATH environment variable. To do so, create a softlink in a
+suitable system folder pointing to \texttt{/bin/redch} of the previously
+cloned repository. In Mac OS X \texttt{/usr/local/bin} might be a good
+choice. You can do that with the following command:
+
+\begin{verbatim}
+$ ln -s ~/redch/bin/redch /usr/local/bin/.
+\end{verbatim}
+
+Then, make sure your PATH variable looks up into the folder that
+contains the softlink. If not, add it. Doing so \texttt{redch} will be
+globally accessible.
+
+In case of working with Bash shell this should be set in the
+\texttt{\textasciitilde{}/.bash\_profile} file. Find further details in
+\href{http://www.joshstaiger.org/archives/2005/07/bash_profile_vs.html}{.bash\_profile
+vs .bashrc}
+
+\begin{verbatim}
+# Prepend the variable with the right path
+PATH="/usr/local/bin:/usr/local/sbin:$PATH"
+\end{verbatim}
+
+Lastly, load the changes
+
+\begin{verbatim}
+$ source ~/.bash_profile
+\end{verbatim}
+
+\subsection*{Usage}\label{usage}
+
+The command-line interface comes with the methods \texttt{setup} and
+\texttt{simulate} that you can use as follows.
+
+\subsubsection*{Setup}\label{setup}
+
+If no coordinates are provided, the \texttt{setup} command will pick up
+a random location near by Tàrrega within a range of 90 Km as the sensor
+location. It uses the first MAC address of the system as device unique
+identifier.
+
+\begin{verbatim}
+$ redch setup -c '41.65, 2.13'
+\end{verbatim}
+
+\subsubsection*{Simulate}\label{simulate}
+
+The \texttt{simulate} command loads the configuration set by the
+\texttt{setup} and issues randomly generated observations for each time
+period indefinitely. If not specified a period of 2 seconds will be
+used.
+
+\begin{verbatim}
+# Issue a post request each second
+$ redch simulate -p 1
+\end{verbatim}
+
+If the setup defaults suit you, you can skip the \texttt{setup} and just
+type the \texttt{simulate} command. It always executes the setup before
+the simulation if no configuration is found.
+
+\begin{verbatim}
+# Set up the sensor with its defaults and simulate observations
+$ redch simulate
+\end{verbatim}
+
+\subsubsection*{Help}\label{help}
+
+You can always list the available commands with the \texttt{help}
+command or the \texttt{-h} flag
+
+\begin{verbatim}
+$ redch help
+Commands:
+  redch help [COMMAND]  # Describe available commands or one specific command
+  redch setup           # Sets up the environment to enable the use of the device
+  redch simulate        # Simulate a sensor generating electrical power samples in W
+\end{verbatim}
+
+Or find out the details of a particular command
+
+\begin{verbatim}
+$ redch help setup
+Usage:
+  redch setup
+
+Options:
+  c, [--coordinates=COORDINATES]
+
+Sets up the environment to enable the use of the device
+\end{verbatim}
+
+
+\section{Sensor Observation Service}\label{doc-sos}
+
+\subsection*{Installation}\label{installation}
+
+\subsubsection*{Database}\label{database}
+
+You must create a Postgres PostGIS database named \texttt{sos}. To do
+so, connect to postgres and create the database. Then, connect to it and
+add the PostGIS extension.
+
+\begin{verbatim}
+$ psql -h localhost
+
+=# CREATE DATABASE sos;
+=# \connect sos;
+=# CREATE EXTENSION postgis;
+
+# Quit from the DB
+=# \q
+\end{verbatim}
+
+\subsubsection*{AMQP Service extension}\label{amqp-service-extension}
+
+This SOS implementation has been extended to suit the requirements of
+the Redch project. A RabbitMQ client wrapper has been added as
+extension.
+
+Contained in the
+\href{https://github.com/sauloperez/sos/tree/master/src/extensions/amqp-service}{amqp-service}
+submodule of the \texttt{extensions} module, it comes with an example
+properties file which can be found in the
+\href{https://github.com/sauloperez/sos/tree/master/config}{config
+folder}. These properties are the following:
+
+\begin{verbatim}
+# URL of the RabbitMQ server
+redch.amqp.host=192.168.0.20
+
+# Name of the exchange to where the observations should be published
+redch.amqp.exchange=observations
+\end{verbatim}
+
+An updated copy of this file must be stored in the same folder named as
+\texttt{redch.properties}.
+
+\textbf{Note:} Make sure you compile the \texttt{amqp-service} submodule
+whenever you change it before compiling the whole SOS. You can do so
+with the \texttt{mvn install} command.
+
+\paragraph{Integration}\label{integration}
+
+This service has been integrated with the SOS by using a subclass of the
+corresponding request handler. As every observation received must be
+published into the queue, the
+\href{https://github.com/sauloperez/sos/blob/master/src/bindings/rest/code/src/main/java/org/n52/sos/binding/rest/resources/observations/ObservationsPostRequestHandler.java}{ObservationsPostRequestHandler}
+with
+\href{https://github.com/sauloperez/sos/blob/mastero/src/bindings/rest/code/src/main/java/org/n52/sos/binding/rest/resources/observations/RedchObservationsPostRequestHandler.java}{RedchObservationsPostRequestHandler}
+of the rest binding, which connects to the AMQP Service.
+
+\subsection*{Usage}\label{usage}
+
+\subsubsection*{Development}\label{development}
+
+First of all, deploy the Java Webapp with the command
+\texttt{mvn clean tomcat:deploy} or
+\texttt{mvn clean tomcat:undeploy tomcat:deploy} if it already exists.
+Then configure it using the webapp. Just browse to
+\texttt{\textless{}tomcat\_url\textgreater{}/webapp} and follow the
+wizard's steps.
+
+Redch SOS talks to RabbitMQ and Postgresql. So besides setting them up
+and running, make sure the \texttt{redch.amqp.host} property of the
+\texttt{redch.properties} file points to the right the RabbitMQ server.
+As for the DB, make sure the field \texttt{Host} under
+\textbf{Datasource settings} section of the SOS administrative backend
+points to the right host.
+
+\subsubsection*{Production}\label{production}
+
+In production the deployment process is automatized using
+\href{http://capistranorb.com/}{Capistrano}. To deploy just type the
+following command from your machine:
+
+\begin{verbatim}
+cap production deploy
+\end{verbatim}
+
+This essentially runs commands on the remote server through SSH. Once
+the process is finished, point your browser to
+\texttt{\textless{}production\_server\textgreater{}/webapp} and fill up
+the wizard fields like in development.
+
+In addition, it also provides tasks to \# TODO fix tomcat tasks
+
+\subsection*{Testing}\label{testing}
+
+The AMQPService extensions as well as the SOS itself come with unit
+tests made with JUnit. It is recommended to run them from your IDE of
+choice. Most of them have JUnit plugins available.
+
+The tests can be found in the \texttt{src/test} folder of every module.
 
 \clearpage
 \newpage
