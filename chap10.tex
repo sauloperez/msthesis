@@ -8,17 +8,7 @@
 
 \section{Conclusions}
 
-- Two iterations of each component. Better way?
-- Decisions unsure
 - Pay a lot for puppet and infrastructure, trying to much towards one path without stepping back. It might help not to get these benefit, get it working and then try to address them.
-- Goals of the project achieved
-- DevOps knowledge has much impact and cost.
-
-\section{Further Work}
-
-- Try other options for the unsure
-- Investigate PaaS further. Git-based deployments. They do not require DevOps knowledge.
-
 
 The myriad of open-source software and modern web technologies used in this MS Thesis have provided to be a viable solution for building IT infrastructure for public research centers. Specifically, these technologies have been combined together to build a distributed as a proof-of-concept for a larger initiative, which aims to provide a valuable insight into the actual production of renewable energies at a small scale in Catalonia.
 
@@ -26,6 +16,23 @@ The introduction presents the motivations behind this initiative of the CREAF an
 
 Next, a thorough analysis defines the boundaries of this thesis by providing its scope and requirements. This is detailed further in Chapter 3 with a formal specification of the use cases and the whole conceptual model around the measurement and processing of observations.
 
-Then, Chapter 4 details the findings of the deep research process that had been carried out to assess the best technologies available and later support the design decisions taken in Chapter 5. This is particularly relevant due to the fact the chosen technologies are the basis for its further development.
+Then, Chapter 4 details the findings of the deep research process that had been carried out 
+to later support the design decisions taken in Chapter 5. These chapters are particularly relevant due to the fact the chosen technologies are the basis for its further development.
 
-Chapters 6 and 7 provide insight into the implementation and the infrastructure the system runs on. Particular attention is given to the automation of common processes such as provisioning, deployment and maintenance tasks, which provide reliability and confidence to the system's managers.
+Chapters 6 and 7 provide insight into the implementation and the infrastructure the system runs on. Particular attention is given to the automation of common processes such as provisioning, deployment and maintenance tasks, which provide reliability and confidence to the system's managers. Then, the evaluation of the resulting system in terms of performance is described in Chapter 8.
+
+In spite of the difficulties that determining the scope of the product entailed, the final delimitation we came up with together with CREAF has proven to be adequate. It has been enough to explore each individual part of the project and demonstrate their potential. Specifically, although being rather simple the web application shows how a data visualization can be enriched with a full-featured application. As for the future sensors, the development of the simulator has allowed to better understand the challenges and requirements their design may involve.
+
+On the other hand, the key point of using a messaging queue has been a very successful decision, in that has enabled a loosely coupled and scalable architecture that allows both ends of the queue, the SOS and the web application, to evolve independently. But as downside, this has brought some complexity that affects the resilience of the system. Implementing a more robust redundancy-based resilience mechanism would have improved the overall quality of the system.
+
+As for the infrastructure, the complexity of setting the servers up surpassed the initial estimation causing a great impact on the time invested for that matter. While running the services in a development environment is often very easy, there are numerous variables involved when it comes to a production environment. Furthermore, it was the least-known of the fields involved in the project and the one the required the deepest understanding of the architecture and all its implications.
+
+Regarding the methodology, the iterative development has led to a clean and maintainable codebase. A first iteration laid out each component and allowed to get the insight upon which the second iteration improved them to be up and ready.
+
+Finally, all the goals of the project have been successfully achieved and all the requirements in Chapter 2 were met. We are able to simulate sensor with a command line interface, the observations are stored, processed and displayed in real time.
+
+\section{Further Work}
+
+- Try other options for the unsure
+- Investigate PaaS further. Git-based deployments. They do not require DevOps knowledge. DevOps knowledge has much impact and cost and must be taken into account as is critical for the success.
+
