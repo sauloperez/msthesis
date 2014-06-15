@@ -8,8 +8,6 @@
 
 \section{Conclusions}
 
-- Pay a lot for puppet and infrastructure, trying to much towards one path without stepping back. It might help not to get these benefit, get it working and then try to address them.
-
 The myriad of open-source software and modern web technologies used in this MS Thesis have provided to be a viable solution for building IT infrastructure for public research centers. Specifically, these technologies have been combined together to build a distributed as a proof-of-concept for a larger initiative, which aims to provide a valuable insight into the actual production of renewable energies at a small scale in Catalonia.
 
 The introduction presents the motivations behind this initiative of the CREAF and outlines the main goals of this project.
@@ -25,14 +23,20 @@ In spite of the difficulties that determining the scope of the product entailed,
 
 On the other hand, the key point of using a messaging queue has been a very successful decision, in that has enabled a loosely coupled and scalable architecture that allows both ends of the queue, the SOS and the web application, to evolve independently. But as downside, this has brought some complexity that affects the resilience of the system. Implementing a more robust redundancy-based resilience mechanism would have improved the overall quality of the system.
 
-As for the infrastructure, the complexity of setting the servers up surpassed the initial estimation causing a great impact on the time invested for that matter. While running the services in a development environment is often very easy, there are numerous variables involved when it comes to a production environment. Furthermore, it was the least-known of the fields involved in the project and the one the required the deepest understanding of the architecture and all its implications.
+As for the infrastructure, the complexity of setting the servers up surpassed the initial estimation causing a great impact on the time invested for that matter. While running the services in a development environment is often very easy, there are numerous variables involved when it comes to a production environment. Furthermore, it was the least-known of the fields involved in the project and the one that required the deepest understanding of the architecture. This led us to the conclusions that being the infrastructure critical for the proper functioning of the system, much attention has to be paid to the administration of the system. Otherwise, its impact on cost will increase as it evolves.
 
-Regarding the methodology, the iterative development has led to a clean and maintainable codebase. A first iteration laid out each component and allowed to get the insight upon which the second iteration improved them to be up and ready.
+Regarding the methodology, the outcome of the iterative development is a clean and maintainable codebase. A first iteration laid out each component and allowed to get the insight upon which the second iteration improved them so as to be up and ready.
 
-Finally, all the goals of the project have been successfully achieved and all the requirements in Chapter 2 were met. We are able to simulate sensor with a command line interface, the observations are stored, processed and displayed in real time.
+Finally, all the goals of the project have been successfully achieved and all the requirements in Chapter 2 were met. We are able to simulate sensors with a command line interface and the observations are stored, processed and displayed in real time.
 
 \section{Further Work}
 
-- Try other options for the unsure
-- Investigate PaaS further. Git-based deployments. They do not require DevOps knowledge. DevOps knowledge has much impact and cost and must be taken into account as is critical for the success.
+Considering the current state of the product, we identify some unresolved issues and steps that would be worth exploring in further research.
 
+From the point of view of the implementation, there are a couple of aspects of the current architecture that would be interesting to investigate. First, given the event-driven nature of the web application's  back-end, it may be worth replacing its implementation with Node.js. Its non-blocking I/O design that claims to maximize throughput and efficiency, makes it suitable for scalable networking applications. This seems to be a natural fit the features of this project and may even surpass the EventMachine's high performance. However, it has not been possible due to the time constraints considering our total lack of awareness of this platform.
+
+Regarding the messaging queue, given that RabbitMQ's messages acknowledgement is not used may be beneficial to implement messaging with Redis instead. It is essentially a very high-performance key/value store for structured data that brings many other features such as pub/sub capabilities. This, however, doesn't include message acknowledgement for the sake of performance. Replacing RabbitMQ with Redis would enable to implement retrieval of latest observations once a new browser connection is established, feature that isn't currently supported. Nevertheless, Redis pub/sub simplicity compared to RabbitMQ queue features may impact on future decisions as the system's usage grows.
+
+From the infrastructure perspective, it may be beneficial at the early stages of the project to lean towards a PaaS hosting rather than the current IaaS. As a result, it would require far less systems administration knowledge and it would simplify deployments even more, but this comes at the expense of higher cost and less control over the product. In any case, this a possibility that is worth studying.
+
+Finally, as next step of the project the system's poor performance must be addressed by switching to more reliable and powerful servers. After that, it would be recommended to start using the system with a small subset of real users while the ideas exposed above are considered prior to a public release. Meanwhile it would be valuable to look for the involvement of public institutions, other research centers and specially the Open Geospatial Consortium so as to ensure the success of the project.
