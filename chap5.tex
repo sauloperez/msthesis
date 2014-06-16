@@ -158,11 +158,9 @@ The SPA consists of four different components: the HTML template, the data visua
 	\label{fig:spa_class_diagram}
 \end{figure}
 
-The single HTML file acts as the template for the application and contains the references to all of its assets: css files, web fonts, and JS libraries.
+The single HTML file acts as the template for the application and contains the references to all of its assets: css files, web fonts, and JS libraries. Among these assets, there are the JS and tiles that Mabpox -- an interactive maps JS library -- loads.
 
-TODO speak about the map tiles servive. Mapbox
-
-The data visualization sets up a map and renders circles placed at the exact location where the observation took place, each one corresponding to a different observation. These circles convey the observation's electrical power with the filling color ranging from yellow to red following a linear function.
+The data visualization sets up the map and renders circles placed at the exact location where the observation took place, each one corresponding to a different observation. These circles convey the observation's electrical power with the filling color ranging from yellow to red following a linear function.
 
 All SPA pieces work in a fully evented fashion. Whenever a SSE message is received, the \texttt{Communicator} publishes the event into the \texttt{eventBus} and the observations collection, which is subscribed to said event, process it. When the collection triggers an add, remove or change event the visualization gets updated with new, changed or deleted circles depending on the information contained in the collection at that point.
 

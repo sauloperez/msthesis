@@ -24,7 +24,7 @@ First and foremost, the variables involved in determining the response times of 
 
 \paragraph{Number of requests} This is the total number of requests issued to the system for each execution of the test. However, each time a user loads a web page the browser makes as many requests as assets the page contains. That is, the browser loads each of the CSS files, images and JS scripts the HTML states, one per request.
 
-In this particular case, the single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application source files plus the map tiles and other resources fetched by the map client. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system but instead the Mapbox's servers. Therefore, they are not taken into account although they have an impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
+In this particular case, the single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application source files plus the map tiles and other resources fetched by the Mapbox library. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system but instead the Mapbox's servers. Therefore, they are not taken into account although they have an impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
 
 \subsection*{Baseline}
 
