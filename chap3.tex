@@ -66,7 +66,7 @@ The actors of the system are the following.
 		\item The system notifies the sensor when the observation has been successfully stored
 	}
 	\addscenario{Extensions:}{
-		\item[1.a] The observation sensor is not found
+		\item[1.a] The sensor specified in the request is not found
 			\begin{enumerate}
 			\item[1.] The system returns an error message
 			\end{enumerate}
@@ -95,8 +95,8 @@ To start with, an observation is an aggregation of the following six elements:
 \item[Feature of interest] A representation of a real-world object that carries the observed property, e.g. "Pant\`a de Sau". Hence, for an in-place instrument this would be the sensor location, whereas for a remote sensor it would be the target location.
 \item[Procedure] Instance of a process which has performed the observation. Despite being usually a physical sensor, it can also be a process that leads to an observation such as a computation or the result of post-processing.
 \item[Observed property] Represent the phenomena under observation. Usually a concept of a formal ontology, e.g. air temperature.
-\item[Phenomenon time] Time when the observation result applies.
-\item[Result time] Time when the observation result has been created. Note that these two times may be identical.
+\item[Phenomenon time] Time when the phenomenon that produces the observation occurs.
+\item[Result time] Time when the observation result has been created. Note that phenomenon and result times may be identical.
 \item[Result] Result of the observation, which can be either a scalar value or a complex multi-dimensional array.
 \end{description}
 

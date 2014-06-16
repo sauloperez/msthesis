@@ -6,7 +6,7 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Implementation}
 
-\section{Development environment set-up}
+\section{Development environment setup}
 
 The development of this project encompasses a set of diverse tools that aim to ease this process allowing one to focus on the particularities of this project rather than on repetitive and common tasks. What follows is the description and reasons that led to their choice.
 
@@ -16,7 +16,7 @@ The development of this project encompasses a set of diverse tools that aim to e
 
 \paragraph{Version Control System} Is essential for the sake of the project to store its codebase in a Version Control System (CVS). All source codes as well as this document are kept in multiple Git repositories. In addition, Github has been chosen as the as the code hosting service due to its focus on collaboration and its considerable popularity in the open-source community.
 	
-\paragraph{Virtual Machines} Virtual Machines (VM) have been mainly used in order to employ multiple sensor simulators at once. A tool such as Vagrant has dramatically improved the use of such systems by providing means to easily configure lightweight and portable development environments. It has become as simple as describing the VM in a file and booting it by typing \texttt{vagrant up} in the terminal. The same configuration file can boot the same VM in any other host OS with vagrant installed.
+\paragraph{Virtual Machines} Virtual Machines (VM) have been mainly used in order to employ multiple sensor simulators at once. A tool such as Vagrant has dramatically improved the use of such systems by providing means to easily configure lightweight and portable development environments. It has become as simple as describing the VM in a file and booting it up by typing \texttt{vagrant up} in the terminal. The same configuration file can boot the same VM in any other host OS with vagrant installed.
 
 \begin{listing}[h]
 \begin{minted}[
@@ -47,7 +47,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   end
 end
 \end{minted}
-\caption{Example of a Vagrantfile specifying three sensor simulator's VM}
+\caption{Example of a Vagrantfile specifying three VM to host sensor simulators}
 \end{listing}
 
 \paragraph{Secure Shell} the Secure Shell (SSH) has proven to be essential for the development of the project. Once the aforementioned VMs are running the easiest and fastest way to manage them is by using ssh through the terminal. Likewise, ssh is the only way to remotely manage the production servers.
@@ -56,7 +56,7 @@ end
 
 \section{CLI commands}
 
-Every implemented SOS operation has its CLI command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow one to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal. The command is executed from the terminal as:
+Every implemented SOS operation has its CLI command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow one to define the description of the command and any option such as \texttt{period}. The helper shell method \texttt{say} outputs the passed message to the terminal. The \texttt{simulate} command is then executed from the terminal as:
 
 \begin{figure}[H]
   \centering
@@ -113,7 +113,7 @@ public interface AMQPService {
 \label{fig:amqp_service_spi}
 \end{listing}
 
-\begin{listing}[h]
+\begin{listing}[H]
 \begin{minted}[
 frame=lines,
 framesep=2mm,
@@ -153,7 +153,7 @@ public class AMQPServiceImpl implements AMQPService {
 
 \section{Sinatra's DSL}
 
-Sinatra exposes a simple DSL that enables the actions associated to a given endpoint to be specified and the response template to render. Similar to the HTTP verbs methods it defines a method for each templating engine supported, which accepts the template name as a parameter.
+Sinatra exposes a simple DSL that enables the actions associated to a given endpoint to be specified and the response template to render. Similar to the HTTP verbs methods, it defines a method for each templating engine supported, which accepts the template name as a parameter.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -189,9 +189,9 @@ end
 
 Data Joins is what D3.js uses to bind data to elements. Data joined to existing elements produces the \textit{enter} selection, that is, the intersection's set between data and elements. All unbound data produce the \textit{enter} selection, that is, all missing elements. Similarly, all remaining elements produce the \textit{exit} selection which represents elements to be removed. These selections represent the three possible states.
 
-To operate over these three states, one must select the elements and data to be joined. In the third line of the source code all circles of the \texttt{this.\_g} SVG container are selected. This selection is then joined to the array of Backbone observation models \texttt{this.collection.models} passed in on instantiation.
+To operate over these three states, one must select the elements and data to be joined. In the third line of the source code \ref{fig:joins} all circles of the \texttt{this.\_g} SVG container are selected. This selection is then joined to the array of Backbone observation models \texttt{this.collection.models} passed in on instantiation.
 
-As a consequence, data joins lead to a more declarative code that allowing targeting operations to specific states without need for branches nor iterations. A good example is found in lines 8 and  24. While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
+As a consequence, data joins lead to a more declarative code allowing targeting operations to specific states without need for branches nor iterations. A good example is found in lines 8 and  24. While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -228,7 +228,7 @@ draw: function() {
 }
 \end{minted}
 \caption{D3 data joins used in the SPA}
-\label{fig:command}
+\label{fig:joins}
 \end{listing}
 
 \section{Server-Sent Events}
@@ -258,7 +258,7 @@ end
 \label{fig:sse_backend}
 \end{listing}
 
-The Event Stream format is just a plaintext response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies that the response must contain a line beginning with \texttt{data:} followed by the message. The message can be broken up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
+The Event Stream format is just a plain text response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies that the response must contain a line beginning with \texttt{data:} followed by the message. The message can be broken up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
 
 An event can be associated with a unique id by including a line starting with \texttt{id:} as in line 4. Likewise, the reconnection-timeout can be changed by including a line beginning with \texttt{retry:} followed by the number of milliseconds to wait before the reconnection. In this way, whenever the connection is dropped the browser will attempt to reconnect after the specified time.
 
@@ -276,11 +276,13 @@ baselinestretch=1.2,
 fontsize=\footnotesize,
 linenos
 ] {javascript}
+// (...)
 connect: function() {
   if (this._connection) return;
   this._connection = new EventSource(this.uri);
   this.setCallbacks();
 }
+// (...)
 \end{minted}
 \caption{SSE connection in \texttt{communicator.js}}
 \label{fig:sse_connection}

@@ -6,7 +6,7 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Design}
 
-In this chapter we will discuss all design decisions taken regarding the building of Redch. These are grounded on the detailed research explained in \ref{technology_research}. The high-level architecture already outlined in \ref{fig:use_cases} is extended further by first explaining the technology used: the programming languages, frameworks and most relevant libraries. Then, the whole architecture of the system is presented by describing each one of the components the system is comprised of.
+In this chapter we will discuss all design decisions taken regarding the building of Redch. These are grounded on the detailed research explained in Chapter \ref{technology_research}. The high-level architecture already outlined in \ref{fig:use_cases} is extended further by first explaining the technology used: the programming languages, frameworks and most relevant libraries. Then, the whole architecture of the system is presented by describing each one of the components the system is comprised of.
 
 The design explained below aims to provide a solid groundwork and a first prototype for the Redch project. Therefore, not all ideas discussed in previous chapters may be included in the result of this master thesis.
 
@@ -60,9 +60,9 @@ Thor is a toolkit for building powerful command-line interfaces, which is used b
 
 \subsubsection*{Sensor Observation Service Client}
 
-On the other hand, each command calls the underlying SOS Client, which in turn makes an HTTP request to the service. Being SOS a RESTful Web Service, the client implements two REST resources: Sensor and Observation, using the Ruby's rest-client gem\footnote{Libraries in Ruby programming language}.
+On the other hand, each command calls the underlying SOS Client, which in turn makes an HTTP request to the service. Being SOS a RESTful Web Service, the client implements two REST resources: \texttt{sensors} and \texttt{observations}, using the Ruby's rest-client gem\footnote{Libraries in Ruby programming language}.
 
-This widely-used gem abstracts the actual http protocol by exposing methods for each HTTP verb that accept header and query parameters to be passed in. Additionally, it provides a lower-level API that enables specification SSL parameters, dealing with cookies, etc. for cases the general API doesn't cover.
+This widely-used gem abstracts the actual HTTP protocol by exposing methods for each HTTP verb that accept header and query parameters to be passed in. Additionally, it provides a lower-level API that enables specification OF SSL parameters, dealing with cookies, etc. for cases the general API doesn't cover.
 
 Finally, the client uses the Slim template language to render Geography Markup Language (GML), an OGC standard adopted by the International Organization for Standardization (ISO). Each operation has its own template that gets rendered with the data provided by each call. The obtained XML markup makes up the HTTP request body.
 
@@ -82,7 +82,7 @@ Finally, the client uses the Slim template language to render Geography Markup L
 
 The messaging queue is the central component which drives the data throughout the system and thereby determines the architecture of all other components. A detailed list of most known messaging queue systems has been given in \ref{message_passing}, all of which highly reliable and high-performant. However, usually message queues aren't system bottlenecks but rather message consumers slowed down by database queries or backend systems.
 
-So the choice of an specific message queue depends on the amount of client libraries available, particularly for the languages used in the project, clustering support and the complexity of installation and management. It is also important that the chosen queue has enough high-quality online resources to help with the integration. RabbitMQ, with a rich management web UI and exhaustive documentation including a clustering guide, is the one that best fits our requirements.
+So the choice of an specific message queue depends on the amount of client libraries available, particularly for the languages used in the project, clustering support and the complexity of installation and management. It is also important that the chosen queue has enough high-quality online resources to ease the integration. RabbitMQ, with a rich management web UI and exhaustive documentation including a clustering guide, is the one that best fits our requirements.
 
 This decision has an impact on the design of the data producers and consumers, which must integrate with RabbitMQ using the AMQP protocol. This will be discussed further in following sections.
 
@@ -126,9 +126,9 @@ The web application has two differentiated parts: the application's backend and 
 
 \subsubsection{Backend}
 
-The backend uses the amqp gem. A feature-rich asynchronous RabbitMQ client built which is built on top of EventMachine, the most popular event-driven I/O and concurrency library in Ruby. This library implements the Reactor pattern \cite{reactor}, the event handling pattern that constitutes the core of Python's Twisted or Node.js.
+The backend uses the amqp gem. A feature-rich asynchronous RabbitMQ client which is built on top of EventMachine, the most popular event-driven I/O and concurrency library in Ruby. This library implements the Reactor pattern \cite{reactor}, the event handling pattern that constitutes the core of Python's Twisted or Node.js.
 
-Once a message is received, the backend forwards it to each open streaming connection using the HTML5 Server Sent Events API \ref{web_real_time}. Therefore, concurrency is essential for the performance of the backend which, once again, is provided through EventMachine.
+Once a message is received, the backend forwards it to each open streaming connection using the HTML5 Server Sent Events API, explained in \ref{web_real_time}. Therefore, concurrency is essential for the performance of the backend which, once again, is provided through EventMachine.
 
 SSE has been chosen over WebSockets as the data delivery mechanism because of its much easier implementation and lesser impact on the underlying infrastructure. Moreover, since the data flows only from the backend to the browser, half-duplex one-way communication is enough.
 
@@ -158,7 +158,7 @@ The SPA consists of four different components: the HTML template, the data visua
 	\label{fig:spa_class_diagram}
 \end{figure}
 
-The single HTML file acts as the template for the application and contains the references to all of its assets: css files, web fonts, and JS libraries. Among these assets, there are the JS and tiles that Mabpox -- an interactive maps JS library -- loads.
+The single HTML file acts as the template for the application and contains the references to all of its assets: css files, web fonts, and JS libraries. Among these assets, there are the JS and tiles that Mabpox -- the interactive maps JS library used -- loads.
 
 The data visualization sets up the map and renders circles placed at the exact location where the observation took place, each one corresponding to a different observation. These circles convey the observation's electrical power with the filling color ranging from yellow to red following a linear function.
 
