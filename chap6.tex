@@ -8,15 +8,15 @@
 
 \section{Development environment set-up}
 
-The development of this project comprehends a set of diverse tools that aim to ease this process allowing to focus on the particularities of this project rather than on repetitive and common tasks. What follows is the description and reasons that led to their choice.
+The development of this project encompasses a set of diverse tools that aim to ease this process allowing one to focus on the particularities of this project rather than on repetitive and common tasks. What follows is the description and reasons that led to their choice.
 
-\paragraph{Terminal emulator} iTerm2 has been used as the terminal emulator throughout the project to execute many tools used in this project. From the compilation of the customized SOS to the execution of the simulator's CLI. Its rich features such as search, split panes, tabs, 256 colors or OS native notifications support make it a good replacement for the Mac OS X terminal.
+\paragraph{Terminal emulator} iTerm2 has been used as the terminal emulator throughout the project to execute many tools used in this project from the compilation of the customized SOS to the execution of the simulator's CLI. Its rich features such as search, split panes, tabs, 256 colors or OS native notifications support make it a good replacement for the Mac OS X terminal.
 
 \paragraph{Editors} Given the diversity of languages used in the project different editors have been used in its development. An static language like Java requires the use of a full-featured Integrated Development Environment (IDE) like Eclipse, which provides integration with major frameworks and tools. As for the dynamic languages of the project, Ruby and JavaScript, Sublime Text 2 has been chosen as the main editor, sometimes replaced with Vim. Both are lightweight editors with a rich environment of plugins and focused on the efficiency of the developer.
 
-\paragraph{Version Control System} Is essential for the sake of the project to store it in a Version Control System (CVS). Its whole codebase as well as this document are kept in multiple Git repositories. In addition, Github has been chosen as the as the code hosting service due to its focus on collaboration and its considerable popularity in the open-source community.
+\paragraph{Version Control System} Is essential for the sake of the project to store its codebase in a Version Control System (CVS). All source codes as well as this document are kept in multiple Git repositories. In addition, Github has been chosen as the as the code hosting service due to its focus on collaboration and its considerable popularity in the open-source community.
 	
-\paragraph{Virtual Machines} Virtual Machines (VM) have been mainly used for the use of multiple sensor simulators at once. A tool such as Vagrant has dramatically improved the use of such systems by providing means to easily configure lightweight and portable development environments. It has become as simple as describing the VM in a file and boot it typing \texttt{vagrant up} in the terminal. The same configuration file can boot the same VM in any other host OS with vagrant installed.
+\paragraph{Virtual Machines} Virtual Machines (VM) have been mainly used in order to employ multiple sensor simulators at once. A tool such as Vagrant has dramatically improved the use of such systems by providing means to easily configure lightweight and portable development environments. It has become as simple as describing the VM in a file and booting it by typing \texttt{vagrant up} in the terminal. The same configuration file can boot the same VM in any other host OS with vagrant installed.
 
 \begin{listing}[h]
 \begin{minted}[
@@ -50,13 +50,13 @@ end
 \caption{Example of a Vagrantfile specifying three sensor simulator's VM}
 \end{listing}
 
-\paragraph{Secure Shell} the Secure Shell (SSH) has provided to be essential for the development of the project. Once the aforementioned VMs are running the easiest and fastest way to manage them is using ssh through the terminal. Likewise, ssh is the only way to remotely manage the production servers.
+\paragraph{Secure Shell} the Secure Shell (SSH) has proven to be essential for the development of the project. Once the aforementioned VMs are running the easiest and fastest way to manage them is by using ssh through the terminal. Likewise, ssh is the only way to remotely manage the production servers.
 
-\paragraph{Custom tools} Third-party tools not always solve the issues encountered across the stages of a project. Rather than final solutions, sometimes is worth considering them as the building blocks of a custom solution. This is the approach followed on the building of the Random Observations Generator\footnote{Git repository: \url{https://github.com/sauloperez/redch-obsgen}}, a very simple wrapper around the RabbitMQ's Management Command Line Tool plugin. The wrapper is built with Thor and the Open4 gem, which allows to open child processes and handle their pids and I/O streams.
+\paragraph{Custom tools} Third-party tools not always solve the issues encountered throughout the stages of a project. Rather than final solutions, sometimes is worthwhile considering them as the building blocks of a custom solution. This is the approach followed in the building of the Random Observations Generator\footnote{Git repository: \url{https://github.com/sauloperez/redch-obsgen}}, a very simple wrapper around the RabbitMQ's Management Command Line Tool plugin. The wrapper is built with Thor and the Open4 gem, which allows to open child processes and handle their pids and I/O streams.
 
-\section{CLI's command}
+\section{CLI commands}
 
-Every implemented SOS operation has its CLI's command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal. The command is executed from the terminal as:
+Every implemented SOS operation has its CLI command equivalent. Figure \ref{fig:command} shows the implementation of the command \texttt{simulate}. The Thor's \texttt{desc} and \texttt{option} class methods allow one to define the description of the command and the \texttt{period} option, including an alias. The helper shell method \texttt{say} outputs the passed message to the terminal. The command is executed from the terminal as:
 
 \begin{figure}[H]
   \centering
@@ -92,7 +92,7 @@ end
 
 \section{AMQP Service}
 
-The Service Interface pattern is a common and simple pattern for building Java extensible applications. The Service is just a set of programming interfaces and classes that provide access to some specific feature. Considering the implemented AMQP Service, the figure \ref{fig:amqp_service_spi} constitutes the Service Provider Interface (SPI); The public interface that the service defines. Then, the particular implementation shown in \ref{fig:amqp_service_implementation} acts as a AMQP Service provider by conforming to the SPI.
+The Service Interface pattern is a common and simple pattern for building Java extensible applications. The Service is just a set of programming interfaces and classes that provide access to some specific feature. Considering the implemented AMQP Service, figure \ref{fig:amqp_service_spi} constitutes the Service Provider Interface (SPI), the public interface defined by the service. Then, the particular implementation shown in \ref{fig:amqp_service_implementation} acts as a AMQP Service provider by conforming to the SPI.
 
 \begin{listing}[h]
 \begin{minted}[
@@ -153,7 +153,7 @@ public class AMQPServiceImpl implements AMQPService {
 
 \section{Sinatra's DSL}
 
-Sinatra exposes a simple DSL that allows to specify the actions associated to a given endpoint and the response template to render. Similar to the HTTP verbs methods it defines a method for each templating engine supported, which accepts the template name as a parameter.
+Sinatra exposes a simple DSL that enables the actions associated to a given endpoint to be specified and the response template to render. Similar to the HTTP verbs methods it defines a method for each templating engine supported, which accepts the template name as a parameter.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -187,11 +187,11 @@ end
 
 \section{Data Joins in D3}
 
-Data Joins is what D3.js uses to bind data to elements. Data joined to existing elements produces the \textit{enter} selection. That is, the intersection's set between data and elements. All unbound data produce the \textit{enter} selection. That is, all missing elements. Similarly, all remaining elements produce the \textit{exit} selection, which represents elements that are going to be removed. This selections represent the three possible states.
+Data Joins is what D3.js uses to bind data to elements. Data joined to existing elements produces the \textit{enter} selection, that is, the intersection's set between data and elements. All unbound data produce the \textit{enter} selection, that is, all missing elements. Similarly, all remaining elements produce the \textit{exit} selection which represents elements to be removed. These selections represent the three possible states.
 
 To operate over these three states, one must select the elements and data to be joined. In the third line of the source code all circles of the \texttt{this.\_g} SVG container are selected. This selection is then joined to the array of Backbone observation models \texttt{this.collection.models} passed in on instantiation.
 
-As a consequence, data joins lead to a more declarative code that allows to target operations to specific states without need for branches nor iterations. A good example is found in lines 8 and  24. While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
+As a consequence, data joins lead to a more declarative code that allowing targeting operations to specific states without need for branches nor iterations. A good example is found in lines 8 and  24. While the updated circles animate their transition to the new fill color, the circles fade out before being removed.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -258,15 +258,15 @@ end
 \label{fig:sse_backend}
 \end{listing}
 
-The Event Stream format is just a plaintext response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies the response must contain a line beginning with \texttt{data:} followed by the message. The message can be break up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
+The Event Stream format is just a plaintext response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies that the response must contain a line beginning with \texttt{data:} followed by the message. The message can be broken up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
 
 An event can be associated with a unique id by including a line starting with \texttt{id:} as in line 4. Likewise, the reconnection-timeout can be changed by including a line beginning with \texttt{retry:} followed by the number of milliseconds to wait before the reconnection. In this way, whenever the connection is dropped the browser will attempt to reconnect after the specified time.
 
-What makes SSE even more interesting is the possibility to specify your own event names. If the server sends line beginning with \texttt{event:} followed by a unique name, this event will be associated with that name. Hence, the client can set up a regular event listener to listen to that particular event.
+What makes SSE even more interesting is the possibility to specify your own event names. If the server sends a line beginning with \texttt{event:} followed by a unique name, this event will be associated with that name. Hence, the client can set up a regular event listener to listen to that particular event.
 
 \subsection*{Client-side}
 
-With regard to the client-side, the JavaScript API exposes the \texttt{EventSource} object. To subscribe to an event stream, this object must be instantiated passing the URL of the stream. This can be easily encapsulated into a standalone JavaScript object hence, the data consumers are not concerned with the details of the API. This is the idea behind the implementation of \texttt{communicator.js} partially shown in \ref{fig:sse_connection}.
+With regard to the client-side, the JavaScript API exposes the \texttt{EventSource} object. To subscribe to an event stream, this object must be instantiated passing the URL of the stream. This can be easily encapsulated into a standalone JavaScript object so the data consumers are not concerned with the details of the API. This is the idea behind the implementation of \texttt{communicator.js} partially shown in \ref{fig:sse_connection}.
 
 \begin{listing}[h]
 \begin{minted}[
