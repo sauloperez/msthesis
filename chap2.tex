@@ -10,17 +10,17 @@
 
 There are four distinguished groups of stakeholders which will be affected by the outcome of this project. These are summarized as follows.
 
-\paragraph{Users} They are the clients of the product and producers of the data that feeds the system. They will provide the data gathered from their solar panels or wind mills to the system. To that end, they are responsible for keeping the sensor device working under the required conditions.
+\paragraph{Users} These are the clients of the product and producers of the data that feeds the system. They will provide the data gathered from their solar panels or wind mills to the system. To that end, they are responsible for keeping the sensor device working under the required conditions.
 \paragraph{CREAF} This research center is the client of the project and the product owner. The staff in charge of the project is responsible for ensuring that the software and hardware of the sensor devices is updated as needed and for the maintenance of the system. In addition, CREAF must also provide and approve any required funding and infrastructure, as well as monitor the progress of the project.
 \paragraph{Decision makers} Politicians and any person responsible for decisions that may affect the future of renewable energies in Catalonia. They will use the system as a basis for decisions concerning renewable energy production in Catalonia.
 \paragraph{Green activists} They act as a pressure group disseminating the system in their regular campaigns.
 
 \section{Constraints} \label{constraints}
-\subsection{Schedule Constraint} \label{schedule_constraint}
+\subsection{Schedule Constraints} \label{schedule_constraint}
 
 \begin{description}
 \item[Description] The project shall be finished by June 2014.
-\item[Rationale] This project will be delivered as a MS Thesis and must completed before its presentation at the end of June 2014.
+\item[Rationale] This project will be delivered as a MS Thesis and must be completed before its presentation at the end of June 2014.
 \end{description}
 
 \subsection{Budget Constraints}
@@ -29,7 +29,7 @@ There are four distinguished groups of stakeholders which will be affected by th
 
 \begin{description}
 \item[Description] The project shall be developed by one engineer.
-\item[Rationale] Since there is no budget assigned to the project, it must be developed by the author of this MS Thesis within the time specified in \label{schedule_constraint}.
+\item[Rationale] Since there is no budget assigned to the project, it must be developed by the author of this MS Thesis within the time specified in \ref{schedule_constraint}.
 \end{description}
 
 \subsubsection{Infrastructure Constraint}
@@ -41,22 +41,22 @@ There are four distinguished groups of stakeholders which will be affected by th
 
 \section{Scope of the Product}
 
-As already outlined in \ref{project_goals} this MS Thesis is part of a larger project. Given the constraints enumerated in \ref{constraints} the said MS Thesis aims to build the foundation for the further development of the project, focusing on its core features. By doing so, we will be able to draw conclusions and plan the further development of the project accordingly. Thus, aspects such as the hardware of the sensor device, its distribution among the users or the building of the complete web application fall beyond the scope of this MS Thesis. Therefore, the system will be compound of the following three parts.
+As already outlined in \ref{project_goals} this MS Thesis is part of a larger project. Given the constraints enumerated in \ref{constraints} the said MS Thesis aims to build the foundation for the further development of the project, focusing on its core features. By doing so, we will be able to draw conclusions and plan the further development of the project accordingly. Thus, aspects such as the hardware of the sensor device, its distribution among the users or the building of the complete web application fall beyond the scope of this MS Thesis. Therefore, the system will be made up of the following three parts.
 
 Firstly, a sensor simulator that will allow to use the system as if the sensor were already developed. To that end, the simulator will provide a Command Line Interface (CLI) to allow seamless interaction with the system. It will cover the essential use cases for the system to work leaving others out of the scope.
 
-Secondly, a distributed system that will process and store the observations generated from the simulators. Eventually, the same system will deal with real observations from the sensor devices. Additionally, it will provide a web interface to manage the sensors and observations as well as the system's settings.
+Secondly, a distributed system will process and store the observations generated from the simulators. Eventually, the same system will deal with real observations from the sensor devices. Additionally, it will provide a web interface to manage the sensors and observations as well as the system's settings.
 
-Finally, a simple web application publicly accessible that will display these observations in a real-time map. This application will allow to explore the possibilities of a complete SaaS by providing insight into the complexities and requirements of building such service.
+Finally, a simple publicly accessible web application will display these observations in a real-time map. This application will enable to explore the possibilities of a complete Software-as-a-Service (SaaS) by providing insight into the complexities and requirements of building such service.
 
-The scope of the project is formalized with the following features:
+The scope of the project is formalized through the following features:
 
 \begin{itemize}
 \item Register simulators as sensors in the system
 \item Store observations generated from the simulator
 \item Change the data storage configuration
-\item Query the data store
-\item Clear the data store
+\item Query the stored data
+\item Clear the stored data
 \item Show observations in real-time on a map
 \end{itemize}
 
@@ -64,13 +64,13 @@ The scope of the project is formalized with the following features:
 
 These requirements have been obtained by means of some meetings with the CREAF researcher in charge of the project. 
 
-Even though the terms \textit{sensor} and \textit{simulator} may be used interchangeably as explained above, we use the former in the requirements below to keep consistency across the whole MS Thesis.
+Even though the terms \textit{sensor} and \textit{simulator} may be used interchangeably as explained above, we use the former in the requirements below to keep consistency throughout this Thesis.
 
 \subsection{Functional Requirements}
 
 \begin{usecase}
 \addtitle{Requirement}{Insert Sensor}
-\addfield{Description:}{The system shall register the sensors that will interact with it.}
+\addfield{Description:}{The system shall register the sensors that interact with it.}
 \addfield{Rationale:}{The observations within the system must be related to the producer sensor to know the location of the phenomenon, and so the sensors must be registered beforehand.}
 \end{usecase}
 
@@ -82,26 +82,26 @@ Even though the terms \textit{sensor} and \textit{simulator} may be used interch
 
 \begin{usecase}
 \addtitle{Requirement}{Update data storage configuration}
-\addfield{Description:}{The system shall allow to change the data storage settings.}
+\addfield{Description:}{The system shall enable changes in data storage settings.}
 \addfield{Rationale:}{The system must be independent of the parameters of the underlying data storage and allow administrators to update it.}
 \end{usecase}
 
 \begin{usecase}
 \addtitle{Requirement}{Query data store}
-\addfield{Description:}{The system shall allow to query the stored data.}
+\addfield{Description:}{The system shall allow queries over the stored data.}
 \addfield{Rationale:}{The system must allow administrators to query all the raw data including the observations.}
 \end{usecase}
 
 \begin{usecase}
 \addtitle{Requirement}{Clear data store}
-\addfield{Description:}{The system shall allow to empty all data stored.}
+\addfield{Description:}{The system shall allow clearance of all data stored.}
 \addfield{Rationale:}{The system must allow administrators to clean up all data stored in the system for maintenance purposes.}
 \end{usecase}
 
 \begin{usecase}
 \addtitle{Requirement}{Data visualization}
-\addfield{Description:}{The system shall allow to browse observations in a real-time data visualization.}
-\addfield{Rationale:}{The users must be able to browse the location of the observations on a map in real time.}
+\addfield{Description:}{The system shall enable browse observations in a real-time data visualization.}
+\addfield{Rationale:}{Users must be able to browse the location of the observations on a map in real time.}
 \end{usecase}
 
 \subsection{Non-functional Requirements}
@@ -116,8 +116,8 @@ Even though the terms \textit{sensor} and \textit{simulator} may be used interch
 
 \begin{usecase}
 \addtitle{Requirement}{Configurable CLI}
-\addfield{Description:}{The simulator's CLI shall allow to configure all its parameters.}
-\addfield{Rationale:}{The simulator's users must be able to choose the parameters of the operations in order to simulate the sensors' behaviour in different conditions.}
+\addfield{Description:}{The simulator's CLI shall enable configuration of all its parameters.}
+\addfield{Rationale:}{The simulator's users must be able to choose the service operation parameters in order to simulate the sensors' behaviour in different conditions.}
 \end{usecase}
 
 \subsubsection*{Performance}
@@ -150,7 +150,7 @@ Even though the terms \textit{sensor} and \textit{simulator} may be used interch
 \begin{usecase}
 \addtitle{Requirement}{Interoperability}
 \addfield{Description:}{The system shall conform to OGC Sensor Observation Service (SOS).}
-\addfield{Rationale:}{The system must offer its data using SOS standard in order to be interoperable from other independent systems.}
+\addfield{Rationale:}{The system must offer its data using SOS in order to be interoperable from other independent systems.}
 \end{usecase}
 
 \subsubsection*{Compliance}
@@ -158,7 +158,7 @@ Even though the terms \textit{sensor} and \textit{simulator} may be used interch
 \begin{usecase}
 \addtitle{Requirement}{Licensing}
 \addfield{Description:}{The system and all its components shall adhere to Apache License.}
-\addfield{Rationale:}{The system and all components of the final solution must adhere to Apache License to ensure all software is open-source.}
+\addfield{Rationale:}{The system and all components of the final solution must adhere to Apache License to ensure that all software is open-source.}
 \end{usecase}
 
 

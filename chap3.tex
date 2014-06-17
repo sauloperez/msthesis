@@ -6,9 +6,9 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Specification}
 
-The following section describes what the system does detailing its entities.
+The following section describes what the system does by detailing its entities.
 
-\section{Uses Case Model}
+\section{Use Case Model}
 
 This section describes the operations of the systems as events triggered by external actors and their interrelation.
 
@@ -26,7 +26,7 @@ The actors of the system are the following.
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=\textwidth]{uses_cases}
-	\caption{System's use cases}
+	\caption{System use cases}
 	\label{fig:use_cases}
 \end{figure}
 
@@ -37,8 +37,8 @@ The actors of the system are the following.
 	\addfield{Postconditions:}{The sensor is registered and persisted in the system}
 	\addscenario{Main Success Scenario:}{
 		\item The sensor sends a request to register itself
-		\item The system stores the sensor's information in the database
-		\item The system notifies the sensor that it has been successfully registered
+		\item The system stores the information of the sensor in the database
+		\item The system notifies the sensor when it has been successfully registered
 	}
 	\addscenario{Extensions:}{
 		\item[1.a] The sensor is already registered
@@ -61,14 +61,14 @@ The actors of the system are the following.
 	}
 	\addscenario{Main Success Scenario:}{
 		\item The sensor sends a request to store the observation
-		\item The system stores the observation's data in the database
-		\item The system sends the observation's data to the web application tier
-		\item The system notifies the sensor the observation has been successfully stored
+		\item The system stores the observation data in the database
+		\item The system sends the observation data to the web application tier
+		\item The system notifies the sensor when the observation has been successfully stored
 	}
 	\addscenario{Extensions:}{
-		\item[1.a] The observation's sensor is not found
+		\item[1.a] The sensor specified in the request is not found
 			\begin{enumerate}
-			\item[1.] The system returns an error response
+			\item[1.] The system returns an error message
 			\end{enumerate}
 	}
 \end{usecase}
@@ -81,22 +81,22 @@ The actors of the system are the following.
 	\addscenario{Main Success Scenario:}{
 		\item The user's browser loads the web application
 		\item Once loaded, the web application establishes a connection against the system
-		\item The system pushes the observations to the web application as they are available
+		\item The system incorporates observations into the web application as they are available
 	}
 \end{usecase}
 
 \section{Conceptual Model}
 
-As shown in figure \ref{fig:use_cases}, the system revolves around the concepts of \textit{Observation} and \textit{Sensor}. The diagram \ref{fig:conceptual_model} describes these concepts and other entities involved in the system as well as their relations, heavily based on the OGC O\&M model \cite{OM}.
+As shown in figure \ref{fig:use_cases}, the system revolves around the concepts of \textit{Observation} and \textit{Sensor}. Diagram \ref{fig:conceptual_model} describes these concepts and other entities involved in the system as well as their relations, heavily based on the OGC O\&M model \cite{OM}.
 
 To start with, an observation is an aggregation of the following six elements:
 
 \begin{description}
-\item[Feature of interest] A representation of a real-world object that carries the observed property, e.g. "Pant\`a de Sau". Hence, for an in-place instrument it would be the sensor location, whereas for a remote sensor it is the target location.
-\item[Procedure] Instance of a process which has performed the observation. Even though it is usually a physical sensor, it can also be a process that leads to an observation such as a computation or the result of a post-processing.
-\item[Observed property] Represent the phenomena under observation. Usually a concept of an ontology, e.g. air temperature.
-\item[Phenomenon time] Time when the observation's result applies.
-\item[Result time] Time when the observation's result has been created. Note these two times may be identical.
+\item[Feature of interest] A representation of a real-world object that carries the observed property, e.g. "Pant\`a de Sau". Hence, for an in-place instrument this would be the sensor location, whereas for a remote sensor it would be the target location.
+\item[Procedure] Instance of a process which has performed the observation. Despite being usually a physical sensor, it can also be a process that leads to an observation such as a computation or the result of post-processing.
+\item[Observed property] Represent the phenomena under observation. Usually a concept of a formal ontology, e.g. air temperature.
+\item[Phenomenon time] Time when the phenomenon that produces the observation occurs.
+\item[Result time] Time when the observation result has been created. Note that phenomenon and result times may be identical.
 \item[Result] Result of the observation, which can be either a scalar value or a complex multi-dimensional array.
 \end{description}
 

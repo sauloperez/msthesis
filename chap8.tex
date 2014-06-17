@@ -4,157 +4,487 @@
 %% You can process specific files by typing their names in at the 
 %% \files=
 %% prompt when you run the file main.tex through LaTeX.
-\chapter{Infrastructure}
+\chapter{Performance Testing}
 
-This chapter aims to describe the tools and processes involved in the infrastructure setup. From local development environment to the set of production servers running the Redch. Firstly, it explains the infrastructure setup and secondly, it describes the provisioning and deployment processes.
+Performance testing deals with any process of determining the quality attributes of a system such as responsiveness, stability and reliability under certain workloads. It is usually used to verify that the system meets its specifications.
 
-\section{Amazon AWS setup}
+Load testing is the simplest form of performance testing. Tests are conducted to assess the behaviour of the system under a particular load, which is defined by a particular number of transactions and a certain level of concurrency within a specified duration. In the context of a web system, the transactions are a round-trip of HTTP requests to a particular endpoint while the concurrency level is the number of requests performed at a time. As a result, the test outputs the response times of these requests, thus uncovering possible bottlenecks of the system.
 
-Amazon Web Services (AWS) is a cloud computing platform. It offers a collection of remote computing services ranging from computing and storage to networking services such as DNS, among others. AWS is a world-wide leader of Infrastructure-as-a-Service (IaaS) providers with numerous companies like Spotify, Heroku, Airbnb, Foursquare, Github, Reddit or Mapbox relying on them.
+There are numerous variables involved in the execution of a web system such as network reliability, performance of the underlying hardware, availability of third-party services, etc. Therefore, the following load tests do not aim to give a thorough assessment of the performance of the system but rather its behaviour under conditions similar to a real scenarios while making some reasonable assumptions.
 
-The whole infrastructure of the system is compound by EC2 instances, virtual servers in Amazon's cloud. They all run a custom Amazon Machine Image (AMI) built from a raw Ubuntu 12.04 LTS with all needed dependencies ---Puppet and Ruby 2.0.0--- installed. As a result, any new instance booted up with this custom AMI is ready to be provisioned. Starting and stopping machines, as well as configuring their firewall rules is managed through the AWS Management Console, a web UI.
+The tests have been conducted using two simple yet powerful and mature open-source tools: Apache Bench and Gnuplot. Apache Bench is a server benchmarking tool that focuses on showing how many requests per second a system is able to serve. It provides basic statistic such as mean, median, minimum and maximum of the measured magnitudes. Gnuplot, on the other hand, makes it easy to draw charts from diverse input text formats by means of its own scripting language or an interactive console. Additionally, Apache Bench can output data in Gnuplot-compatible format, which allows both tools to be easily integrated.
 
-One of the major benefits Redch can take advantage of is Amazon's Auto Scaling. This service allows to scale the capacity of the EC2 instances up and down according to a set of predefined conditions. A load balancer, for instance, can automatically spawn app servers during demand spikes and shut them down during low demand periods. Redch can get the most out of it exploiting the fact that solar panels don't produce energy at night, thereby minimizing costs. Likewise, less computing power is required under windless conditions.
+Since the system has two entry points, the one used by the sensors and the web application, two different load test have been performed. By doing so, we can assess the performance of the Sensor Observation Service and the Web application.
 
-As for the database server, although it would desirable to keep the infrastructure provider-independent, Amazon RDS has been chosen. It makes easier to set up, operate, and scale a relational database. Furthermore, it provides automated backups, Multi-AZ replication and monitoring metrics. It has support for MySQL, Oracle, SQL Server and PostrgeSQL, all the DBMSs supported by 52ºNorth SOS, being the latter the one it uses by default. However, the PostrgeSQL support is still in beta version due to its recent release in November of 2013.
+\section{Web Application}
 
-The final production environment comprehends the four servers shown in \ref{fig:infrastructure}. Three EC2 micro instances plus a RDS micro instance. Amazon's free tier includes both services at no cost within the first year. Therefore, EC2 micro instances are limited to 1 low-capacity throttled CPU with 627MB of RAM \footnote{AWS Micro Instances Documentation: \url{http://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts_micro_instances.html}}. All three EC2 instances are attached to an 8GB Elastic Block Storage (EBS), which are storage volumes with built-in redundancy. These volumes host the filesystem of their related EC2 instances.
+First and foremost, the variables involved in determining the response times of the requests must be defined. These are the concurrency level and the number of requests per test.
 
-\begin{sidewaysfigure}
-  \centering
-  \includegraphics[width=\textwidth]{infrastructure}
-  \caption{Production's infrastructure diagram}
-  \label{fig:infrastructure}
+\paragraph{Concurrency} We distinguish two different levels of concurrency. Firstly, when a browser loads a web page it starts multiple connections to the server to load the resources. The number of simultaneous connections is a built-in browser parameter that for most of the web browsers defaults to 6. Besides, concurrency in load testing often refers to the number of users issuing requests to the system at a time. Each progressive increase in this variable defines the workloads the system will be tested with.
+
+\paragraph{Number of requests} This is the total number of requests issued to the system for each execution of the test. However, each time a user loads a web page the browser makes as many requests as assets the page contains. That is, the browser loads each of the CSS files, images and JS scripts the HTML lists, one per request.
+
+In this particular case, the single HTML page of the application contains 46 assets, loading 717 KB of data. These resources contain the JS application source files plus the map tiles and other resources fetched by the Mapbox library. Moreover, as the user interacts with the map, more tiles are loaded by the browser. Nevertheless, these requests don't hit our system but instead the Mapbox's servers. Therefore, they are not taken into account although they have an impact on the perceived performance of the system. The size of each resource is assumed to be the average, 717 KB / 46 resources = 15,6 KB.
+
+\subsection*{Baseline}
+
+To serve as comparison the baseline is defined as a test with a single request to load the HTML page followed by 46 requests with 6 concurrent connections to load the assets of 15,6 KB each. This tries to mimic the behaviour  of the browser while simplifying the intricacies of its concurrency and assuming the content is instantly rendered.
+
+\subsection*{10-User Scenario}
+
+In the following scenario the concurrency is increased progressively in order to simulate more demanding situations, first 10 users, then 50. For each of these, half of the required requests point to the HTML and the other half to the assets thereby simulating requests that impact the server differently.
+
+Therefore, the first test issues 10 concurrent requests to load the HTML, while 460 more requests with 60 concurrent connections load the assets.
+
+\subsection*{30-User Scenario}
+
+To test the load equivalent to 30 users, this scenario involves 30 concurrent requests plus 1380 requests with 180 concurrent connections. Again, this tries to be slightly more realistic than just requesting the plain HTML document.
+
+\section{Sensor Observation Service}
+
+This test aims to assess the performance of the system while receiving requests from the sensors. This test impacts the SOS and the database and so the bottleneck is likely to be one of these components. In contrast with the web application load test and since SOS is essentially a set of HTTP endpoints, regular requests with an increasing level of concurrency are enough to assess the performance of the system.
+
+Nevertheless, the sensors are required to perform only a request every 10 minutes, resulting in 6 requests per hour. If higher resolution was required requests would also be evenly distributed. Thus, the test take into account this time spans.
+
+\subsection*{Baseline}
+
+For this test, the baseline is defined as a single POST request to the \texttt{/observations} endpoint. The two available endpoints, \texttt{/sensors} and \texttt{/observations}, have fairly similar behaviour. Since they process requests with similar payload size and store results in the database, there is no need for testing both endpoints as it provides no valuable insight.
+
+\subsection*{First scenario}
+
+In this scenario the load is composed of 10 sensors sending observations every minute concurrently. Thus, the resolution of the observations is then increased up until 60 observations per hour. This covers the worse-case scenario where all available sensors have been turned on at the same time, thereby sending their observations simultaneously. For the sake of brevity, only the execution with the worst mean response time is shown in \ref{fig:observations_n60c10}, while the response times of all executions is summarized in the chart \ref{fig:observations_n60c10_chart}.
+
+It is worth noting that all requests use the same POST data file, as it is the only way to simulate a POST request with Apache Bench. Splitting the test into different steps, one for each particular sensor wouldn't allow Apache Bench to compute aggregated statistics.
+
+\subsection*{Second scenario}
+
+Finally, in this scenario the SOS performance is tested under a more demanding load. To do so, the test sends 500 requests with 30 concurrent connections in a single execution. Thus, by assuming that every sensor sends an observation per minute and given that the system receives multiple batches of concurrent connections within a minute, this scenario simulates much more than 30 sensors.
+
+\section{Results}
+
+\subsection*{Web Application}
+
+As shown in \ref{fig:baseline}, the application assets are loaded in 240ms. This, together with the response time of a request for the HTML document, 431ms, means that a single user waits an average 671ms until the whole application is fully loaded. The requests per second the system is able to serve while dealing with the assets is 24.94 req/sec.
+
+When the concurrency level is increased up to 10, the application loading time reaches $2966ms + 4419ms = 7385ms$, on the average. However, as shown in \ref{fig:kn460c60} and contrary to expectations, the throughput is reduced to 13.58 req/sec. The chart \ref{fig:kn460c60_chart} more closely examines all the response times, which happen to be slightly disparate in some cases.
+
+Nevertheless, the system reaches its tipping point when the concurrency is increased to 180 connections and 1380 requests for assets are issued. In this case, Apache Bench's output \ref{fig:kn1380c180} lists 54 failed requests and the mean response time is increased by more than 30\%. The related chart \ref{fig:kn1380c180_chart} perfectly illustrates how the system is unable to reliably process all the requests. Besides the initial burst on the response, the standard deviation rises gradually as time goes by until reaching its maximum capacity serving requests in around 30 seconds. Then, the system suddenly brakes and serves only HTTP error responses which have a negligible response time.
+
+In spite of some unusually long response times, the system can reliably handle around 60 concurrent connections. In overall terms, the results show a somewhat poor performance. It takes more than 7 seconds to load the application with 10 concurrent users, a highly likely scenario.
+
+\subsection*{Sensor Observation Service}
+
+As expected, both SOS endpoints have a similar response when a single request is issued to them. While \texttt{/sensors} response time is 510ms, it is 654ms for \texttt{observations}. This is a reasonable difference since to insert an observation, the SOS must first look up the related sensor.
+
+When some concurrency is added, the results of the first scenario \ref{fig:observations_n60c10} show an increased response time -- 1103ms -- but a better throughput, with 9 requests per second. When all response times of the 7 executions are considered together, as in \ref{fig:observations_n60c10_chart}, the deviation turns out to be remarkably high. While most of the response times fall within the one-second threshold, a significant number of measures are around 2 seconds and few of them fall beyond 3 seconds.
+
+When tested with heavy load of 500 requests and 30 concurrent connections, the system provides to be far more unreliable than the first scenario. The chart \ref{fig:observations_n500c30_chart} conveys a dramatic increase in the deviation of the measures. Furthermore, the two failed requests shown in \ref{fig:observations_n500c30} make clear that the system has already reached its limit in terms of concurrency.
+
+It should also be mentioned the high value of the mean connection waiting time. Unlike the web application test, it is almost equal to the mean connection processing time across all scenarios, including the baseline. This is directly related to the particular kind of workload this server does,  mostly bound to the CPU and IO. Both are scarce resources in a AWS micro instance.
+
+Finally, the first scenario provides that the system meets the requirements in terms of observation processing. It is able to handle 10 concurrent connections reliably.
+
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /test_asset
+Document Length:        15600 bytes
+
+Concurrency Level:      6
+Time taken for tests:   1.845 seconds
+Complete requests:      46
+Failed requests:        0
+Keep-Alive requests:    46
+Total transferred:      729330 bytes
+HTML transferred:       717600 bytes
+Requests per second:    24.94 [#/sec] (mean)
+Time per request:       240.603 [ms] (mean)
+Time per request:       40.100 [ms] (mean, across all concurrent requests)
+Transfer rate:          386.12 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0    8  19.9      0      64
+Processing:    87  223 241.9    142    1448
+Waiting:       54  110  26.9     99     189
+Total:         87  231 249.4    142    1448
+
+Percentage of the requests served within a certain time (ms)
+  50%    142
+  66%    159
+  75%    259
+  80%    265
+  90%    378
+  95%    748
+  98%   1448
+  99%   1448
+ 100%   1448 (longest request)
+\end{minted}
+\label{fig:baseline}
+\caption{Web application baseline results}
+\end{listing}
+
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /
+Document Length:        2406 bytes
+
+Concurrency Level:      10
+Time taken for tests:   2.967 seconds
+Complete requests:      10
+Failed requests:        0
+Keep-Alive requests:    10
+Total transferred:      27460 bytes
+HTML transferred:       24060 bytes
+Requests per second:    3.37 [#/sec] (mean)
+Time per request:       2966.874 [ms] (mean)
+Time per request:       296.687 [ms] (mean, across all concurrent requests)
+Transfer rate:          9.04 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      100  106   2.9    107     110
+Processing:   241  529 821.4    276    2867
+Waiting:      236  380 370.9    270    1435
+Total:        345  636 819.3    383    2967
+
+Percentage of the requests served within a certain time (ms)
+  50%    383
+  66%    390
+  75%    397
+  80%    404
+  90%   2967
+  95%   2967
+  98%   2967
+  99%   2967
+ 100%   2967 (longest request)
+ \end{minted}
+\label{fig:kn10c10}
+\caption{Output of 10 concurrent connections to root of the Web application}
+\end{listing}
+
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /test_asset
+Document Length:        15600 bytes
+
+Concurrency Level:      60
+Time taken for tests:   33.881 seconds
+Complete requests:      460
+Failed requests:        0
+Keep-Alive requests:    460
+Total transferred:      7293300 bytes
+HTML transferred:       7176000 bytes
+Requests per second:    13.58 [#/sec] (mean)
+Time per request:       4419.294 [ms] (mean)
+Time per request:       73.655 [ms] (mean, across all concurrent requests)
+Transfer rate:          210.22 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0   17  48.0      0     212
+Processing:   401 2677 2836.6   1979   31183
+Waiting:       71  431 699.3    217    7835
+Total:        401 2695 2849.7   1993   31183
+
+Percentage of the requests served within a certain time (ms)
+  50%   1993
+  66%   2608
+  75%   3115
+  80%   3535
+  90%   4596
+  95%   7347
+  98%  11424
+  99%  18008
+ 100%  31183 (longest request)
+ \end{minted}
+\label{fig:kn460c60}
+\caption{Output of 460 requests with 60 concurrent connections to load the assets}
+\end{listing}
+
+
+\begin{sidewaysfigure}[!p]
+	\centering
+	\includegraphics[width=\textwidth]{kn460c60}
+	\caption{Response time plot of 460 requests with 60 concurrent connections}
+	\label{fig:kn460c60_chart}
 \end{sidewaysfigure}
 
-Ubuntu 12-04 LTS has been chosen as the OS of all three servers due to its stability and security besides, the inherent benefits of a Linux OS. With regard to the database, Amazon's RDS abstract away from the particularities of the underlying hardware by providing the database access as a service.
-
-\section{Provisioning}
-
-Once the software is developed the underlying infrastructure must be configured to host each of the system components. This process, that involves creating directories and installing packages, may be error-prone when done manually. Besides, it may need to be repeated several times when new servers need to be set up. Even though writing down the build-out process may help, whoever reads that documentation can't figure out the current state of the configuration.
-
-Server automation frameworks formalize systems administration treating infrastructure as code. As a result, infrastructure's configuration can be tested and repeated, automating away repetitive tasks while systems administrators focus on architecting and tunning services.
-
-Puppet, among other solutions such as Chef, enables server configuration automation. It automates server provisioning by formalizing its configuration into manifests. Puppet's manifests are text files that contain statements written in a declarative domain-specific language (DSL) that allows to define the desired state of the infrastructure. Once these configurations are deployed, Puppet automatically installs the necessary packages and ensures that the machine’s files and services match the desired state.
-
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
-frame=lines,
-framesep=2mm,
 baselinestretch=1.2,
-fontsize=\footnotesize,
-linenos
-] {puppet}
-package { 'apache2':
-  provider => 'apt',
-  ensure   => 'installed'
-}
+fontsize=\footnotesize
+] {bash}
+(...)
 
-service { 'apache2':
-  ensure => 'running'
-}
-\end{minted}
-\caption{Example of Puppet's manifest file}
-\label{fig:puppet}
+Document Path:          /
+Document Length:        2406 bytes
+
+Concurrency Level:      30
+Time taken for tests:   1.607 seconds
+Complete requests:      30
+Failed requests:        0
+Keep-Alive requests:    30
+Total transferred:      82380 bytes
+HTML transferred:       72180 bytes
+Requests per second:    18.67 [#/sec] (mean)
+Time per request:       1606.587 [ms] (mean)
+Time per request:       53.553 [ms] (mean, across all concurrent requests)
+Transfer rate:          50.07 [Kbytes/sec] received
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:      240  260  10.9    266     279
+Processing:   350  752 443.5    457    1356
+Waiting:      347  747 444.8    453    1354
+Total:        600 1013 437.1    726    1606
+
+Percentage of the requests served within a certain time (ms)
+  50%    726
+  66%   1555
+  75%   1561
+  80%   1572
+  90%   1602
+  95%   1604
+  98%   1606
+  99%   1606
+ 100%   1606 (longest request)
+ \end{minted}
+\label{fig:kn30c30}
+\caption{Output of 30 concurrent connections to the root of the web application}
 \end{listing}
 
-Puppet is mature and widely used. Besides having an open source version, there are lots of learning materials available online.
-
-Prior provisioning any server must have puppet installed, which comes packaged as a ruby gem. Therefore, Puppet does also require a MRI Ruby interpreter. Puppet can be installed with any system package manager, doing so will likely install previous releases missing features and bug fixes.
-
-Puppet allows to provision machines by either applying the configuration directly or compiled into a catalog and distributed to the target system via client-server paradigm.
-
-\subsection{Production Software}
-
-Most of the software used in the development environment is also used on the production one. This is the case of SOS, for instance, where both Tomcat 7 and PostgreSQL have been chosen to run also in production. However, the production web application's stack differs from the one in development. Nginx plus Passenger has been chosen over Thin, the server included in Sinatra for development purposes.
-
-Passenger is a mature and feature rich application server widely used in many production scenarios. Therefore, is easy to find learning materials and support on the internet. Nginx on the other hand, is a high-performance web server and load balancer that can handle high concurrency.
-
-Placed in front of the application server, Nginx acts as a reverse-proxy. It deals with all incoming requests serving static files efficiently and passing them the application layer. Then, Passenger processes the requests and returns a response.
-
-\section{Deployment}
-
-Once the configuration is applied the target server is up and ready. Next, the code release must be transferred to the production environment to make the application available for use.
-
-Capistrano is a remote multi-server automation tool that enables the execution of arbitrary tasks on remote servers over SSH. It aims to allow reliable deployment of web applications to any number of machines simultaneously. All its features enforce sane development workflows.
-
-The general configuration of the application is set in the \texttt{deploy.rb} file. Then, each particular stage overrides it in its own file. By following this convention Capistrano infers the environment names and enables tasks to be run on each of them as in \ref{fig:capistrano}.
-
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
-frame=lines,
-framesep=2mm,
 baselinestretch=1.2,
-fontsize=\footnotesize,
-linenos
-] {ruby}
-set :application, 'redch'
-set :repo_url, 'git://github.com/sauloperez/redch-webapp.git'
-set :ssh_options, {
-  forward_agent: true
-}
+fontsize=\footnotesize
+] {bash}
+(...)
 
-ask :branch, proc { `git rev-parse --abbrev-ref HEAD`.chomp }
+Document Path:          /test_asset
+Document Length:        15600 bytes
 
-set :deploy_to, '/var/redch'
-set :use_sudo, false
-set :deploy_via, :copy
-set :copy_strategy, :export
+Concurrency Level:      180
+Time taken for tests:   102.233 seconds
+Complete requests:      1380
+Failed requests:        54
+   (Connect: 0, Receive: 0, Length: 54, Exceptions: 0)
+Keep-Alive requests:    1326
+Total transferred:      21187354 bytes
+HTML transferred:       20841574 bytes
+Requests per second:    13.50 [#/sec] (mean)
+Time per request:       13334.721 [ms] (mean)
+Time per request:       74.082 [ms] (mean, across all concurrent requests)
+Transfer rate:          202.39 [Kbytes/sec] received
 
-SSHKit.config.command_map[:rake]  = "bundle exec rake"
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:        0  128 652.6      0    4900
+Processing:     0 6618 17501.4    831   95570
+Waiting:       54 1260 6032.2    193   49972
+Total:          0 6745 17697.4    843   97127
 
-after 'deploy:publishing', 'nginx:restart'
-after 'deploy:publishing', 'passenger:restart'
-\end{minted}
-\caption{Capistrano's deployment definition}
-\label{fig:deploy.rb}
+Percentage of the requests served within a certain time (ms)
+  50%    843
+  66%   1348
+  75%   1843
+  80%   2547
+  90%  21964
+  95%  45340
+  98%  86613
+  99%  91950
+ 100%  97127 (longest request)
+ \end{minted}
+\label{fig:kn1380c180}
+\caption{Output of 1380 requests with 180 concurrent connections to load the assets}
 \end{listing}
 
-\begin{figure}[h]
-  \texttt{\$ cap staging deploy}\\
-  \texttt{...}\\
-  \texttt{\$ cap production deploy:rollback}\\
-  \caption{Execution of commands in different environments}
-  \label{fig:capistrano}
-\end{figure}
+\begin{sidewaysfigure}[!p]
+	\centering
+	\includegraphics[width=\textwidth]{kn1380c180}
+	\caption{Response time plot of 1380 requests with 180 concurrent connections}
+	\label{fig:kn1380c180_chart}
+\end{sidewaysfigure}
 
-The configuration can be tailored to fit the needs of the project by writing extra tasks. Capistrano provides the \textit{deploy} and \textit{rollback} flows that invoke several hooks for the developer to hook up custom tasks into the flow either before or after the particular hook. In line 16 of listing \ref{fig:deploy.rb} Nginx is restarted right after the release has been published and before the deploy's leftovers are cleaned up.
 
-Therefore, some custom capistrano's tasks have been developed to ease the execution of common operations such as starting and stopping tomcat. The listing \ref{fig:cap_nginx} illustrates Nginx-related tasks used in the web application's deployment.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Beginning of SOS figures
 
-\begin{listing}[h]
+\begin{listing}[!p]
 \begin{minted}[
-frame=lines,
-framesep=2mm,
 baselinestretch=1.2,
-fontsize=\footnotesize,
-linenos
-] {ruby}
-namespace :nginx do
-  desc 'Start nginx'
-  task :start do
-    on roles(:app), in: :sequence, wait: 5 do
-      sudo 'start nginx'
-    end
-  end
+fontsize=\footnotesize
+] {bash}
+(...)
 
-  desc 'Stop nginx'
-  task :stop do
-    on roles(:app), in: :sequence, wait: 5 do
-      sudo 'stop nginx'
-    end
-  end
+Document Path:          /webapp/sos/rest/sensors
+Document Length:        890 bytes
 
-  desc 'Restart nginx'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      sudo 'restart nginx'
-    end
-  end
-end
-\end{minted}
-\caption{Content of \texttt{lib/capistrano/tasks/nginx.cap}}
-\label{fig:cap_nginx}
+Concurrency Level:      1
+Time taken for tests:   0.511 seconds
+Complete requests:      1
+Failed requests:        0
+Total transferred:      1210 bytes
+Total body sent:        3003
+HTML transferred:       890 bytes
+Requests per second:    1.96 [#/sec] (mean)
+Time per request:       510.607 [ms] (mean)
+Time per request:       510.607 [ms] (mean, across all concurrent requests)
+Transfer rate:          2.31 [Kbytes/sec] received
+                        5.74 kb/s sent
+                        8.06 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       48   48   0.0     48      48
+Processing:   463  463   0.0    463     463
+Waiting:      462  462   0.0    462     462
+Total:        511  511   0.0    511     511
+
+(...)
+ \end{minted}
+\label{fig:sensors_n1c1}
+\caption{Output of a POST request to /sensors}
 \end{listing}
 
-As Capistrano essentially executes commands in a remote server, custom tasks can written to target any specific purposes like listing servers' uptimes, checking their load, etc.
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /webapp/sos/rest/observations
+Document Length:        854 bytes
+
+Concurrency Level:      1
+Time taken for tests:   0.655 seconds
+Complete requests:      1
+Failed requests:        0
+Total transferred:      1210 bytes
+Total body sent:        2204
+HTML transferred:       854 bytes
+Requests per second:    1.53 [#/sec] (mean)
+Time per request:       654.535 [ms] (mean)
+Time per request:       654.535 [ms] (mean, across all concurrent requests)
+Transfer rate:          1.81 [Kbytes/sec] received
+                        3.29 kb/s sent
+                        5.09 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       59   59   0.0     59      59
+Processing:   595  595   0.0    595     595
+Waiting:      592  592   0.0    592     592
+Total:        654  654   0.0    654     654
+
+(...)
+ \end{minted}
+\label{fig:observations_n1c1}
+\caption{Output of a POST request to /observations}
+\end{listing}
+
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /webapp/sos/rest/observations
+Document Length:        1000 bytes
+
+Concurrency Level:      10
+Time taken for tests:   6.621 seconds
+Complete requests:      60
+Failed requests:        0
+Non-2xx responses:      60
+Total transferred:      70920 bytes
+Total body sent:        132240
+HTML transferred:       60000 bytes
+Requests per second:    9.06 [#/sec] (mean)
+Time per request:       1103.555 [ms] (mean)
+Time per request:       110.355 [ms] (mean, across all concurrent requests)
+Transfer rate:          10.46 [Kbytes/sec] received
+                        19.50 kb/s sent
+                        29.96 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       84  405 532.5    144    2382
+Processing:   214  595 514.2    365    1916
+Waiting:      213  595 514.2    365    1916
+Total:        316 1000 672.8    611    2808
+
+(...)
+ \end{minted}
+\label{fig:observations_n60c10}
+\caption{Output of 60 POST request to /observations with 10 concurrent connections}
+\end{listing}
+
+\begin{sidewaysfigure}[!p]
+	\centering
+	\includegraphics[width=\textwidth]{observations_n60c10_total}
+	\caption{6 executions of 10 concurrent connections with 1 minute timespan}
+	\label{fig:observations_n60c10_chart}
+\end{sidewaysfigure}
+
+\begin{listing}[!p]
+\begin{minted}[
+baselinestretch=1.2,
+fontsize=\footnotesize
+] {bash}
+(...)
+
+Document Path:          /webapp/sos/rest/observations
+Document Length:        1000 bytes
+
+Concurrency Level:      30
+Time taken for tests:   63.616 seconds
+Complete requests:      500
+Failed requests:        2
+   (Connect: 0, Receive: 0, Length: 2, Exceptions: 0)
+Non-2xx responses:      498
+Total transferred:      588636 bytes
+Total body sent:        1102000
+HTML transferred:       498000 bytes
+Requests per second:    7.86 [#/sec] (mean)
+Time per request:       3816.968 [ms] (mean)
+Time per request:       127.232 [ms] (mean, across all concurrent requests)
+Transfer rate:          9.04 [Kbytes/sec] received
+                        16.92 kb/s sent
+                        25.95 kb/s total
+
+Connection Times (ms)
+              min  mean[+/-sd] median   max
+Connect:       53 1076 915.3    551    4895
+Processing:   170 2477 2986.4   1296   21714
+Waiting:        0 2391 2732.4   1205   19575
+Total:        242 3554 3152.2   2658   22155
+
+(...)
+ \end{minted}
+\label{fig:observations_n500c30}
+\caption{Output of 500 POST request to /observations with 30 concurrent connections}
+\end{listing}
+
+\begin{sidewaysfigure}[!p]
+	\centering
+	\includegraphics[width=\textwidth]{observations_n500c30}
+	\caption{Response time plot of 500 requests with 30 concurrent connections}
+	\label{fig:observations_n500c30_chart}
+\end{sidewaysfigure}

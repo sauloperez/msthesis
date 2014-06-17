@@ -6,15 +6,15 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Design}
 
-In this chapter we argue all design decisions taken regarding the building of Redch. These are grounded on the detailed research explained in \ref{technology_research}. It extends the high-level architecture already outlined in \ref{fig:use_cases} further by first explaining the technology used: the programming languages, frameworks and most relevant libraries. Then, it presents the whole architecture of the system by describing each one of the components the system is comprised of.
+In this chapter we will discuss all design decisions taken regarding the building of REDCH. These are grounded on the detailed research explained in Chapter \ref{technology_research}. The high-level architecture already outlined in \ref{fig:use_cases} is extended further by first explaining the technology used: the programming languages, frameworks and most relevant libraries. Then, the whole architecture of the system is presented by describing each one of the components the system is comprised of.
 
-The design explained below aims to be a solid ground and a first prototype for the Redch project. Therefore, not all ideas discussed in previous chapters may be included in the result of this master thesis. As a first step towards the final product it will serve to get insight...
+The design explained below aims to provide a solid groundwork and a first prototype for the REDCH project. Therefore, not all ideas discussed in previous chapters may be included in the result of this master thesis.
 
-Ruby has been chosen as the main language for the development of the project. This dynamic language focused on simplicity and productivity, is often regarded as developer performant. Due to its flexibility and similarity with natural language, along with the massive amount of libraries and frameworks available, it allows developers to write applications very quickly. However, this features hamper its execution performance.
+Ruby has been chosen as the main language for the development of the project. This dynamic language focused on simplicity and productivity is often regarded as developer performant. Due to its flexibility and similarity with natural language along with the massive amount of libraries and frameworks available, it allows developers to write applications very quickly. However, these features may hamper its execution performance.
 
 \section{Physical Architecture}
 
-The core idea of this architecture is to decouple the data producers from the data consumers by means of an asynchronous message queue enabling push capabilities in the consumption tier. It is compound of four different servers, as figure \ref{fig:physical_architecture} shows: An application server that receives the observations from the sensors and stores them in the database. That server is also responsible for publishing the observation into the messaging queue. Then, the messaging queue pushes them to the data consumption tier, where the app server sends them to the web clients.
+The core idea of this architecture is to decouple the data producers from the data consumers by means of an asynchronous message queue enabling push capabilities in the consumption tier. It is compound of four different servers, as shown in figure \ref{fig:physical_architecture}: an application server that receives the observations from the sensors and stores them in the database. That server is also responsible for publishing them into the messaging queue. Then the messaging queue makes them available to the data consumption tier, where the app server sends them to the web clients.
 
 \begin{figure}[H]
 	\centering
@@ -23,9 +23,9 @@ The core idea of this architecture is to decouple the data producers from the da
 	\label{fig:physical_architecture}
 \end{figure}
 
-Such architecture brings a number of benefits, as outlined in \ref{technology_research}. First and foremost, each tier can easily scale out independently. In both tiers, high availability and increased throughput can be provided through redundancy \cite{Antwerp}, that is, adding more app servers. As for the database and the messaging queue, clusterizing them can provide better performance, increased throughput and storage capacity.
+Such architecture brings about a number of benefits, as outlined in \ref{technology_research}. First and foremost, each tier can easily scale out independently. In both tiers, high availability and increased throughput can be provided through redundancy \cite{UA:resilience}, that is, adding more app servers. As for the database and the messaging queue, clusterizing them can provide better performance, increased throughput and storage capacity.
 
-The loosely coupled architecture the messaging queue entails along with the benefits stated in \ref{message_passing} not only allows scaling horizontally, but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue may be replaced without affecting any of the tiers.
+The loosely coupled architecture that the messaging queue provides along with the benefits stated in \ref{message_passing}, not only enables horizontally scaling but also allows components to evolve independently. The only constraint is that both tiers must understand the Advanced Message Queuing Protocol (AMQP). On the other hand, given the wide adoption of such protocol, the particular messaging queue may be replaced without affecting any of the tiers.
 
 Finally, a high-performance asynchronous messaging queue provides real-time capabilities to the system.
 
@@ -33,72 +33,71 @@ Finally, a high-performance asynchronous messaging queue provides real-time capa
 
 \subsection{Sensor}
 
-As already stated in \ref{actors}, although we opt for a solution that may involve RaspberryPi, the development of the sensor device falls out of the scope of the project. Nonetheless, the system requires some sort of client in order to simulate its functioning in normal conditions.
+As already stated in \ref{actors}, although we opt for a solution that may involve RaspberryPi, the development of the sensor device falls beyond the scope of this project. Nonetheless, the system requires some sort of client in order to simulate its functioning in normal conditions.
 
 \begin{figure}[h]
-\begin{minipage}{.5\textwidth}
+\centering
+\begin{minipage}{.45\textwidth}
 	\centering
-	\includegraphics[width=.7\textwidth]{sensor_logic_view}
-	\caption{Simulator's Logic View}
+	\includegraphics[width=.65\textwidth]{sensor_logic_view}
+	\caption{Simulator Logic View}
 	\label{fig:sensor_logic_view}
 \end{minipage}
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.45\textwidth}
 	\centering
-	\includegraphics[width=.7\textwidth]{future_sensor_logic_view}
-	\caption{Sensor's Logic View}
+	\includegraphics[width=.65\textwidth]{future_sensor_logic_view}
+	\caption{Sensor Logic View}
 	\label{fig:future_sensor_logic_view}
 \end{minipage}
 \end{figure}
 
-A CLI acts as a presentation layer that allows interaction with the underlying SOS API client hence, the particular features of the sensor can be simulated. This approach offers the advantage of reusing the SOS client as a component of the final sensor device.
+A CLI acts as a presentation layer that enables interaction with the underlying SOS API client thus allowing the particular features of the sensor to be simulated. This approach offers the advantage of reusing the SOS client as a component of the final sensor device.
 
 \subsubsection*{Command Line Interface}
 
 On one hand, the \texttt{Redch} global namespace comprehends the CLI's commands. Similar to the command pattern, each class is named after the command it enables and contains all the logic for that particular command. As \ref{fig:cli_class_diagram} shows, the \texttt{Redch::CLI} class itself is a Thor application that exposes its interface in the command line, receives the input, executes the commands and prints their output.
 
-Thor is a toolkit for building powerful command-line interfaces, which is used by well-known frameworks and tools such as Bundler, Ruby on Rails or Vagrant. The Thor class exposes a command-suite command-line application like Git that leads to very polished and easy to maintain command-line applications. In any Thor's subclass public methods become commands. Furthermore, Thor provides an interface to easily specify options and flags as a command's metadata, along with methods to specify the description of the commands. These are then included in a \texttt{help} command automatically generated.
+Thor is a toolkit for building powerful command-line interfaces, which is used by well-known frameworks and tools such as Bundler, Ruby on Rails or Vagrant. The Thor class exposes a command-suite command-line application like Git that leads to very polished and easy-to-maintain command-line applications. In any Thor subclass, public methods become commands. Furthermore, Thor provides an interface to easily specify options and flags as a command's metadata, along with methods to specify the description of the commands. These are then included in a automatically generated \texttt{help} command.
 
 \subsubsection*{Sensor Observation Service Client}
 
-On the other hand, each command calls the underlying SOS Client, which in turn makes an HTTP request to the service. Being SOS a RESTful Web Service, the client implements two REST resources: Sensor and Observation, using the Ruby's rest-client gem\footnote{Libraries in Ruby programming language}.
+On the other hand, each command calls the underlying SOS Client, which in turn makes an HTTP request to the service. Being SOS a RESTful Web Service, the client implements two REST resources: \texttt{sensors} and \texttt{observations}, using the Ruby's rest-client gem\footnote{Libraries in Ruby programming language}.
 
-This widely-used gem abstracts the actual http protocol by exposing methods for each HTTP verb that accept header and query parameters to be passed in. Additionally, it provides a lower-level API that allows to specify SSL parameters, deal with cookies, etc. for cases the general API doesn't cover.
+This widely-used gem abstracts the actual HTTP protocol by exposing methods for each HTTP verb that accept header and query parameters to be passed in. Additionally, it provides a lower-level API that enables specification OF SSL parameters, dealing with cookies, etc. for cases the general API doesn't cover.
 
 Finally, the client uses the Slim template language to render Geography Markup Language (GML), an OGC standard adopted by the International Organization for Standardization (ISO). Each operation has its own template that gets rendered with the data provided by each call. The obtained XML markup makes up the HTTP request body.
 
 \begin{sidewaysfigure}
 	\includegraphics[width=\textwidth]{cli_class_diagram}
-	\caption{CLI's class diagram}
+	\caption{CLI class diagram}
 	\label{fig:cli_class_diagram}
 \end{sidewaysfigure}
 
 \begin{sidewaysfigure}
 	\includegraphics[width=\textwidth]{sos_client_class_diagram}
-	\caption{SOS Client's class diagram}
+	\caption{SOS Client class diagram}
 	\label{fig:sos_client_class_diagram}
 \end{sidewaysfigure}
 
 \subsection{Messaging Queue}
 
-The messaging queue is the central component which drives the data throughout the system. As a consequence, it determines the architecture of all other components. A detailed list of most known messaging queue systems has been given in \ref{message_passing}. All of them are highly reliable and high-performant, but usually message queues aren't the system's bottleneck, but message consumers slowed down by database queries or backend systems.
+The messaging queue is the central component which drives the data throughout the system and thereby determines the architecture of all other components. A detailed list of most known messaging queue systems has been given in \ref{message_passing}, all of which highly reliable and high-performant. However, usually message queues aren't system bottlenecks but rather message consumers slowed down by database queries or backend systems.
 
-Then, the choice of an specific message queue depends on the amount of client libraries available, particularly for the languages used it in the project, its clustering support and the complexity of installation and management. It is also important that the chosen queue has enough high-quality online resources to help with the integration. RabbitMQ, with a rich management web UI and exhaustive documentation including a clustering guide, is the one that best fits our requirements.
+So the choice of an specific message queue depends on the amount of client libraries available, particularly for the languages used in the project, clustering support and the complexity of installation and management. It is also important that the chosen queue has enough high-quality online resources to ease the integration. RabbitMQ, with a rich management web UI and exhaustive documentation including a clustering guide, is the one that best fits our requirements.
 
-This decision impacts on the design of the data producers and consumers, which must integrate with RabbitMQ using the AMQP protocol. This will be discussed further in following sections.
-
-TODO Extend with some words about fanout routing
+This decision has an impact on the design of the data producers and consumers, which must integrate with RabbitMQ using the AMQP protocol. This will be discussed further in following sections.
 
 \subsection{Sensor Observation Service}
 
-Given the CREAF's determination towards the SWE initiative and its involvement in Open-source GIS community it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring last web standards to the OGC implementations, which may be worth checking out in order to include them in Redch project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version has been released less than three months before this writing.
+Given the CREAF's determination towards the SWE initiative and its involvement in  the open-source GIS community, it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring latest web standards to the OGC implementations, which may be worth looking into in order to include them in the REDCH project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version was released less than three months before this writing.
 
-As fully discussed in \ref{interoperability}, SOS provides the level of interoperability the project requires. The specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
+As fully discussed in \ref{interoperability}, SOS provides the level of interoperability the project requires. This specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
 
-With regard to the bindings only SOAP and KVP are defined in the specification. In addition, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension, which our SOS client will use. By choosing this binding, we aim to build a lightweight and stateless service client that can run in a resource-constrained sensor device.
+With regard to the bindings, only SOAP and KVP are defined in the specification. In addition, 52ºNorth SOS 4.0 implements a RESTful binding as part of the bindings extension which our SOS client will use. By choosing this binding, we aim to build a lightweight and stateless service client that can run in a resource-constrained sensor device.
 
-Additionally, 52ºNorth SOS also provides an administrator GUI that allows to change the settings, de/activate encodings and bindings and query and clear the data store.
+Additionally, 52ºNorth SOS also provides an administrator GUI that enables changing the settings, de/activation of encodings and bindings as well as queries and clearance of stored data.
 
-In order to integrate with RabbitMQ, a component that handles the data delivery to the messaging queue must be developed and included in the SOS. Once the observation has been stored in the database, this component publishes a message with the observation into the queue. Its logical architecture is as figure \ref{fig:amqp_extension} shows.
+In order to integrate with RabbitMQ, a component that handles the data delivery to the messaging queue must be developed and included in the SOS. Once the observation has been stored in the database, this component publishes a message with the observation into the queue. Its logical architecture is shown in figure \ref{fig:amqp_extension}.
 
 \begin{figure}[p]
 	\centering
@@ -109,15 +108,15 @@ In order to integrate with RabbitMQ, a component that handles the data delivery 
 
 \subsection{Database}
 
-52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, MySQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, Redch may benefit from the integration of some sort of NoSQL solution.
+52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, My\-SQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, REDCH may benefit from the integration of some sort of NoSQL solution.
 
-The system is characterised by an ever growing data set, with small data units. That is, the system is write-intensive and I/O-bound. Given this features, in a real-world scenario Redch may take advantage of NoSQL massive scalability and its higher performance and scalability. Furthermore, in this project the impact of relaxed consistency may not be as high as in other systems where high reliability is required.
+The system is characterised by an ever-growing data set with small data units. That is, the system is write-intensive and I/O-bound. Given this features, in a real-world scenario REDCH may take advantage of massive NoSQL scalability and higher performance. Furthermore, in this project the impact of relaxed consistency may not be as high as in other systems where high reliability is required.
 
-However, time constraints do not allow to explore this possibility since it would require to migrate the whole relational schema to a non-relational one. In addition, this prototype will only deal with a limited number of sensors for testing purposes.
+However, time constraints do not allow further exploration of this possibility since this would require that the whole relational schema migrate to a non-relational one. In addition, this prototype will only deal with a limited number of sensors for testing purposes.
 
 \subsection{Web Application}
 
-The web application has two differentiated parts. The application's backend and the Single-Page Application (SPA). While the former pushes AMQP messages received from the queue to the SPA, the latter converts this information into a data visualization. Both components are tied together through a simple Sinatra Application.
+The web application has two differentiated parts: the application's backend and the Single-Page Application (SPA). While the former pushes AMQP messages received from the queue to the SPA, the latter converts this information into a data visualization. Both components are tied together through a simple Sinatra Application.
 
 \begin{figure}[h]
 	\centering
@@ -128,51 +127,47 @@ The web application has two differentiated parts. The application's backend and 
 
 \subsubsection{Backend}
 
-The backend uses the amqp gem. A feature-rich asynchronous RabbitMQ client built on top of EventMachine, the most popular event-driven I/O and concurrency library in Ruby, which implements the Reactor pattern \cite{reactor}. The event handling pattern at the core of Python's Twisted or Node.js among others.
+The backend uses the amqp gem. A feature-rich asynchronous RabbitMQ client which is built on top of EventMachine, the most popular event-driven I/O and concurrency library in Ruby. This library implements the Reactor pattern \cite{reactor}, the event handling pattern that constitutes the core of Python's Twisted or Node.js.
 
-Once a message is received, the backend forwards it to each open streaming connection using the HTML5 Server Sent Events API \ref{web_real_time}. Therefore, concurrency is essential for the performance of the backend, and again, it is provided with EventMachine.
+Once a message is received, the backend forwards it to each open streaming connection using the HTML5 Server Sent Events API, explained in \ref{web_real_time}. Therefore, concurrency is essential for the performance of the backend which, once again, is provided through EventMachine.
 
-SSE has been chosen against WebSockets as the data delivery mechanism because of its much easier implementation and smaller impact on the underlying infrastructure. Moreover, the data flows only from the backend to the browser. Thus, half-duplex one-way communication is enough.
+SSE has been chosen over WebSockets as the data delivery mechanism because of its much easier implementation and lesser impact on the underlying infrastructure. Moreover, since the data flows only from the backend to the browser, half-duplex one-way communication is enough.
 
-Sinatra is a Web application framework and Domain Specific Language (DSL) that allows to create web applications in Ruby very quickly. In contrast with other frameworks, such as Ruby on Rails, Sinatra does not include a complex ORM nor follows the MVC pattern. Instead, it focuses on being small and flexible.
+Sinatra is a Web application framework and Domain Specific Language (DSL) that enables quick creation of web applications in Ruby. In contrast with other frameworks, such as Ruby on Rails, Sinatra does not include a complex ORM nor follows the MVC pattern, focusing instead on being small and flexible.
 
-The Sinatra Application exposes just two endpoints: \texttt{GET /} and \texttt{GET /stream}. The former is used to download the whole SPA, whereas the latter allows to open a SSE streaming connection.
+The Sinatra Application exposes just two endpoints: \texttt{GET /} and \texttt{GET /stream}. The former is used to download the whole SPA, whereas the latter allows for an SSE streaming connection to be opened.
 
 The class diagram of the whole backend is as follows.
-
-TODO state node.js. Tool made for this, performance worth checking out. Leaned towards Ruby to come up with a webapp quickly.
 
 \begin{figure}[h]
 	\centering
 	\includegraphics[scale=.7]{backend_class_diagram}
-	\caption{Backend's class diagram}
+	\caption{Backend class diagram}
 	\label{fig:backend_class_diagram}
 \end{figure}
 
 \subsubsection{Single Page Application}
 
-The SPA downloads all necessary source code ---HTML, JS and CSS--- on the first request and renders the data visualization, empty at this point. Then, an HTTP streaming connection is opened  through which the SSE events are sent. Then, the data visualization is continuously rendered with every event containing an observation, using the D3.js JS library. The state of the application is handled with Backbone.js structuring it as a collection of observation models.
+The SPA downloads all necessary source codes ---HTML, JS and CSS--- at the first request and renders the data visualization, empty at this point. Then, an HTTP streaming connection is opened  through which the SSE events are sent. Then, the data visualization is continuously rendered with every event containing an observation by using the D3.js JS library. The state of the application is handled through Backbone.js which structures it as a collection of observation models.
 
 The SPA consists of four different components: the HTML template, the data visualization, the data handling and the SSE client.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.62]{spa_class_diagram}
-	\caption{SPA's class diagram}
+	\includegraphics[scale=.55]{spa_class_diagram}
+	\caption{SPA class diagram}
 	\label{fig:spa_class_diagram}
 \end{figure}
 
-The single HTML file acts as the template for the application and contains the references to all of its assets: css files, web fonts, and JS libraries.
+The single HTML file acts as the template for the application and contains the references to all of its assets: css files, web fonts, and JS libraries. Among these assets, there are the JS and tiles that Mabpox -- the interactive maps JS library used -- loads.
 
-TODO speak about the map tiles servive. Mapbox
+The data visualization sets up the map and renders circles placed at the exact location where the observation took place, each one corresponding to a different observation. These circles convey the observation's electrical power with the filling color ranging from yellow to red following a linear function.
 
-The data visualization sets up a map and renders circles placed on the exact location where the observation took place, each one corresponding to a different observation. This circles convey the observation's electrical power with the filling color ranging from yellow to red following a linear function.
-
-All SPA's pieces work in a fully evented fashion. Whenever a SSE message is received the \texttt{Communicator} publishes the event into the \texttt{eventBus} and the observations collection, which is subscribed to said event, process it. Then, when the collection triggers an add, remove or change event the visualization gets updated with new, updated or deleted circles depending on the information contained in the collection at that point.
+All SPA pieces work in a fully evented fashion. Whenever a SSE message is received, the \texttt{Communicator} publishes the event into the \texttt{eventBus} and the observations collection, which is subscribed to said event, process it. When the collection triggers an add, remove or change event the visualization gets updated with new, changed or deleted circles depending on the information contained in the collection at that point.
 
 \section{Sequence Diagrams}
 
-This section aims to depict the lifetime of an observation as it goes through all the aforementioned components. From the sensor up until it is visualized in the SPA. This gives a global view of the system's functioning.
+This section aims to depict the lifetime of an observation as it goes through all the aforementioned steps from the sensor up until it is visualized in the SPA, thereby giving an overall view of the system's functioning.
 
 \begin{sidewaysfigure}
 	\includegraphics[width=\textwidth]{insert_observation_design_seq}
@@ -189,7 +184,7 @@ This section aims to depict the lifetime of an observation as it goes through al
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.75]{browse_data_design_seq}
+	\includegraphics[scale=.7]{browse_data_design_seq}
 	\caption{Sequence Diagram - Browse Data}
 	\label{fig:browse_data_design_seq}
 \end{figure}

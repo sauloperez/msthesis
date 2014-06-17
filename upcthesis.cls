@@ -169,6 +169,9 @@
 % Highlighted source code blocks
 \usepackage{minted}
 
+% Euro currency symbol
+\usepackage[gen]{eurosym}
+
 % *** GRAPHICS RELATED PACKAGES ***
 %
 \usepackage[final]{graphicx}
@@ -186,6 +189,9 @@
 
 % Full page horizontal figure. Enables '\begin{sidewaysfigure}'
 \usepackage{rotating}
+
+% Allows to include pdf files
+\usepackage[final]{pdfpages}
 
 \def\baselinestretch{\mystretch}	% Double spacing hack
 
