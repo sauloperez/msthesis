@@ -345,7 +345,7 @@
 
 %% Define all the pieces that go on the title page and the abstract.
 
-% \title and \author already exist
+% \title and \t already exist
 
 \def\prevdegrees#1{\gdef\@prevdegrees{#1}}
 \def\@prevdegrees{}
@@ -428,21 +428,20 @@
 by\par
 {\Large  \choosecase{\@author}}
 \par
-\@prevdegrees
+\@thesisdate
 \par
-\choosecase{Submitted to the} \choosecase{\@department} \\
-\choosecase{in partial fulfillment of the requirements for the}
-\choosecase{\@degreeword} 
-\choosecase{of}
+\vspace{5mm}
+Thesis Supervisor \\
+Carles Farr\'{e} Tost \\
+\choosecase{\@department} \\
 \par
+\vspace{10mm}
 \choosecase{\@degree}
 \par
-at the
 \par\UPC\par
-\@degreemonth\ \@degreeyear
+\par\FIB\par
 \par
 \vfill
-\unvbox\@titlesupervisor
 \par
 \vfill
 \end{titlepage}}
@@ -456,9 +455,8 @@ by \\
 \@author \\[\baselineskip]}
 \par
 \def\baselinestretch{1}\@normalsize
-Submitted to the \@department \\
-on \@thesisdate, in partial fulfillment of the \\
-requirements for the \@degreeword\ of \\
+\@department \\
+on \@thesisdate \\
 \@degree
 \end{center}
 \par
@@ -469,7 +467,7 @@ requirements for the \@degreeword\ of \\
 %% page.
 %% Krishna Sethuraman (1990)
 \def\endabstractpage{\end{abstract}\noindent
- \unvcopy\@abstractsupervisor \newpage}
+ \newpage}
 
 %% This counter is used to save the page number for the second copy of
 %% the abstract.
@@ -487,8 +485,8 @@ requirements for the \@degreeword\ of \\
 % The \kern0pt pushes any depth into the height.  Thanks to Richard Stone.
 \def\endtitlepage{\par\kern 0pt\egroup\vss\egroup\newpage}
 
-\def\UPC{UNIVERSITAT POLIT\`{E}CNICA DE CATALUNYA}
-\def\Upc{Universtiat Polit\`{e}cnica de Catalunya}
+\def\UPC{Universtiat Polit\`{e}cnica de Catalunya (UPC)\\BarcelonaTech}
+\def\FIB{Facultat d'Inform\`{a}tica de Barcelona (FIB)}
 
 \def\permission{\par\noindent{\centering
    The author hereby grants to MIT permission to reproduce and to
