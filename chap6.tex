@@ -235,7 +235,7 @@ draw: function() {
 
 \subsection*{Server-side}
 
-From the server-side HTML5 Server-Sent Events API is a really simple convention over a regular HTTP streaming connection. Together with Sinatra's DSL its implementation is reduced to few lines.
+From the server-side, HTML5 Server-Sent Events API is a really simple convention over a regular HTTP streaming connection. Together with Sinatra's DSL its implementation is reduced to few lines.
 
 \begin{listing}[H]
 \begin{minted}[
@@ -258,7 +258,7 @@ end
 \label{fig:sse_backend}
 \end{listing}
 
-The Event Stream format is just a plain text response served with \texttt{text/event-stream} Content-Type whose data must conform to the SSE format. The format specifies that the response must contain a line beginning with \texttt{data:} followed by the message. The message can be broken up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
+The Event Stream format is just a plain text response served with Content-Type set to \texttt{text/event-stream} and whose data must conform to the SSE format. The format specifies that the response must contain a line beginning with \texttt{data:} followed by the message. The message can be broken up in multiple \texttt{data:} lines by ending them with a single \texttt{"\texttt{\textbackslash n}"} char. Therefore, \texttt{"\textbackslash n\textbackslash n"} must be used to end the stream. This is considered a single event, thereby firing only one \texttt{message} event on the client-side.
 
 An event can be associated with a unique id by including a line starting with \texttt{id:} as in line 4. Likewise, the reconnection-timeout can be changed by including a line beginning with \texttt{retry:} followed by the number of milliseconds to wait before the reconnection. In this way, whenever the connection is dropped the browser will attempt to reconnect after the specified time.
 

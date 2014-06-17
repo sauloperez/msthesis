@@ -36,15 +36,16 @@ Finally, a high-performance asynchronous messaging queue provides real-time capa
 As already stated in \ref{actors}, although we opt for a solution that may involve RaspberryPi, the development of the sensor device falls beyond the scope of this project. Nonetheless, the system requires some sort of client in order to simulate its functioning in normal conditions.
 
 \begin{figure}[h]
-\begin{minipage}{.5\textwidth}
+\centering
+\begin{minipage}{.45\textwidth}
 	\centering
-	\includegraphics[width=.7\textwidth]{sensor_logic_view}
+	\includegraphics[width=.65\textwidth]{sensor_logic_view}
 	\caption{Simulator Logic View}
 	\label{fig:sensor_logic_view}
 \end{minipage}
-\begin{minipage}{.5\textwidth}
+\begin{minipage}{.45\textwidth}
 	\centering
-	\includegraphics[width=.7\textwidth]{future_sensor_logic_view}
+	\includegraphics[width=.65\textwidth]{future_sensor_logic_view}
 	\caption{Sensor Logic View}
 	\label{fig:future_sensor_logic_view}
 \end{minipage}
@@ -107,7 +108,7 @@ In order to integrate with RabbitMQ, a component that handles the data delivery 
 
 \subsection{Database}
 
-52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, MySQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, REDCH may benefit from the integration of some sort of NoSQL solution.
+52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, My\-SQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, REDCH may benefit from the integration of some sort of NoSQL solution.
 
 The system is characterised by an ever-growing data set with small data units. That is, the system is write-intensive and I/O-bound. Given this features, in a real-world scenario REDCH may take advantage of massive NoSQL scalability and higher performance. Furthermore, in this project the impact of relaxed consistency may not be as high as in other systems where high reliability is required.
 
@@ -153,7 +154,7 @@ The SPA consists of four different components: the HTML template, the data visua
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.62]{spa_class_diagram}
+	\includegraphics[scale=.55]{spa_class_diagram}
 	\caption{SPA class diagram}
 	\label{fig:spa_class_diagram}
 \end{figure}
@@ -183,7 +184,7 @@ This section aims to depict the lifetime of an observation as it goes through al
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[scale=.75]{browse_data_design_seq}
+	\includegraphics[scale=.7]{browse_data_design_seq}
 	\caption{Sequence Diagram - Browse Data}
 	\label{fig:browse_data_design_seq}
 \end{figure}
