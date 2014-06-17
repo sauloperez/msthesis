@@ -6,7 +6,7 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Infrastructure}
 
-This chapter aims to describe the tools and processes involved in the infrastructure setup, from local development environment to the set of production servers running the Redch. Firstly, it explains the infrastructure setup and secondly, describes the provisioning and deployment processes.
+This chapter aims to describe the tools and processes involved in the infrastructure setup, from local development environment to the set of production servers running the REDCH. Firstly, it explains the infrastructure setup and secondly, describes the provisioning and deployment processes.
 
 \section{Amazon AWS setup}
 
@@ -14,7 +14,7 @@ Amazon Web Services (AWS) is a cloud computing platform that offers a collection
 
 The whole infrastructure of the system is made up of EC2 instances, virtual servers in Amazon's cloud. They all run a custom Amazon Machine Image (AMI) built from a raw Ubuntu 12.04 LTS with all needed dependencies ---Puppet and Ruby 2.0.0--- installed. As a result, any new instance booted up with this custom AMI is ready to be provisioned. Starting and stopping machines, as well as configuring their firewall rules is managed through the AWS Management Console, a web UI.
 
-One of the major benefits Redch can take advantage of is Amazon's Auto Scaling. This service allows to scale the capacity of the EC2 instances up and down according to a set of predefined conditions. A load balancer, for instance, can automatically spawn app servers during demand spikes and shut them down during low demand periods. Redch can get the most out of it by exploiting the fact that solar panels don't produce energy at night, thereby minimizing costs. Likewise, less computing power is required under windless conditions.
+One of the major benefits REDCH can take advantage of is Amazon's Auto Scaling. This service allows to scale the capacity of the EC2 instances up and down according to a set of predefined conditions. A load balancer, for instance, can automatically spawn app servers during demand spikes and shut them down during low demand periods. REDCH can get the most out of it by exploiting the fact that solar panels don't produce energy at night, thereby minimizing costs. Likewise, less computing power is required under windless conditions.
 
 Although it would be desirable to keep a provider-independent infrastructure, Amazon RDS has been chosen as database server which makes it easier to set up, operate and scale a relational database. Furthermore, it provides automated backups, Multi-AZ replication and monitoring metrics. It has support for MySQL, Oracle, SQL Server and PostrgeSQL, all the DBMSs supported by 52ºNorth SOS, being the latter the one it uses by default. However, the PostrgeSQL support is still in beta version due to its recent release in November of 2013.
 

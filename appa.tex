@@ -16,7 +16,7 @@ Next, install its dependencies:
 bundle install
 \end{verbatim}
 
-Redch Webapp gets observations from a RabbitMQ, so make sure the
+REDCH Webapp gets observations from a RabbitMQ, so make sure the
 RabbitMQ server is running and accessible from within your network. For
 Mac OS X users this is done be typing:
 
@@ -242,7 +242,7 @@ $ psql -h localhost
 \subsubsection*{AMQP Service extension}\label{amqp-service-extension}
 
 This SOS implementation has been extended to suit the requirements of
-the Redch project. A RabbitMQ client wrapper has been added as
+the REDCH project. A RabbitMQ client wrapper has been added as
 extension.
 
 Contained in the
@@ -288,7 +288,7 @@ Then configure it using the webapp. Just browse to
 \texttt{\textless{}tomcat\_url\textgreater{}/webapp} and follow the
 wizard's steps.
 
-Redch SOS talks to RabbitMQ and Postgresql. So besides setting them up
+REDCH SOS talks to RabbitMQ and Postgresql. So besides setting them up
 and running, make sure the \texttt{redch.amqp.host} property of the
 \texttt{redch.properties} file points to the right the RabbitMQ server.
 As for the DB, make sure the field \texttt{Host} under

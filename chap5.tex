@@ -6,9 +6,9 @@
 %% prompt when you run the file main.tex through LaTeX.
 \chapter{Design}
 
-In this chapter we will discuss all design decisions taken regarding the building of Redch. These are grounded on the detailed research explained in Chapter \ref{technology_research}. The high-level architecture already outlined in \ref{fig:use_cases} is extended further by first explaining the technology used: the programming languages, frameworks and most relevant libraries. Then, the whole architecture of the system is presented by describing each one of the components the system is comprised of.
+In this chapter we will discuss all design decisions taken regarding the building of REDCH. These are grounded on the detailed research explained in Chapter \ref{technology_research}. The high-level architecture already outlined in \ref{fig:use_cases} is extended further by first explaining the technology used: the programming languages, frameworks and most relevant libraries. Then, the whole architecture of the system is presented by describing each one of the components the system is comprised of.
 
-The design explained below aims to provide a solid groundwork and a first prototype for the Redch project. Therefore, not all ideas discussed in previous chapters may be included in the result of this master thesis.
+The design explained below aims to provide a solid groundwork and a first prototype for the REDCH project. Therefore, not all ideas discussed in previous chapters may be included in the result of this master thesis.
 
 Ruby has been chosen as the main language for the development of the project. This dynamic language focused on simplicity and productivity is often regarded as developer performant. Due to its flexibility and similarity with natural language along with the massive amount of libraries and frameworks available, it allows developers to write applications very quickly. However, these features may hamper its execution performance.
 
@@ -88,7 +88,7 @@ This decision has an impact on the design of the data producers and consumers, w
 
 \subsection{Sensor Observation Service}
 
-Given the CREAF's determination towards the SWE initiative and its involvement in  the open-source GIS community, it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring latest web standards to the OGC implementations, which may be worth looking into in order to include them in the Redch project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version was released less than three months before this writing.
+Given the CREAF's determination towards the SWE initiative and its involvement in  the open-source GIS community, it is important to make use of the Sensor Observation Service (SOS). To do so, we opt for 52ºNorth SOS 4.0, the leading open-source implementation already integrated by many research institutions throughout the world. In this regard, great efforts are underway to bring latest web standards to the OGC implementations, which may be worth looking into in order to include them in the REDCH project. This is the case of 52ºNorth SOS 4.0. While this project uses its beta version, the final version was released less than three months before this writing.
 
 As fully discussed in \ref{interoperability}, SOS provides the level of interoperability the project requires. This specification structures the service with a core and four extensions: Transactional, Enhanced operations, Result handling and bindings. Together, all extensions provide CRUD functionality for sensors, observations and results.
 
@@ -107,9 +107,9 @@ In order to integrate with RabbitMQ, a component that handles the data delivery 
 
 \subsection{Database}
 
-52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, MySQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, Redch may benefit from the integration of some sort of NoSQL solution.
+52ºNorth's implementation uses Hibernate and Hibernate Spatial persistence framework to allow changing the underlying database management system and database model, which currently supports PostgreSQL/PostGIs, Oracle/Oracle spatial, MySQL and SQL Server DBMSs. Although we have chosen PostgreSQL, the GIS industry standard, REDCH may benefit from the integration of some sort of NoSQL solution.
 
-The system is characterised by an ever-growing data set with small data units. That is, the system is write-intensive and I/O-bound. Given this features, in a real-world scenario Redch may take advantage of massive NoSQL scalability and higher performance. Furthermore, in this project the impact of relaxed consistency may not be as high as in other systems where high reliability is required.
+The system is characterised by an ever-growing data set with small data units. That is, the system is write-intensive and I/O-bound. Given this features, in a real-world scenario REDCH may take advantage of massive NoSQL scalability and higher performance. Furthermore, in this project the impact of relaxed consistency may not be as high as in other systems where high reliability is required.
 
 However, time constraints do not allow further exploration of this possibility since this would require that the whole relational schema migrate to a non-relational one. In addition, this prototype will only deal with a limited number of sensors for testing purposes.
 
