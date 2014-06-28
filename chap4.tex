@@ -89,7 +89,7 @@ On the other hand, \textit{hard} real-time refers to systems which don't fulfil 
 
 \subsection{Message Passing} \label{message_passing}
 
-Instead of sharing the memory, in distributed systems is generally a better approach to share state by communicating. Message passing is a communication model that involves calling a subroutine by sending a message to an intermediary process. It relies on its infrastructure to invoke the actual code rather than calling subroutine by name as in a traditional procedure call. In such systems, communication is explicit and functions are separated from the specific implementations. (Immediate drawbacks)
+Instead of sharing the memory, in distributed systems is generally a better approach to share state by communicating. Message passing is a communication model that involves calling a subroutine by sending a message to an intermediary process. It relies on its infrastructure to invoke the actual code rather than calling subroutine by name as in a traditional procedure call. In such systems, communication is explicit and functions are separated from the specific implementations.
 
 An immediate upside of such communication model is the loose coupling between components. With a remote procedure call, the sender process must know the receiver and the complete signature of its procedures beforehand whereas with message passing, sender and receiver are nearly independent. This allows the system's components to be upgraded one at a time, thus giving the system the ability to evolve. Furthermore, it also improves interoperability. If the message is text-based (i.e., JSON, XML) there is no requirement for the components to be built in the same platform, operating system or language.
 
